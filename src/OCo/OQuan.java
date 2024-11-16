@@ -32,16 +32,22 @@ public class OQuan extends OCo {
 
     //Setter
     public void setDans(Dan dan) {
-        if (this.dans == null) {
-            this.dans = new ArrayList<>();
+        if (dan == null) {
+            this.dans.clear();
         }
-        this.dans.add(dan);
-        System.out.println("Added Dan: " + dan + " | Current size: " + this.dans.size());
+        else {
+            this.dans.add(dan);
+            System.out.println("Added Dan: " + dan + " | Current size: " + this.dans.size());
+        }
+
     }
 
-    public void setQuan(ArrayList<Quan> quans){
-        this.quans = quans;
-        this.quans.add(quans);
+    public void setQuan(Quan quan){
+        if (this.quans == null) {
+            this.quans= new ArrayList<>();
+        }
+        this.quans.add(quan);
+        System.out.println("Added Quan: " + quan + " | Current size: " + this.quans.size());
     }
 
     //Method
