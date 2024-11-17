@@ -65,9 +65,9 @@
 //            System.out.print(ODan.sumDans(oDans.get(k).getDans()) + " ");
 //        }
 //        System.out.println();
-//        System.out.println(OQuan.sumQuanAndDans(oQuans.get(1).getQuan(), oQuans.get(1).getDans())
+//        System.out.println(OQuan.Interface.sumQuanAndDans(oQuans.get(1).getQuan(), oQuans.get(1).getDans())
 //                + "              "
-//                + OQuan.sumQuanAndDans(oQuans.get(0).getQuan(), oQuans.get(0).getDans()));
+//                + OQuan.Interface.sumQuanAndDans(oQuans.get(0).getQuan(), oQuans.get(0).getDans()));
 //        System.out.print("     ");
 //        for (int k = 0; k < 5; k++) {
 //            System.out.print(ODan.sumDans(oDans.get(k).getDans()) + " ");
@@ -110,8 +110,8 @@
 //    }
 //
 //    private static boolean isGameOver() {
-//        return OQuan.sumQuanAndDans(oQuans.get(0).getQuan(), oQuans.get(0).getDans()) == 0
-//                && OQuan.sumQuanAndDans(oQuans.get(1).getQuan(), oQuans.get(1).getDans()) == 0;
+//        return OQuan.Interface.sumQuanAndDans(oQuans.get(0).getQuan(), oQuans.get(0).getDans()) == 0
+//                && OQuan.Interface.sumQuanAndDans(oQuans.get(1).getQuan(), oQuans.get(1).getDans()) == 0;
 //    }
 //
 //    private static int getPlayerMove() {

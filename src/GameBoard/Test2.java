@@ -17,10 +17,10 @@ public class Test2 {
     public static Player player1 = new Player("Tuấn");
     public static Player player2 = new Player("Tún");
 
-    private static int currentPlayer = 0;
-    private static int scored01 = player1.getScore();
-    private static int scored02 = player2.getScore();
-    private static int count = 0; //đếm người chơi => Xoay vòng chơi
+    private static int currentPlayer = 0; //đếm người chơi => Xoay vòng chơi
+//    private static int scored01 = player1.getScore();
+//    private static int scored02 = player2.getScore();
+    private static int count = 0;
     private static Scanner scanner = new Scanner(System.in);
 
     // Initialize the board
@@ -106,13 +106,14 @@ public class Test2 {
             printBoard();
 
             if (oQuans.get(0).sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) == 0 && oQuans.get(1).sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) == 0) {
-                scored01 += sumRange(0, 5);
-                player1.setScore(scored01);
-                scored02 += sumRange(6, 11);
-                player2.setScore(scored02);
-                if (scored01 < scored02) {
+//                scored01 += sumRange(0, 5);
+//                player1.setScore(scored01);
+//                scored02 += sumRange(6, 11);
+//                player2.setScore(scored02);
+
+                if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
                     System.out.println("Player:" + player2.getName()  + ": Win!");
-                } else if (scored02 < scored01) {
+                } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
                     System.out.println("Player:" + player1.getName()  + ": Win!");
                 } else {
                     System.out.println("Hòa");
@@ -198,9 +199,25 @@ public class Test2 {
                 if (i < 0) i = 11;
 
                 if (i==oQuans.get(0).getIndex()) {
+                    if (OQuan.sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) >= 15) {
+                        if (currentPlayer == 0) {
+                            player1.setQuans(oQuans.get(0).getQuan());
+                        } else {
+                            player2.setQuans(oQuans.get(0).getQuan());
+                        }
+                        oQuans.get(0).getQuan().clear();
+                    }
                     stones = oQuans.get(0).getDans();
                 }
                 else if (i==oQuans.get(1).getIndex()) {
+//                    if (OQuan.sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) >= 15) {
+//                        if (currentPlayer == 0) {
+//                            player1.setQuans(oQuans.get(1).getQuan());
+//                        } else {
+//                            player2.setQuans(oQuans.get(1).getQuan());
+//                        }
+//                        oQuans.get(1).getQuan().clear();
+//                    }
                     stones = oQuans.get(1).getDans();
                 }
                 else {
@@ -209,17 +226,37 @@ public class Test2 {
                 }
 
                 if (!stones.isEmpty()) {
-                    if (currentPlayer == 0) scored01 += stones.size();
-                    if (currentPlayer == 1) scored02 += stones.size();
+//                    if (currentPlayer == 0) {
+//                        scored01 += stones.size();
+//                    }
+//                    if (currentPlayer == 1) {
+//                        scored02 += stones.size();
+//                    }
                     diemCong += stones.size();
                     stones.clear();
 
                     i--;
                     if (i < 0) i = 11;
                     if (i==oQuans.get(0).getIndex()) {
+                        if (OQuan.sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) >= 15) {
+                            if (currentPlayer == 0) {
+                                player1.setQuans(oQuans.get(0).getQuan());
+                            } else {
+                                player2.setQuans(oQuans.get(0).getQuan());
+                            }
+                            oQuans.get(0).getQuan().clear();
+                        }
                         stones = oQuans.get(0).getDans();
                     }
                     else if (i==oQuans.get(1).getIndex()) {
+//                        if (OQuan.sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) >= 15) {
+//                            if (currentPlayer == 0) {
+//                                player1.setQuans(oQuans.get(1).getQuan());
+//                            } else {
+//                                player2.setQuans(oQuans.get(1).getQuan());
+//                            }
+//                            oQuans.get(1).getQuan().clear();
+//                        }
                         stones = oQuans.get(1).getDans();
                     }
                     else {
@@ -287,14 +324,30 @@ public class Test2 {
                 stones = oDans.get(i).getDans() ;
             }
             i++;
-
+// 2t 6p 8t 0p 1t 3p 6t 10t 4p 2p
             while (stones.isEmpty()) {
                 if (i > 11) i = 0;
 
                 if (i==oQuans.get(0).getIndex()) {
+                    if (OQuan.sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) >= 15) {
+                        if (currentPlayer == 0) {
+                            player1.setQuans(oQuans.get(0).getQuan());
+                        } else {
+                            player2.setQuans(oQuans.get(0).getQuan());
+                        }
+                        oQuans.get(0).getQuan().clear();
+                    }
                     stones = oQuans.get(0).getDans();
                 }
                 else if (i==oQuans.get(1).getIndex()) {
+                    if (OQuan.sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) >= 15) {
+                        if (currentPlayer == 0) {
+                            player1.setQuans(oQuans.get(1).getQuan());
+                        } else {
+                            player2.setQuans(oQuans.get(1).getQuan());
+                        }
+                        oQuans.get(1).getQuan().clear();
+                    }
                     stones = oQuans.get(1).getDans();
                 }
                 else {
@@ -303,17 +356,31 @@ public class Test2 {
                 }
 
                 if (!stones.isEmpty()) {
-                    if (currentPlayer == 0) scored01 += stones.size();
-                    if (currentPlayer == 1) scored02 += stones.size();
+//                    if (currentPlayer == 0) {
+//                        scored01 += stones.size();
+//                    }
+//                    if (currentPlayer == 1) {
+//                        scored02 += stones.size();
+//                    }
                     diemCong += stones.size();
                     stones.clear();
 
                     i++;
                     if (i > 11) i = 0;
                     if (i==oQuans.get(0).getIndex()) {
+                        if (currentPlayer == 0) {
+                            player1.setQuans(oQuans.get(0).getQuan());
+                        } else {
+                            player2.setQuans(oQuans.get(0).getQuan());
+                        }
                         stones = oQuans.get(0).getDans();
                     }
                     else if (i==oQuans.get(1).getIndex()) {
+                        if (currentPlayer == 0) {
+                            player1.setQuans(oQuans.get(1).getQuan());
+                        } else {
+                            player2.setQuans(oQuans.get(1).getQuan());
+                        }
                         stones = oQuans.get(1).getDans();
                     }
                     else {
@@ -394,20 +461,20 @@ public class Test2 {
     private static void printScore(int diemCong) {
         if (currentPlayer == 0) {
             System.out.println("Người chơi " + player1.getName() + " nhận được: " + diemCong);
-            System.out.println("Điểm của " + player1.getName() + ": " + scored01);
+            System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
         }
         if (currentPlayer == 1) {
             System.out.println("Người chơi " + player2.getName() + " nhận được: " + diemCong);
-            System.out.println("Điểm của " + player2.getName() + ": " + scored02);
+            System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
         }
     }
 
     private static void printFinalScore() {
-        System.out.println("Điểm của " + player1.getName() + ": " + scored01);
-        System.out.println("Điểm của " + player2.getName() + ": " + scored02);
-        if (scored01 < scored02) {
+        System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
+        System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
+        if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
             System.out.println(player1.getName() +": Win!");
-        } else if (scored02 < scored01) {
+        } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
             System.out.println(player2.getName() +": Win!");
         } else {
             System.out.println("Hòa");

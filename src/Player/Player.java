@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private /*static*/ int index = 0;
-    private /*static*/ int score = 0;
+//    private /*static*/ int score = 0;
     private /*static*/ int diemCong = 0;
     private ArrayList<Quan> quans = new ArrayList<>();
     private ArrayList<Dan> dans = new ArrayList<>();
@@ -27,9 +27,9 @@ public class Player {
     public int getIndex() {
         return index;
     }
-    public int getScore() {
-        return score;
-    }
+//    public int getScore() {
+//        return score;
+//    }
     public int getDiemCong() {
         return diemCong;
     }
@@ -42,9 +42,9 @@ public class Player {
     public void setIndex(int index) {
         this.index = index;
     }
-    public void setScore(int score) {
-        this.score = score;
-    }
+//    public void setScore(int score) {
+//        this.score = score;
+//    }
     public void setDiemCong(int diemCong) {
         this.diemCong = diemCong;
     }
@@ -58,18 +58,18 @@ public class Player {
     }
 
     public void setQuans(ArrayList<Quan> quans){
-        this.quans = quans;
+        this.quans = (ArrayList<Quan>) quans.clone();
         System.out.println(quans);
     }
 
     //Method
 
-    public static int sumQuanAndDans(ArrayList<Quan> quan, ArrayList<Dan> dans){
-        if (quan.size() != 1){
+    public int sumQuanAndDans(){
+        if (this.quans.size() != 1){
             return dans.size()*Dan.getScore();
         }
         else {
-            return quan.size()*Quan.getScore() + dans.size()*Dan.getScore();
+            return this.quans.size()*Quan.getScore() + this.dans.size()*Dan.getScore();
         }
     }
 }
