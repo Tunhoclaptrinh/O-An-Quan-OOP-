@@ -137,8 +137,6 @@ public class Test2 {
                 }
             }
 
-
-
             System.out.print("Chọn chiều Phải - Trái (p/t): ");
             String chieu = scanner.next();
 
@@ -191,7 +189,7 @@ public class Test2 {
                 stones = oQuans.get(0).getDans();
             }
             else if (i==oQuans.get(1).getIndex()) {
-                stones = oQuans.get(0).getDans();
+                stones = oQuans.get(1).getDans();
             }
             else {
                 stones = oDans.get(i).getDans() ;
@@ -213,8 +211,10 @@ public class Test2 {
                     if (i==5) i=4;
                     stones = oDans.get(i).getDans() ;
                 }
-// 2t 3t 1t 6p
-// 2t 6p 8t 0p 1t 9t 3p
+//  2t 3t 1t 6p
+//  2t/p 6p/10t 8t/p 0p/4t 1t/3p 9t/7p 3p/1t
+//  8t/p 0p/4t 2t/p 6p/10t 7t/9p 3t/1p 9p/7t
+//  6t
                 if (!stones.isEmpty()) {
                     if (currentPlayer == 0) scored01 += stones.size();
                     if (currentPlayer == 1) scored02 += stones.size();
@@ -227,7 +227,7 @@ public class Test2 {
                         stones = oQuans.get(0).getDans();
                     }
                     else if (i==oQuans.get(1).getIndex()) {
-                        stones = oQuans.get(0).getDans();
+                        stones = oQuans.get(1).getDans();
                     }
                     else {
                         stones = oDans.get(i).getDans() ;
@@ -281,7 +281,7 @@ public class Test2 {
                 i++;
                 printBoard();
             }
-//
+
             // Capture stones
             int diemCong = 0;
             if (i > 11) i = 0;
@@ -291,7 +291,7 @@ public class Test2 {
                 stones = oQuans.get(0).getDans();
             }
             else if (i==oQuans.get(1).getIndex()) {
-                stones = oQuans.get(0).getDans();
+                stones = oQuans.get(1).getDans();
             }
             else {
                 stones = oDans.get(i).getDans() ;
@@ -326,7 +326,7 @@ public class Test2 {
                         stones = oQuans.get(0).getDans();
                     }
                     else if (i==oQuans.get(1).getIndex()) {
-                        stones = oQuans.get(0).getDans();
+                        stones = oQuans.get(1).getDans();
                     }
                     else {
                         stones = oDans.get(i).getDans() ;
