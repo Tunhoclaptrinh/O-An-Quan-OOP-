@@ -181,10 +181,11 @@ public class Test2 {
                 printBoard();
             }
 
-            // Capture stones
 
+            // Capture stones
             int diemCong = 0;
             if (i < 0) i = 11;
+
 
             if (i==oQuans.get(0).getIndex()) {
                 stones = oQuans.get(0).getDans();
@@ -195,11 +196,11 @@ public class Test2 {
             else {
                 stones = oDans.get(i).getDans() ;
             }
-
+            i--;
 
             while (stones.isEmpty()) {
 
-                if (i <= 0) i = 12;
+                if (i < 0) i = 11;
                 if (i==oQuans.get(0).getIndex()) {
 //                    if (i-1==5) i=5;
 //                    stones = oDans.get(i-1).getDans() ;
@@ -212,19 +213,34 @@ public class Test2 {
                     if (i==5) i=4;
                     stones = oDans.get(i).getDans() ;
                 }
+// 2t 3t 1t 6p
+// 2t 6p 8t 0p 1t 9t 3p
                 if (!stones.isEmpty()) {
                     if (currentPlayer == 0) scored01 += stones.size();
                     if (currentPlayer == 1) scored02 += stones.size();
                     diemCong += stones.size();
                     stones.clear();
+
                     i--;
+                    if (i < 0) i = 11;
+                    if (i==oQuans.get(0).getIndex()) {
+                        stones = oQuans.get(0).getDans();
+                    }
+                    else if (i==oQuans.get(1).getIndex()) {
+                        stones = oQuans.get(0).getDans();
+                    }
+                    else {
+                        stones = oDans.get(i).getDans() ;
+                    }
+                    i--;
+//                    i--;
                 } else if (stones.size() == 0) {
                     break;
                 }
-
+//                i--;
 //                if (i => 11) i = -1;
-                if (i <= 0) i = 12;
-                i--;
+                if (i < 0) i = 11;
+
                 printBoard();
             }
 
@@ -266,27 +282,69 @@ public class Test2 {
                 printBoard();
             }
 //
-//            // Capture stones
-//            int diemCong = 0;
-//            while (board[i] == 0) {
-//                if (i >= 11) i = -1;
-//                if (board[i + 1] > 0) {
-//                    if (currentPlayer == 0) scored01 += board[i + 1];
-//                    if (currentPlayer == 1) scored02 += board[i + 1];
-//                    diemCong += board[i + 1];
-//                    board[i + 1] = 0;
-//                    i++;
-//                } else if (board[i + 1] == 0) {
-//                    break;
-//                }
-////                if (i <= 0) i = 12;
-//                if (i >= 11) i = -1;
-//                i++;
-////                printBoard();
-//
-//            }
+            // Capture stones
+            int diemCong = 0;
+            if (i > 11) i = 0;
 
-//            printScore(diemCong);
+
+            if (i==oQuans.get(0).getIndex()) {
+                stones = oQuans.get(0).getDans();
+            }
+            else if (i==oQuans.get(1).getIndex()) {
+                stones = oQuans.get(0).getDans();
+            }
+            else {
+                stones = oDans.get(i).getDans() ;
+            }
+            i++;
+
+            while (stones.isEmpty()) {
+
+                if (i > 11) i = 0;
+                if (i==oQuans.get(0).getIndex()) {
+//                    if (i-1==5) i=5;
+//                    stones = oDans.get(i-1).getDans() ;
+                    stones = oQuans.get(0).getDans();
+                }
+                else if (i==oQuans.get(1).getIndex()) {
+                    stones = oQuans.get(1).getDans();
+                }
+                else {
+                    if (i==5) i=4;
+                    stones = oDans.get(i).getDans() ;
+                }
+
+                if (!stones.isEmpty()) {
+                    if (currentPlayer == 0) scored01 += stones.size();
+                    if (currentPlayer == 1) scored02 += stones.size();
+                    diemCong += stones.size();
+                    stones.clear();
+
+                    i++;
+                    if (i > 11) i = 0;
+                    if (i==oQuans.get(0).getIndex()) {
+                        stones = oQuans.get(0).getDans();
+                    }
+                    else if (i==oQuans.get(1).getIndex()) {
+                        stones = oQuans.get(0).getDans();
+                    }
+                    else {
+                        stones = oDans.get(i).getDans() ;
+                    }
+                    i++;
+
+//                    i--;
+                } else if (stones.size() == 0) {
+                    break;
+                }
+//                i--;
+//                if (i => 11) i = -1;
+                if (i > 11) i = 0;
+
+                printBoard();
+            }
+
+            printScore(diemCong);
         }
 
         currentPlayer++;
