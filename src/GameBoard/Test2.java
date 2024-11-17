@@ -25,13 +25,15 @@ public class Test2 {
 
     // Initialize the board
     public static ArrayList gameBoard = new ArrayList<>();
-    public static ArrayList<ODan> oDans = (ArrayList<ODan>) KhoiTao.KhoiTaoODan().clone();
-    public static ArrayList<Dan> dans = (ArrayList<Dan>) KhoiTao.KhoiTaoDan().clone();
-    public static ArrayList<OQuan> oQuans = (ArrayList<OQuan>) KhoiTao.KhoiTaoOQuan().clone();
-    public static ArrayList<Quan> quans = (ArrayList<Quan>) KhoiTao.KhoiTaoQuan().clone();
+    public static ArrayList<ODan> oDans = KhoiTao.KhoiTaoODan();
+    public static ArrayList<Dan> dans = KhoiTao.KhoiTaoDan();
+    public static ArrayList<OQuan> oQuans = KhoiTao.KhoiTaoOQuan();
+    public static ArrayList<Quan> quans = KhoiTao.KhoiTaoQuan();
 
-
-
+//    public static ArrayList<ODan> oDans = (ArrayList<ODan>) KhoiTao.KhoiTaoODan().clone();
+//    public static ArrayList<Dan> dans = (ArrayList<Dan>) KhoiTao.KhoiTaoDan().clone();
+//    public static ArrayList<OQuan> oQuans = (ArrayList<OQuan>) KhoiTao.KhoiTaoOQuan().clone();
+//    public static ArrayList<Quan> quans = (ArrayList<Quan>) KhoiTao.KhoiTaoQuan().clone();
 
     public static void main(String[] args) {
 
@@ -45,9 +47,9 @@ public class Test2 {
             }
         }
 
-
         oDans.add(5,null);
 
+//        cái này là tạo 12 ô quan tránh lỗi logic khi i chạy
 //        for (int i = 0; i < 12  ; i++) {
 //            if (i != 0 && i != 11){
 //                oQuans.add(i,null);
@@ -150,7 +152,6 @@ public class Test2 {
         if (chieu.equals("t")) {
             // Distribute stones to the left
             ArrayList stones = oDans.get(hole).getDans() ;
-//            oDans.get(hole).clearDans();
             while (!stones.isEmpty()) {
                 Dan dan_temp = (Dan) stones.get(stones.size()-1);
                 if (i < 0) i = 11;
@@ -165,7 +166,6 @@ public class Test2 {
                 }
                 stones.remove(stones.size() - 1);
 
-
                 if (stones.isEmpty()) {
                     if (i - 1 == -1){
                         stones = oQuans.get(1).getDans();
@@ -179,11 +179,9 @@ public class Test2 {
                 printBoard();
             }
 
-
             // Capture stones
             int diemCong = 0;
             if (i < 0) i = 11;
-
 
             if (i==oQuans.get(0).getIndex()) {
                 stones = oQuans.get(0).getDans();
@@ -197,11 +195,9 @@ public class Test2 {
             i--;
 
             while (stones.isEmpty()) {
-
                 if (i < 0) i = 11;
+
                 if (i==oQuans.get(0).getIndex()) {
-//                    if (i-1==5) i=5;
-//                    stones = oDans.get(i-1).getDans() ;
                     stones = oQuans.get(0).getDans();
                 }
                 else if (i==oQuans.get(1).getIndex()) {
@@ -211,10 +207,7 @@ public class Test2 {
                     if (i==5) i=4;
                     stones = oDans.get(i).getDans() ;
                 }
-//  2t 3t 1t 6p
-//  2t/p 6p/10t 8t/p 0p/4t 1t/3p 9t/7p 3p/1t
-//  8t/p 0p/4t 2t/p 6p/10t 7t/9p 3t/1p 9p/7t
-//  6t
+
                 if (!stones.isEmpty()) {
                     if (currentPlayer == 0) scored01 += stones.size();
                     if (currentPlayer == 1) scored02 += stones.size();
@@ -233,12 +226,10 @@ public class Test2 {
                         stones = oDans.get(i).getDans() ;
                     }
                     i--;
-//                    i--;
                 } else if (stones.size() == 0) {
                     break;
                 }
-//                i--;
-//                if (i => 11) i = -1;
+
                 if (i < 0) i = 11;
 
                 printBoard();
@@ -286,7 +277,6 @@ public class Test2 {
             int diemCong = 0;
             if (i > 11) i = 0;
 
-
             if (i==oQuans.get(0).getIndex()) {
                 stones = oQuans.get(0).getDans();
             }
@@ -299,11 +289,9 @@ public class Test2 {
             i++;
 
             while (stones.isEmpty()) {
-
                 if (i > 11) i = 0;
+
                 if (i==oQuans.get(0).getIndex()) {
-//                    if (i-1==5) i=5;
-//                    stones = oDans.get(i-1).getDans() ;
                     stones = oQuans.get(0).getDans();
                 }
                 else if (i==oQuans.get(1).getIndex()) {
@@ -333,12 +321,10 @@ public class Test2 {
                     }
                     i++;
 
-//                    i--;
                 } else if (stones.size() == 0) {
                     break;
                 }
-//                i--;
-//                if (i => 11) i = -1;
+
                 if (i > 11) i = 0;
 
                 printBoard();
