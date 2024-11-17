@@ -37,7 +37,7 @@ public class OQuan extends OCo {
         }
         else {
             this.dans.add(dan);
-            System.out.println("Added Dan: " + dan + " | Current size: " + this.dans.size());
+//            System.out.println("Added Dan: " + dan + " | Current size: " + this.dans.size());
         }
 
     }
@@ -47,7 +47,7 @@ public class OQuan extends OCo {
             this.quans= new ArrayList<>();
         }
         this.quans.add(quan);
-        System.out.println("Added Quan: " + quan + " | Current size: " + this.quans.size());
+//        System.out.println("Added Quan: " + quan + " | Current size: " + this.quans.size());
     }
 
     //Method

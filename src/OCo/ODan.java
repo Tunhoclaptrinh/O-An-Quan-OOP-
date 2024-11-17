@@ -31,7 +31,7 @@ public class ODan extends OCo {
             this.dans = new ArrayList<>();
         }
         this.dans.add(dan);
-        System.out.println("Added Dan: " + dan + " | Current size: " + this.dans.size());
+//        System.out.println("Added Dan: " + dan + " | Current size: " + this.dans.size());
     }
 
 

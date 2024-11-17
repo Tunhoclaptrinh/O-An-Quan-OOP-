@@ -128,25 +128,25 @@ public class Test {
             }
 
             // Capture stones
-            int diemCong = 0;
-            while (board[i] == 0) {
-                if (i <= 0) i = 12;
-                if (board[i - 1] > 0) {
-                    if (currentPlayer == 0) scored01 += board[i - 1];
-                    if (currentPlayer == 1) scored02 += board[i - 1];
-                    diemCong += board[i - 1];
-                    board[i - 1] = 0;
-                    i--;
-                } else if (board[i - 1] == 0) {
-                    break;
-                }
-//                if (i >= 11) i = -1;
-                if (i <= 0) i = 12;
-                i--;
-//                printBoard();
-            }
+//            int diemCong = 0;
+//            while (board[i] == 0) {
+//                if (i <= 0) i = 12;
+//                if (board[i - 1] > 0) {
+//                    if (currentPlayer == 0) scored01 += board[i - 1];
+//                    if (currentPlayer == 1) scored02 += board[i - 1];
+//                    diemCong += board[i - 1];
+//                    board[i - 1] = 0;
+//                    i--;
+//                } else if (board[i - 1] == 0) {
+//                    break;
+//                }
+////                if (i >= 11) i = -1;
+//                if (i <= 0) i = 12;
+//                i--;
+////                printBoard();
+//            }
 
-            printScore(diemCong);
+//            printScore(diemCong);
 
         } else if (chieu.equals("p")) {
             // Distribute stones to the right

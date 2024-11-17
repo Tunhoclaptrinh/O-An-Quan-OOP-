@@ -150,9 +150,9 @@ public class Test2 {
 
     private static void phanphoi(int hole, String chieu, int i) {
         if (chieu.equals("t")) {
+            // Distribute stones to the left
             ArrayList stones = oDans.get(hole).getDans() ;
 //            oDans.get(hole).clearDans();
-            // Distribute stones to the left
             while (!stones.isEmpty()) {
                 Dan dan_temp = (Dan) stones.get(stones.size()-1);
                 if (i < 0) i = 11;
@@ -198,7 +198,7 @@ public class Test2 {
 
 
             while (stones.isEmpty()) {
-                i--;
+
                 if (i <= 0) i = 12;
                 if (i==oQuans.get(0).getIndex()) {
 //                    if (i-1==5) i=5;
@@ -222,38 +222,49 @@ public class Test2 {
                     break;
                 }
 
-//                if (i >= 11) i = -1;
+//                if (i => 11) i = -1;
                 if (i <= 0) i = 12;
+                i--;
                 printBoard();
             }
 
             printScore(diemCong);
 
-//        } else if (chieu.equals("p")) {
-//            // Distribute stones to the right
-//            while (stones > 0) {
-//                if (i > 11) i = 0;
-//                board[i]++;
-//                stones--;
-//                i++;
-////                printBoard();
-//            }
-//            if (i > 11) i = 0;
-//
-//            while (board[i] > 0) {
-//                if (i == 5 || i == 11) break;
-//                int stones2 = board[i];
-//                board[i] = 0;
-//                i++;
-//                while (stones2 > 0) {
-//                    if (i > 11) i = 0;
-//                    board[i]++;
-//                    stones2--;
-//                    i++;
-//                }
-//                if (stones2 == 0 && i == 12) i = 0;
-////                printBoard();
-//            }
+        } else if (chieu.equals("p")) {
+            // Distribute stones to the right
+            ArrayList stones = oDans.get(hole).getDans() ;
+            while (!stones.isEmpty()) {
+                Dan dan_temp = (Dan) stones.get(stones.size()-1);
+                if (i > 11) i = 0;
+                if (i==oQuans.get(0).getIndex()) {
+                    oQuans.getFirst().setDans(dan_temp);
+                }
+                else if (i==oQuans.get(1).getIndex()) {
+                    oQuans.get(1).setDans(dan_temp);
+                }
+                else {
+                    oDans.get(i).setDans(dan_temp);
+                }
+                stones.remove(stones.size() - 1);
+
+
+                if (stones.isEmpty()) {
+                    if (i + 1 == 12){
+                        stones = oDans.get(0).getDans();
+                    }
+                    else if (i + 1 == 5) {
+                        stones = oQuans.get(0).getDans();
+                    }
+                    else if (i + 1 == 11) {
+                        stones = oQuans.get(1).getDans();
+                    }
+                    else {
+                        stones = oDans.get(i+1).getDans();
+                    }
+                }
+                i++;
+                printBoard();
+            }
 //
 //            // Capture stones
 //            int diemCong = 0;

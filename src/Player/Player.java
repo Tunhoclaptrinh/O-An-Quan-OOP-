@@ -52,23 +52,14 @@ public class Player {
 
 
 
-    public void setDans(Dan dan) {
-        if (dan == null) {
-            this.dans.clear();
-        }
-        else {
-            this.dans.add(dan);
-            System.out.println("Added Dan: " + dan + " | Current size: " + this.dans.size());
-        }
-
+    public void setDans(ArrayList<Dan> dans) {
+         this.dans = dans;
+         System.out.println(dans);
     }
 
-    public void setQuan(Quan quan){
-        if (this.quans == null) {
-            this.quans= new ArrayList<>();
-        }
-        this.quans.add(quan);
-        System.out.println("Added Quan: " + quan + " | Current size: " + this.quans.size());
+    public void setQuans(ArrayList<Quan> quans){
+        this.quans = quans;
+        System.out.println(quans);
     }
 
     //Method
