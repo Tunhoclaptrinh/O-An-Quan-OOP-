@@ -10,6 +10,9 @@ public class Player {
     private /*static*/ int index = 0;
 //    private /*static*/ int score = 0;
     private /*static*/ int diemCong = 0;
+
+    // Các thuộc tính dùng để lưu điểm của người chơi.
+    // => Còn có mục đích phục vụ cho hàm rải thêm Dân vào ô khi rơi vào trường hợp còn game, đến lượt nhưng không có Dân trên bàn cờ phía mình để rải.
     private ArrayList<Quan> quans = new ArrayList<>();
     private ArrayList<Dan> dans = new ArrayList<>();
 
