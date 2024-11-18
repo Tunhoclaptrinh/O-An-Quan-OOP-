@@ -337,7 +337,14 @@ public class Test2 {
             }
             i++;
 
+
+//  2t 3t 1t 6p
+//  2t/p 6p/10t 8t/p 0p/4t 1t/3p 9t/7p 3p/1t
+//  8t/p 0p/4t 2t/p 6p/10t 7t/9p 3t/1p 9p/7t
+//  6t
 // 2t 6p 8t 0p 1t 3p 6t 10t 4p 2p
+
+
 
             while (stones.isEmpty()) {
                 if (i > 11) i = 0;
