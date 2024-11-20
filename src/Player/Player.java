@@ -56,19 +56,19 @@ public class Player {
 
 
     public void setDans(ArrayList<Dan> dans) {
-         this.dans = dans;
+         this.dans.addAll(dans);
          System.out.println(dans);
     }
 
     public void setQuans(ArrayList<Quan> quans){
-        this.quans = (ArrayList<Quan>) quans.clone();
+        this.quans.addAll ((ArrayList<Quan>) quans.clone());
         System.out.println(quans);
     }
 
     //Method
 
     public int sumQuanAndDans(){
-        if (this.quans.size() != 1){
+        if (this.quans.isEmpty()){
             return dans.size()*Dan.getScore();
         }
         else {

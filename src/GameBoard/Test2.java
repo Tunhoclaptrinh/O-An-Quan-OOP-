@@ -21,7 +21,7 @@ public class Test2 {
     private static int currentPlayer = 0; //đếm người chơi => Xoay vòng chơi
 //    private static int scored01 = player1.getScore();
 //    private static int scored02 = player2.getScore();
-    private static int count = 0;
+    private static int count = 0; //Điều kiện ăn Quan ở vòng chơi thú 3
     private static Scanner scanner = new Scanner(System.in);
 
     // Initialize the board
@@ -98,9 +98,7 @@ public class Test2 {
     }
 
     private static void playGame() {
-        count = 0;
         while (true) {
-            count++;
             if (currentPlayer == 2) {
                 currentPlayer = 0;
             }
@@ -183,6 +181,7 @@ public class Test2 {
 
             // Capture stones
             ArrayList diemCong = new ArrayList();
+            ArrayList quanCong = new ArrayList();
             if (i < 0) i = 11;
 
             if (i==oQuans.get(0).getIndex()) {
@@ -196,6 +195,8 @@ public class Test2 {
             }
             i--;
 
+
+            //Vòng while để ăn liên tục
             while (stones.isEmpty()) {
                 if (i < 0) i = 11;
 
@@ -203,29 +204,23 @@ public class Test2 {
                 if (i+1==oQuans.get(0).getIndex() && !oQuans.get(0).getQuan().isEmpty()) {
                     break;
                 }
-                else if (i+1==oQuans.get(1).getIndex() && !oQuans.get(1).getQuan().isEmpty()) {
-                    break;
+                else if (i+1==oQuans.get(1).getIndex()) {
+                    if (!oQuans.get(1).getQuan().isEmpty()){
+                        break;
+                    }
                 }
+
+
                 //Ăn quân. Thêm các Dân thuộc Ô Quan vào điểm của người chơi
                 if (i==oQuans.get(0).getIndex()) {
-                    if (OQuan.sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) >= 15) {
-                        if (currentPlayer == 0) {
-                            player1.setQuans(oQuans.get(0).getQuan());
-                        } else {
-                            player2.setQuans(oQuans.get(0).getQuan());
-                        }
-                        oQuans.get(0).getQuan().clear();
+                    if (OQuan.sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) >= 15 || count > 2) {
+                        quanCong = oQuans.get(0).getQuan();
                     }
                     stones = oQuans.get(0).getDans();
                 }
                 else if (i==oQuans.get(1).getIndex()) {
-                    if (OQuan.sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) >= 15) {
-                        if (currentPlayer == 0) {
-                            player1.setQuans(oQuans.get(1).getQuan());
-                        } else {
-                            player2.setQuans(oQuans.get(1).getQuan());
-                        }
-                        oQuans.get(1).getQuan().clear();
+                    if (OQuan.sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) >= 15 || count > 2) {
+                        quanCong = oQuans.get(1).getQuan();
                     }
                     stones = oQuans.get(1).getDans();
                 }
@@ -234,40 +229,27 @@ public class Test2 {
                     stones = oDans.get(i).getDans() ;
                 }
 
-                if (!stones.isEmpty()) {
+                if (!stones.isEmpty() || !quanCong.isEmpty()) {
 
                     diemCong =(ArrayList) stones.clone();
                     if (currentPlayer == 0) {
+                        player1.setQuans(quanCong);
                         player1.setDans(diemCong);
                     }
                     else if (currentPlayer == 1) {
+                        player2.setQuans(quanCong);
                         player2.setDans(diemCong);
                     }
 
                     stones.clear();
+                    quanCong.clear();
 
                     i--;
                     if (i < 0) i = 11;
                     if (i==oQuans.get(0).getIndex()) {
-//                        if (OQuan.sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) >= 15) {
-//                            if (currentPlayer == 0) {
-//                                player1.setQuans(oQuans.get(0).getQuan());
-//                            } else {
-//                                player2.setQuans(oQuans.get(0).getQuan());
-//                            }
-//                            oQuans.get(0).getQuan().clear();
-//                        }
                         stones = oQuans.get(0).getDans();
                     }
                     else if (i==oQuans.get(1).getIndex()) {
-//                        if (OQuan.sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) >= 15) {
-//                            if (currentPlayer == 0) {
-//                                player1.setQuans(oQuans.get(1).getQuan());
-//                            } else {
-//                                player2.setQuans(oQuans.get(1).getQuan());
-//                            }
-//                            oQuans.get(1).getQuan().clear();
-//                        }
                         stones = oQuans.get(1).getDans();
                     }
                     else {
@@ -279,7 +261,6 @@ public class Test2 {
                 }
 
                 if (i < 0) i = 11;
-
 
                 printBoard();
             }
@@ -324,6 +305,7 @@ public class Test2 {
 
             // Capture stones
             ArrayList diemCong = new ArrayList<>();
+            ArrayList quanCong = new ArrayList();
             if (i > 11) i = 0;
 
             if (i==oQuans.get(0).getIndex()) {
@@ -338,14 +320,15 @@ public class Test2 {
             i++;
 
 
-//  2t 3t 1t 6p
-//  2t/p 6p/10t 8t/p 0p/4t 1t/3p 9t/7p 3p/1t
+//  2t 3t 1t 6p => ok
+//  2t/p 6p/10t 8t/p 0p/4t 1t/3p 9t/7p 3p/1t ++ 7p  4p 0p 2p 1t 3t
 //  8t/p 0p/4t 2t/p 6p/10t 7t/9p 3t/1p 9p/7t
 //  6t
-// 2t 6p 8t 0p 1t 3p 6t 10t 4p 2p
+//  2t 6p 8t 0p 1t 3p 6t 10t 4p 2p
+//  Kiểm tra lại hàm tính toán điểm 2t 7p 1p 2p 3t 2t
 
 
-
+            //Vòng while để ăn liên tục
             while (stones.isEmpty()) {
                 if (i > 11) i = 0;
 
@@ -353,31 +336,23 @@ public class Test2 {
                 if (i-1==oQuans.get(0).getIndex() && !oQuans.get(0).getQuan().isEmpty()) {
                     break;
                 }
-                else if (i-1==oQuans.get(1).getIndex() && !oQuans.get(1).getQuan().isEmpty()) {
-                    break;
+                else if (i-1==oQuans.get(1).getIndex() || i - 1 == -1) {
+                    if (!oQuans.get(1).getQuan().isEmpty()){
+                        break;
+                    }
                 }
 
                 //Ăn quân. Thêm các Dân thuộc Ô Quan vào điểm của người chơi
                 if (i==oQuans.get(0).getIndex()) {
-//                    if (OQuan.sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) >= 15) {
-//                        if (currentPlayer == 0) {
-//                            player1.setQuans(oQuans.get(0).getQuan());
-//                        } else {
-//                            player2.setQuans(oQuans.get(0).getQuan());
-//                        }
-//                        oQuans.get(0).getQuan().clear();
-//                    }
+                    if (OQuan.sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) >= 15 || count > 2) {
+                        quanCong = oQuans.get(0).getQuan();
+                    }
                     stones = oQuans.get(0).getDans();
                 }
                 else if (i==oQuans.get(1).getIndex()) {
-//                    if (OQuan.sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) >= 15) {
-//                        if (currentPlayer == 0) {
-//                            player1.setQuans(oQuans.get(1).getQuan());
-//                        } else {
-//                            player2.setQuans(oQuans.get(1).getQuan());
-//                        }
-//                        oQuans.get(1).getQuan().clear();
-//                    }
+                    if (OQuan.sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) >= 15 || count > 2) {
+                        quanCong = oQuans.get(1).getQuan();
+                    }
                     stones = oQuans.get(1).getDans();
                 }
                 else {
@@ -385,33 +360,26 @@ public class Test2 {
                     stones = oDans.get(i).getDans() ;
                 }
 
-                if (!stones.isEmpty()) {
+                if (!stones.isEmpty() || !quanCong.isEmpty()) {
                     diemCong =(ArrayList) stones.clone();
                     if (currentPlayer == 0) {
+                        player1.setQuans(quanCong);
                         player1.setDans(diemCong);
                     }
                     else if (currentPlayer == 1) {
+                        player2.setQuans(quanCong);
                         player2.setDans(diemCong);
                     }
 
                     stones.clear();
+                    quanCong.clear();
 
                     i++;
                     if (i > 11) i = 0;
                     if (i==oQuans.get(0).getIndex()) {
-                        if (currentPlayer == 0) {
-                            player1.setQuans(oQuans.get(0).getQuan());
-                        } else {
-                            player2.setQuans(oQuans.get(0).getQuan());
-                        }
                         stones = oQuans.get(0).getDans();
                     }
                     else if (i==oQuans.get(1).getIndex()) {
-                        if (currentPlayer == 0) {
-                            player1.setQuans(oQuans.get(1).getQuan());
-                        } else {
-                            player2.setQuans(oQuans.get(1).getQuan());
-                        }
                         stones = oQuans.get(1).getDans();
                     }
                     else {
@@ -443,6 +411,7 @@ public class Test2 {
         }
 
         currentPlayer++;
+        count ++;
 //        raithhem();
     }
 
@@ -495,13 +464,14 @@ public class Test2 {
 
 
     //Hàm tính toán điểm (số dân, thêm số dân vào các thuộc tính lưu điểm của người chơi) còn lại trên bàn cờ ngay khi hai Ô Quan không còn điểm nữa
-    private static int sumRange(int start, int end) {
-        int sum = 0;
-        for (int i = start; i < end; i++) {
-            sum += oDans.get(i).sumDans(oDans.get(i).getDans());
-        }
-        return sum;
-    }
+//    private static int sumRange(int start, int end) {
+//        ArrayList<Dan> sum = new ArrayList<>();
+//        for (int i = start; i < end; i++) {
+//
+////            sum += oDans.get(i).sumDans(oDans.get(i).getDans());
+//        }
+////        return sum;
+//    }
 
     // Hiển thị số điểm được cộng của người chơi sau mỗi lượt rải Dân
     private static void printScore(int diemCong) {
