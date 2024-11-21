@@ -4,12 +4,15 @@ import Da.Dan;
 import Da.Quan;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Player {
     private String name;
     private int player_id = -1;
+    private int hole;
     private char direction;
+    private static Scanner scanner = new Scanner(System.in); // Sử dụng `scanner` dùng chung
 
 
     // Các thuộc tính dùng để lưu điểm của người chơi.
@@ -21,6 +24,7 @@ public class Player {
     //Constructor
     public Player(String name) {
         this.name = name;
+        this.player_id += 1; //id người chơi tăng tự đông => xoay vòng người chơi
     }
 
     //Getter
@@ -30,6 +34,14 @@ public class Player {
 
     public int getPlayer_id() {
         return player_id;
+    }
+
+    public int getHole() {
+        return hole;
+    }
+
+    public char getDirection() {
+        return direction;
     }
 
     public ArrayList<Dan> getDans() {
@@ -45,8 +57,8 @@ public class Player {
         this.name = name;
     }
 
-    public void setPlayer_id() {
-        this.player_id += 1;
+    public void setPlayer_id(int player_id) {
+        this.player_id = player_id;
     }
 
     public void setDans(ArrayList<Dan> dans) {
@@ -58,11 +70,36 @@ public class Player {
         this.quans.addAll ((ArrayList<Quan>) quans.clone());
         System.out.println(quans);
     }
-    public void setDirection(char direction){
-        Scanner sc = new Scanner(System.in);
-        direction = sc.next().charAt(0);
-        this.direction = direction;
-        sc.close();
+
+    //Chọn lỗ bắt đá
+    public void setHole () {
+        if (this.name.equals("Máy") ) {
+            this.hole = new Random().nextInt(6,11);
+            System.out.println(this.hole);
+        }
+        else {
+            this.hole = scanner.nextInt();
+        }
+
+    }
+
+    //chọn chiều phân phối
+    public void setDirection(){
+        if (this.name.equals("Máy")) {
+            boolean rd = new Random().nextBoolean();
+
+            if (rd == true) {
+                this.direction = 't';
+            }
+            else {
+                this.direction = 'p';
+            }
+            System.out.println(this.direction);
+        }
+        else {
+            this.direction = scanner.next().charAt(0);
+        }
+
     }
 
     //Method
