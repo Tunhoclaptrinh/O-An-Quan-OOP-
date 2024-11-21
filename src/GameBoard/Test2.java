@@ -151,8 +151,12 @@ public class Test2 {
     private static void phanphoi(int hole, String chieu, int i) {
         if (chieu.equals("t")) {
             // Distribute stones to the left
+<<<<<<< HEAD
             ArrayList stones = (ArrayList) (oDans.get(hole).getDans()).clone();
             oDans.get(hole).getDans().clear();
+=======
+            ArrayList stones = oDans.get(hole).getDans() ;
+>>>>>>> 5150858ca480a931e5748ac80edb055edd08a9fd
             while (!stones.isEmpty()) {
                 Dan dan_temp = (Dan) stones.get(stones.size()-1);
                 
@@ -175,9 +179,13 @@ public class Test2 {
                     else if (i - 1 == 5) {
                         stones = oQuans.get(0).getDans();
                     }
+<<<<<<< HEAD
                     else {
                         stones = oDans.get(i-1).getDans();
                     }
+=======
+                    else {stones = oDans.get(i-1).getDans();}
+>>>>>>> 5150858ca480a931e5748ac80edb055edd08a9fd
                 }
                 i--;
                 printBoard();
@@ -189,6 +197,7 @@ public class Test2 {
             if (i < 0) i = 11;
 
             if (i==oQuans.get(0).getIndex()) {
+<<<<<<< HEAD
                 stones = (ArrayList) oQuans.get(0).getDans().clone();
                 oQuans.get(0).getDans().clear();
             }
@@ -199,6 +208,15 @@ public class Test2 {
             else {
                 stones = (ArrayList) oDans.get(i).getDans().clone();
                 oDans.get(i).getDans().clear();
+=======
+                stones = oQuans.get(0).getDans();
+            }
+            else if (i==oQuans.get(1).getIndex()) {
+                stones = oQuans.get(1).getDans();
+            }
+            else {
+                stones = oDans.get(i).getDans() ;
+>>>>>>> 5150858ca480a931e5748ac80edb055edd08a9fd
             }
             i--;
 
@@ -276,8 +294,12 @@ public class Test2 {
 
         } else if (chieu.equals("p")) {
             // Distribute stones to the right
+<<<<<<< HEAD
             ArrayList stones = (ArrayList) (oDans.get(hole).getDans()).clone();
             oDans.get(hole).getDans().clear();
+=======
+            ArrayList stones = oDans.get(hole).getDans() ;
+>>>>>>> 5150858ca480a931e5748ac80edb055edd08a9fd
             while (!stones.isEmpty()) {
                 Dan dan_temp = (Dan) stones.get(stones.size()-1);
 
@@ -318,6 +340,7 @@ public class Test2 {
             if (i > 11) i = 0;
 
             if (i==oQuans.get(0).getIndex()) {
+<<<<<<< HEAD
                 stones = (ArrayList) oQuans.get(0).getDans().clone();
                 oQuans.get(0).getDans().clear();
             }
@@ -328,6 +351,15 @@ public class Test2 {
             else {
                 stones = (ArrayList) oDans.get(i).getDans().clone();
                 oDans.get(i).getDans().clear();
+=======
+                stones = oQuans.get(0).getDans();
+            }
+            else if (i==oQuans.get(1).getIndex()) {
+                stones = oQuans.get(1).getDans();
+            }
+            else {
+                stones = oDans.get(i).getDans() ;
+>>>>>>> 5150858ca480a931e5748ac80edb055edd08a9fd
             }
             i++;
 
