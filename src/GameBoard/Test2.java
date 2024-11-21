@@ -105,10 +105,10 @@ public class Test2 {
             printBoard();
 
             if (oQuans.get(0).sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) == 0 && oQuans.get(1).sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) == 0) {
-//                scored01 += sumRange(0, 5);
-//                player1.setScore(scored01);
-//                scored02 += sumRange(6, 11);
-//                player2.setScore(scored02);
+                player1.setDans(sumRange(0, 5));
+                player2.setDans(sumRange(6, 11));
+                System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
+                System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
 
                 if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
                     System.out.println("Player:" + player2.getName()  + ": Win!");
@@ -154,6 +154,7 @@ public class Test2 {
             ArrayList stones = oDans.get(hole).getDans() ;
             while (!stones.isEmpty()) {
                 Dan dan_temp = (Dan) stones.get(stones.size()-1);
+                
                 if (i < 0) i = 11;
                 if (i==oQuans.get(0).getIndex()) {
                     oQuans.getFirst().setDans(dan_temp);
@@ -272,6 +273,7 @@ public class Test2 {
             ArrayList stones = oDans.get(hole).getDans() ;
             while (!stones.isEmpty()) {
                 Dan dan_temp = (Dan) stones.get(stones.size()-1);
+
                 if (i > 11) i = 0;
                 if (i==oQuans.get(0).getIndex()) {
                     oQuans.getFirst().setDans(dan_temp);
@@ -412,66 +414,86 @@ public class Test2 {
 
         currentPlayer++;
         count ++;
-//        raithhem();
+        raithhem();
     }
 
     //Rải thêm Dân vào ô khi rơi vào trường hợp còn game, đến lượt nhưng không có Dân trên bàn cờ phía mình để rải.
-//    private static void raithhem() {
-//        if (currentPlayer == 0 || currentPlayer == 2) {
-//            if (sumRange(0, 5) == 0) {
-//                if (scored01 == 0) {
-//                    printFinalScore();
-//                }
-//                if (scored01 > 0 && scored01 <= 5) {
-//                    int newStones = scored01;
-//                    scored01 = 0;
-//                    for (int z = 0; z < 5; z++) {
-//                        while (newStones > 0) {
-//                            board[z]++;
-//                            newStones--;
-//                        }
-//                    }
-//                }
-//                if (scored01 > 5) {
-//                    scored01 -= 5;
-//                    Arrays.fill(board, 0, 5, 1);
-//                }
-//            }
-//        }
-//
-//        if (currentPlayer == 1) {
-//            if (sumRange(6, 11) == 0) {
-//                if (scored02 == 0) {
-//                    printFinalScore();
-//                }
-//                if (scored02 > 0 && scored02 <= 5) {
-//                    int newStones = scored02;
-//                    scored02 = 0;
-//                    for (int z = 6; z < 11; z++) {
-//                        while (newStones > 0) {
-//                            board[z]++;
-//                            newStones--;
-//                        }
-//                    }
-//                }
-//                if (scored02 > 5) {
-//                    scored02 -= 5;
-//                    Arrays.fill(board, 6, 11, 1);
-//                }
-//            }
-//        }
-//    }
+    private static void raithhem() {
+        if (currentPlayer == 0 || currentPlayer == 2) {
+            if (sumRange(0, 5).isEmpty()) {
+                if (player1.getDans().size() == 0) {
+                    printFinalScore();
+                }
+                if (player1.getDans().size() > 0 && player1.getDans().size() <= 5) {
+                    ArrayList newStones = (ArrayList) player1.getDans().clone();
+                    player1.getDans().clear();
+                    for (int z = oDans.getFirst().getIndex(); z < oDans.get(5).getIndex(); z++) {
+                        Dan newDan_temp = (Dan) newStones.getLast();
+
+                        oDans.get(z).setDans(newDan_temp);
+                        newStones.removeLast();
+                    }
+                }
+                if (player1.getDans().size() > 5) {
+                    ArrayList newStones = new ArrayList();
+                    for (int i = 0; i < 5 ; i++){
+                        newStones.add(player1.getDans().get(i));
+                        player1.getDans().remove(i);
+                    }
+                    for (int z = oDans.getFirst().getIndex(); z <= oDans.get(4).getIndex(); z++) {
+                        Dan newDan_temp = (Dan) newStones.getLast();
+
+                        oDans.get(z).setDans(newDan_temp);
+                        newStones.removeLast();
+                    }
+                }
+            }
+        }
+
+        if (currentPlayer == 1) {
+            if (sumRange(6, 11).isEmpty()) {
+                if (player2.getDans().size() == 0) {
+                    printFinalScore();
+                }
+                if (player2.getDans().size() > 0 && player2.getDans().size() <= 5) {
+                    ArrayList newStones = (ArrayList) player2.getDans().clone();
+                    player2.getDans().clear();
+                    for (int z = oDans.get(6).getIndex(); z <= oDans.getLast().getIndex(); z++) {
+                        Dan newDan_temp = (Dan) newStones.getLast();
+
+                        oDans.get(z).setDans(newDan_temp);
+                        newStones.removeLast();
+                    }
+                }
+                if (player2.getDans().size() > 5) {
+                    ArrayList newStones = new ArrayList();
+                    for (int i = 0; i < 5 ; i++){
+                        newStones.add(player1.getDans().get(i));
+                        player1.getDans().remove(i);
+                    }
+                    for (int z = oDans.get(6).getIndex(); z <= oDans.getLast().getIndex(); z++) {
+                        Dan newDan_temp = (Dan) newStones.getLast();
+
+                        oDans.get(z).setDans(newDan_temp);
+                        newStones.removeLast();
+                    }
+                }
+            }
+        }
+    }
 
 
     //Hàm tính toán điểm (số dân, thêm số dân vào các thuộc tính lưu điểm của người chơi) còn lại trên bàn cờ ngay khi hai Ô Quan không còn điểm nữa
-//    private static int sumRange(int start, int end) {
-//        ArrayList<Dan> sum = new ArrayList<>();
-//        for (int i = start; i < end; i++) {
-//
-////            sum += oDans.get(i).sumDans(oDans.get(i).getDans());
-//        }
-////        return sum;
-//    }
+    private static ArrayList<Dan> sumRange(int start, int end) {
+        ArrayList<Dan> sumRange = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            ArrayList<Dan> dans = (ArrayList<Dan>) oDans.get(i).getDans().clone();
+
+            sumRange.addAll(dans);
+            dans.clear();
+        }
+        return sumRange;
+    }
 
     // Hiển thị số điểm được cộng của người chơi sau mỗi lượt rải Dân
     private static void printScore(int diemCong) {

@@ -55,6 +55,7 @@ public class KhoiTao {
 //        }
 //        return dans;
 //    }
+
     public static ArrayList<Dan> KhoiTaoDan() {
         ArrayList<Dan> dans = new ArrayList<>();
         for (int id = 0; id < 50; id++) {
