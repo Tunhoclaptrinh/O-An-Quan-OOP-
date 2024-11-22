@@ -355,6 +355,7 @@ public class Test {
 //  6t
 //  2t 6p 8t 0p 1t 3p 6t 10t 4p 2p
 //  Kiểm tra lại hàm tính toán điểm 2t 7p 1p 2p 3t 2t
+//  Kiểm tra ăn liên tục với Quan 2t 7t 1t 8t 1p 10p 2t 8t 4p 10p 4p 7t
 
 
             //Vòng while để ăn liên tục
@@ -422,16 +423,16 @@ public class Test {
 
 
                 if (i > 11) i = 0;
-                if (i==oQuans.get(0).getIndex()) {
-                    if (!oQuans.get(0).getQuan().isEmpty()) {
-                        break;
-                    }
-                }
-                if (i==oQuans.get(1).getIndex()) {
-                    if (!oQuans.get(1).getQuan().isEmpty()) {
-                        break;
-                    }
-                }
+//                if (i==oQuans.get(0).getIndex()) {
+//                    if (!oQuans.get(0).getQuan().isEmpty()) {
+//                        break;
+//                    }
+//                }
+//                if (i==oQuans.get(1).getIndex()) {
+//                    if (!oQuans.get(1).getQuan().isEmpty()) {
+//                        break;
+//                    }
+//                }
 
                 printBoard();
             }

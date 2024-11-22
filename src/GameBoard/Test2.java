@@ -147,7 +147,7 @@ public class Test2 {
             printBoard();
         }
     }
-
+    //  Kiểm tra ăn liên tục với Quan 2t 7t 1t 8t 1p 10p 2t 8t 4p 10p 4p 7t
     private static void phanphoi(int hole, String chieu, int i) {
         if (chieu.equals("t")) {
             // Distribute stones to the left
@@ -405,16 +405,17 @@ public class Test2 {
 
 
                 if (i > 11) i = 0;
-                if (i==oQuans.get(0).getIndex()) {
-                    if (!oQuans.get(0).getQuan().isEmpty()) {
-                        break;
-                    }
-                }
-                if (i==oQuans.get(1).getIndex()) {
-                    if (!oQuans.get(1).getQuan().isEmpty()) {
-                        break;
-                    }
-                }
+
+//                if (i==oQuans.get(0).getIndex() && !stones.isEmpty()) {
+//                    if (!oQuans.get(0).getQuan().isEmpty()) {
+//                        break;
+//                    }
+//                }
+//                if (i==oQuans.get(1).getIndex() && !stones.isEmpty()) {
+//                    if (!oQuans.get(1).getQuan().isEmpty() ) {
+//                        break;
+//                    }
+//                }
 
                 printBoard();
             }
