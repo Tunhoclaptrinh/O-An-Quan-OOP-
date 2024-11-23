@@ -73,10 +73,13 @@ public class Player {
 
     //Chọn lỗ bắt đá
     public void setHole () {
+        // Chơi với máy
         if (this.name.equals("Máy") ) {
             this.hole = new Random().nextInt(6,11);
             System.out.println(this.hole);
         }
+
+        // Chơi hai người bình thường
         else {
             this.hole = scanner.nextInt();
         }
@@ -85,6 +88,8 @@ public class Player {
 
     //chọn chiều phân phối
     public void setDirection(){
+
+        // Chơi với máy
         if (this.name.equals("Máy")) {
             boolean rd = new Random().nextBoolean();
 
@@ -96,6 +101,8 @@ public class Player {
             }
             System.out.println(this.direction);
         }
+
+        // Chơi hai người bình thường
         else {
             this.direction = scanner.next().charAt(0);
         }
@@ -105,12 +112,12 @@ public class Player {
     //Method
 
 
-
 //    public int sumDans() {
 //        return this.dans.size()*Dan.getScore();
 //    }
 
 
+    // Hàm tính điểm
     public int sumQuanAndDans(){
         if (this.quans.isEmpty()){
             return dans.size()*Dan.getScore();

@@ -13,17 +13,13 @@ public class testttt {
 
     public static void main(String[] args) {
         Arrays.fill(board, 5);
-        for (int i = 0; i < board.length; i++) {
-            board[i] = i;
-        }
-        int n = 7; // Length of each side
-        int index = 0;
-        System.out.println("       " + board[0]);
-        System.out.println("      " + board[1] + "  " + board[17]);
-        System.out.println("     " + board[2] + "     " + board[16]);
-        System.out.println("    " + board[3] + "        " + board[15]);
-        System.out.println("   " + board[4] + "           " + board[14]);
-        System.out.println("  " + board[5] + "              " + board[13]);
-        System.out.println(board[6] + "  " + board[7] + "  " + board[8] + "  " + board[9] + "  " + board[10] + "  " + board[11] + "  " + board[12]);
+
+        System.out.println("               " + board[11]);
+        System.out.println("            " + board[12] + "     " + board[10]);
+        System.out.println("          " + board[13] + "         " + board[9]);
+        System.out.println("        " + board[14] + "             " + board[8]);
+        System.out.println("      " + board[15] + "                 " + board[7]);
+        System.out.println("    " + board[16] + "                     " + board[6]);
+        System.out.println("  " +board[17] + "    " + board[0] + "   " + board[1] + "   " + board[2] + "   " + board[3] + "   " + board[4] + "    " + board[5]);
     }
 }

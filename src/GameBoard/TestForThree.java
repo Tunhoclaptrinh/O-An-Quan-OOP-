@@ -3,38 +3,31 @@ package GameBoard;
 
 import Da.Dan;
 import Da.Quan;
-import KhoiTao.KhoiTao;
+import Initialization.InitializationForThree;
 import OCo.ODan;
 import OCo.OQuan;
 import Player.Player;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
-import java.util.Arrays;
 
-public class Test2 {
+public class TestForThree {
 
     public static Player player1 = new Player("Tuấn");
     public static Player player2 = new Player("Tún");
+    public static Player player3 = new Player("Tứng");
 
     private static int currentPlayer = 0; //đếm người chơi => Xoay vòng chơi
-//    private static int scored01 = player1.getScore();
-//    private static int scored02 = player2.getScore();
     private static int count = 0; //Điều kiện ăn Quan ở vòng chơi thú 3
     private static Scanner scanner = new Scanner(System.in);
 
     // Initialize the board
-    public static ArrayList gameBoard = new ArrayList<>();
-    public static ArrayList<ODan> oDans = KhoiTao.KhoiTaoODan();
-    public static ArrayList<Dan> dans = KhoiTao.KhoiTaoDan();
-    public static ArrayList<OQuan> oQuans = KhoiTao.KhoiTaoOQuan();
-    public static ArrayList<Quan> quans = KhoiTao.KhoiTaoQuan();
+    public static InitializationForThree init = new InitializationForThree();
 
-//    public static ArrayList<ODan> oDans = (ArrayList<ODan>) KhoiTao.KhoiTaoODan().clone();
-//    public static ArrayList<Dan> dans = (ArrayList<Dan>) KhoiTao.KhoiTaoDan().clone();
-//    public static ArrayList<OQuan> oQuans = (ArrayList<OQuan>) KhoiTao.KhoiTaoOQuan().clone();
-//    public static ArrayList<Quan> quans = (ArrayList<Quan>) KhoiTao.KhoiTaoQuan().clone();
+    public static ArrayList<ODan> oDans = init.InitODan();
+    public static ArrayList<Dan> dans = init.InitDan();
+    public static ArrayList<OQuan> oQuans = init.InitOQuan();
+    public static ArrayList<Quan> quans = init.InitQuan();
 
     public static void main(String[] args) {
 
@@ -48,35 +41,16 @@ public class Test2 {
         }
 
         oDans.add(5,null);
+        oDans.add(11,null);
 
-//        cái này là tạo 12 ô quan tránh lỗi logic khi i chạy
-//        for (int i = 0; i < 12  ; i++) {
-//            if (i != 0 && i != 11){
-//                oQuans.add(i,null);
-//            }
-//        }
-//        System.out.println(oQuans);
 
         //Thêm Quan và 0 Dân vào Ô Quan
         oQuans.get(0).setQuan(quans.get(0));
         oQuans.get(1).setQuan(quans.get(1));
+        oQuans.get(2).setQuan(quans.get(2));
         oQuans.get(0).setDans(null);
         oQuans.get(1).setDans(null);
-
-        //Thêm các Ô Cờ vào Bàn Cờ
-        for (int i = 0; i <12; i++){
-            if (i == oQuans.get(0).getIndex()){
-                gameBoard.add(oQuans.get(0));
-            }
-            else if (i == oQuans.get(1).getIndex()){
-                gameBoard.add(oQuans.get(1));
-            }
-            else {
-                if (i == 6) i--;
-                gameBoard.add(oDans.get(i));
-                i++;
-            }
-        }
+        oQuans.get(2).setDans(null);
 
         playGame();
         scanner.close();
@@ -94,6 +68,8 @@ public class Test2 {
         for (int k = 0; k < 5; k++) {
             System.out.print(ODan.sumDans(oDans.get(k).getDans()) + " | ");
         }
+
+
         System.out.println("\n");
     }
 
@@ -155,7 +131,7 @@ public class Test2 {
             oDans.get(hole).getDans().clear();
             while (!stones.isEmpty()) {
                 Dan dan_temp = (Dan) stones.get(stones.size()-1);
-                
+
                 if (i < 0) i = 11;
                 if (i==oQuans.get(0).getIndex()) {
                     oQuans.getFirst().setDans(dan_temp);
