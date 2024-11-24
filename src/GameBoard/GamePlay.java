@@ -39,6 +39,7 @@ public class GamePlay {
             }
         }
 
+        // Thêm một ô Dân rỗng để xử lý logic
         oDans.add(5,null);
 
         //Thêm Quan và 0 Dân vào Ô Quan
@@ -94,7 +95,7 @@ public class GamePlay {
             }
 
             int hole;
-            if (currentPlayer == 0) {
+            if (currentPlayer == player1.getPlayer_id()) {
                 System.out.println("Player1: "+ player1.getName());
                 System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
                 hole = scanner.nextInt();
@@ -506,13 +507,13 @@ public class GamePlay {
     }
 
     // Hiển thị số điểm được cộng của người chơi sau mỗi lượt rải Dân
-    private static void printScore(int diemCong, int quanCong) {
+    private static void printScore(int luu_diemCong, int luu_quanCong) {
         if (currentPlayer == 0) {
-            System.out.println("Người chơi " + player1.getName() + " nhận được: " + diemCong + " Dân, " + quanCong + " Quan");
+            System.out.println("Người chơi " + player1.getName() + " nhận được: " + luu_diemCong + " Dân, " + luu_quanCong + " Quan");
             System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
         }
         if (currentPlayer == 1) {
-            System.out.println("Người chơi " + player2.getName() + " nhận được: " +  diemCong + " Dân, " + quanCong + " Quan");
+            System.out.println("Người chơi " + player2.getName() + " nhận được: " +  luu_diemCong + " Dân, " + luu_quanCong + " Quan");
             System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
         }
     }

@@ -8,8 +8,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Player {
+    private static int counter = 0;
+
     private String name;
     private int player_id = -1;
+
     private int hole;
     private char direction;
     private static Scanner scanner = new Scanner(System.in); // Sử dụng `scanner` dùng chung
@@ -24,7 +27,8 @@ public class Player {
     //Constructor
     public Player(String name) {
         this.name = name;
-        this.player_id += 1; //id người chơi tăng tự đông => xoay vòng người chơi
+        this.player_id = counter;
+        counter++ ; //id người chơi tăng tự đông => xoay vòng người chơi
     }
 
     //Getter
