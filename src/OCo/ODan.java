@@ -9,8 +9,8 @@ public class ODan extends OCo {
 
     public static Color oDanColor = Color.WHITE ;
     public static final int DEFAULT_STONES = 5;
-    public static final int WIDTH = 100;
-    public static final int HEIGHT = 100;
+    public static final int WIDTH = 150;
+    public static final int HEIGHT = 150;
     private ArrayList<Dan> dans = new ArrayList<>();
 
 

@@ -1,4 +1,4 @@
-package GUI;
+package PongGUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
