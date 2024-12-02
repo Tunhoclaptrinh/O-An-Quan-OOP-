@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import GameControler.GamePlay;
+import GameControler.TestForTwo;
 import Player.Player;
 import Da.*;
 import OCo.*;
@@ -27,7 +29,7 @@ import java.util.Arrays;
 public class TestGUI extends JFrame {
     private ControlWindow cw = new ControlWindow();
 
-    public TestGUI(){
+    public TestGUI() {
         this.add(cw);
         this.pack();
         this.setTitle("O An Quan");
@@ -51,14 +53,23 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
     private static Player player2 = test.player2;
 
     private static int currentPlayer = 0;
+    public Arrow arrowR = new Arrow( "p");
+    public Arrow arrowL = new Arrow("t");
+
+    public Chooser chooser = new Chooser();
 
 
-    private Font gameFont = new Font("Press Start 2P" , Font.PLAIN, 30);
+    private Font gameFont = new Font("Press Start 2P" , Font.PLAIN, Consts.FONT_SIZE);
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        // Bật chế độ khử răng cưa để vẽ mượt hơn
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        //
+
         // Set the stroke (line thickness) to 5 , set độ dày cho bàn cờ
         g2d.setStroke(new BasicStroke(OCo.THICKNESS));
 
@@ -90,17 +101,17 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         }
 
         //Vẽ điểm của Ô Dân
-        for (int i = 0; i < 5; i++){
-            g.drawString(  "" + test.board[i], OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
-
-        }
-        for (int i = 10; i > 5; i--){
-            g.drawString(  "" + test.board[i], OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
-        }
+//        for (int i = 0; i < 5; i++){
+//            g.drawString(  "" + ODan.sumDans(test.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
+//
+//        }
+//        for (int i = 10; i > 5; i--){
+//            g.drawString(  "" + ODan.sumDans(test.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
+//        }
 
         //Vẽ điểm ô Quan
-        g.drawString(  "" + test.board[11], OCo.x + OQuan.WIDTH/2 - ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y + OQuan.WIDTH/4 + (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan trái
-        g.drawString(  "" + test.board[5], OCo.x + OQuan.WIDTH/2  + 5*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y +  OQuan.WIDTH/4 +  (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan phải
+//        g.drawString(  "" + test.board[11], OCo.x + OQuan.WIDTH/2 - ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y + OQuan.WIDTH/4 + (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan trái
+//        g.drawString(  "" + test.board[5], OCo.x + OQuan.WIDTH/2  + 5*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y +  OQuan.WIDTH/4 +  (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan phải
 
         // Set độ dày cho Chooser
         g2d.setStroke(new BasicStroke(Chooser.THICKNESS));
@@ -108,6 +119,21 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g.setColor(Chooser.chooserColor);
         // Vẽ Chooser
         g.drawRect(Chooser.x, Chooser.y, Chooser.WIDTH, Chooser.HEIGHT);
+
+
+
+
+        if (Chooser.Choosen) {
+            // Thiết lập màu cho mũi tên
+            g2d.setColor(Arrow.arrowColor);
+
+
+            // Vẽ đầu mũi tên
+            g2d.fillPolygon(arrowL.xPoints, arrowL.yPoints, 3);
+            g2d.fillPolygon(arrowR.xPoints, arrowR.yPoints, 3);
+        }
+
+
     }
 
 
@@ -130,35 +156,44 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
     @Override public void keyPressed(KeyEvent e) {
 
         //Mũi tên LEN, XUONG
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
+        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
             Chooser.count_y += 1;
             if (Chooser.count_y > 1) {
                 Chooser.count_y = 0;
             }
             Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
+            arrowR.updateArrowPositions();
+            arrowL.updateArrowPositions();
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+        if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
             Chooser.count_y -= 1;
             if (Chooser.count_y < 0) {
                 Chooser.count_y = 1;
             }
             Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
+            arrowR.updateArrowPositions();
+            arrowL.updateArrowPositions();
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_F) {
             Chooser.count_x += 1;
             if (Chooser.count_x > 2) {
                 Chooser.count_x = -2;
             }
             Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
+            arrowR.updateArrowPositions();
+            arrowL.updateArrowPositions();
         }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+
+        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
             Chooser.count_x -= 1;
             if (Chooser.count_x < -2) {
                 Chooser.count_x = 2;
             }
             Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
+            arrowR.updateArrowPositions();
+            arrowL.updateArrowPositions();
         }
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -169,16 +204,18 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                 Chooser.Choosen = true;
             }
 
-
         }
+        else if (e.getKeyCode() != KeyEvent.VK_ENTER || e.getKeyCode() != KeyEvent.VK_SPACE) {
+            Chooser.Choosen = false;
+        }
+
+
         if (Chooser.Choosen) {
             Chooser.chooserColor = Color.YELLOW;
         }
         else if (!Chooser.Choosen) {
             Chooser.chooserColor = Color.CYAN;
         }
-
-
 
     }
 
@@ -200,62 +237,13 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
 class Test {
 
-    public static Player player1 = new Player("Tuan");
-    public static Player player2 = new Player("Tun");
-    public static OQuan quanL = new OQuan(5);
-    public static OQuan quanR = new OQuan(11);
-
-    static int[] board = {5, 5, 5, 5, 5, 10, 5, 5, 5, 5, 5, 10};
-
-    private static int currentPlayer = 0;
-    //    private static int scored01 = player1.getScore();
-//    private static int scored02 = player2.getScore();
-    private static int count = 0; //đếm người chơi => Xoay vòng chơi
-    private static Scanner scanner = new Scanner(System.in);
+    public static Player player1 = TestForTwo.player1;
+    public static Player player2 = TestForTwo.player2;
+    public static ArrayList<ODan> oDans = TestForTwo.oDans;
+    public static ArrayList<Dan> dans = TestForTwo.dans;
+    public static ArrayList<OQuan> oQuans = TestForTwo.oQuans;
+    public static ArrayList<Quan> quans = TestForTwo.quans;
 
 
-    public static void nextTurn() {
-        count++;
-        if (currentPlayer == 2) {
-            currentPlayer = 0;
-        }
-
-        if (board[5] == 0 && board[11] == 0) {
-//            scored01 += sumRange(0, 5);
-//            scored02 += sumRange(6, 11);
-//            printFinalScore();
-            return;
-        }
-
-        int hole;
-        Scanner scanner = new Scanner(System.in);
-        if (currentPlayer == 0) {
-            System.out.println("Player1: " + player1.getName());
-            System.out.print("Chọn lỗ (0-4): ");
-            hole = scanner.nextInt();
-            if (hole == 5 || hole == 11 || board[hole] == 0) {
-                System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
-                return;
-            }
-        } else {
-            System.out.println("Player2: " + player2.getName());
-            System.out.print("Chọn lỗ (6-10): ");
-            hole = scanner.nextInt();
-            if (hole == 5 || hole == 11 || board[hole] == 0) {
-                System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
-                return;
-            }
-        }
-
-        int stones = board[hole];
-        board[hole] = 0;
-
-        System.out.print("Chọn chiều (p/t): ");
-        String chieu = scanner.next();
-
-        int i = chieu.equals("t") ? hole - 1 : hole + 1;
-
-
-    }
 }
 

@@ -220,7 +220,12 @@ public class TestForThree {
                 stones = (ArrayList) oQuans.get(2).getDans().clone();
                 oQuans.get(2).getDans().clear();
             }
+
             else if (i+1 == 12){
+                stones = (ArrayList) oDans.get(0).getDans().clone();
+                oDans.get(0).getDans().clear();
+            }
+            else if (i+1==18) {
                 stones = (ArrayList) oDans.get(0).getDans().clone();
                 oDans.get(0).getDans().clear();
             }

@@ -13,11 +13,11 @@ import java.util.Scanner;
 
 public class TestForTwo {
 
-    public static Player player1 = new Player("Tún");
-    public static Player player2 = new Player("Tuấn");
+    public static Player player1 = new Player("Tuấn");
+    public static Player player2 = new Player("Máy");
 
 
-    private static int currentPlayer = player2.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
+    private static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
 //    private static int scored01 = player1.getScore();
 //    private static int scored02 = player2.getScore();
     private static int count = 0; //Điều kiện ăn Quan ở vòng chơi thú 3
