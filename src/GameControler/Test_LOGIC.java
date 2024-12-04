@@ -1,34 +1,39 @@
 package GameControler;
 
 
-import Model.Da.*;
+import GameGUI.Arrow;
+import Model.Da.Dan;
+import Model.Da.Quan;
 import Initialization.InitializationForTwo;
-import Model.OCo.*;
+import Model.OCo.ODan;
+import Model.OCo.OQuan;
 import Model.Player.Player;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GamePlay {
+public class Test_LOGIC {
 
-    // Khai báo 2 người chơi
+    public static Player player1 = new Player("Tun");
     public static Player player2 = new Player("Máy");
-    public static Player player1 = new Player("Tuấn");
 
-    public static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
-    private static int count = 2; //Điều kiện ăn Quan ở vòng chơi thứ 3
+
+    private static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
+    //    private static int scored01 = player1.getScore();
+//    private static int scored02 = player2.getScore();
+    private static int count = 0; //Điều kiện ăn Quan ở vòng chơi thú 3
     private static Scanner scanner = new Scanner(System.in);
 
-    // Sử dụng Init
-    public static InitializationForTwo init = new InitializationForTwo();
-
     // Initialize the board
+    public static ArrayList gameBoard = new ArrayList<>();
+
+    public static InitializationForTwo init = new InitializationForTwo();
     public static ArrayList<ODan> oDans = init.InitODan();
     public static ArrayList<Dan> dans = init.InitDan();
     public static ArrayList<OQuan> oQuans = init.InitOQuan();
     public static ArrayList<Quan> quans = init.InitQuan();
 
-    public static void main(String[] args) {
+    public static void P() {
 
         //Thêm Dân vào Ô Dân
         int danIndex = 0;
@@ -39,14 +44,36 @@ public class GamePlay {
             }
         }
 
-        // Thêm một ô Dân rỗng để xử lý logic
         oDans.add(5,null);
+
+//        cái này là tạo 12 ô quan tránh lỗi logic khi i chạy
+//        for (int i = 0; i < 12  ; i++) {
+//            if (i != 0 && i != 11){
+//                oQuans.add(i,null);
+//            }
+//        }
+//        System.out.println(oQuans);
 
         //Thêm Quan và 0 Dân vào Ô Quan
         oQuans.get(0).setQuan(quans.get(0));
         oQuans.get(1).setQuan(quans.get(1));
         oQuans.get(0).setDans(null);
         oQuans.get(1).setDans(null);
+
+        //Thêm các Ô Cờ vào Bàn Cờ
+        for (int i = 0; i <12; i++){
+            if (i == oQuans.get(0).getIndex()){
+                gameBoard.add(oQuans.get(0));
+            }
+            else if (i == oQuans.get(1).getIndex()){
+                gameBoard.add(oQuans.get(1));
+            }
+            else {
+                if (i == 6) i--;
+                gameBoard.add(oDans.get(i));
+                i++;
+            }
+        }
 
         if (oDans == null || oQuans == null || oDans.size() < 11 || oQuans.size() < 2) {
             throw new IllegalStateException("Bàn cờ không hợp lệ. Kiểm tra lại việc khởi tạo!");
@@ -71,7 +98,7 @@ public class GamePlay {
         System.out.println("\n");
     }
 
-    private static void playGame() {
+    public static void playGame() {
         while (true) {
             if (currentPlayer == 2) {
                 currentPlayer = 0;
@@ -95,7 +122,7 @@ public class GamePlay {
             }
 
             int hole;
-            if (currentPlayer == player1.getPlayer_id()) {
+            if (currentPlayer == 0) {
                 System.out.println("Player1: "+ player1.getName());
                 System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
                 hole = scanner.nextInt();
@@ -114,14 +141,19 @@ public class GamePlay {
             }
 
             System.out.print("Chọn chiều Phải - Trái (p/t): ");
-            String chieu = scanner.next();
+            if (Arrow.selectedDirection.isEmpty()){
+                String chieu = Arrow.selectedDirection;
+            }
+            else {
+                continue;
+            }
 
             int i = chieu.equals("t") ? hole - 1 : hole + 1;
             phanphoi(hole, chieu, i);
             printBoard();
         }
     }
-
+    //  Kiểm tra ăn liên tục với Quan 2t 7t 1t 8t 1p 10p 2t 8t 4p 10p 4p 7t
     private static void phanphoi(int hole, String chieu, int i) {
         if (chieu.equals("t")) {
 
@@ -193,6 +225,8 @@ public class GamePlay {
                 stones = (ArrayList) oDans.get(i+1).getDans().clone();
                 oDans.get(i+1).getDans().clear();
             }
+//            i--;
+
 
             //Vòng while để ăn liên tục
             while (stones.isEmpty()) {
@@ -245,7 +279,6 @@ public class GamePlay {
                         player2.setDans(diemCong);
                     }
 
-                    // Làm mới Stones và quanCong
                     stones.clear();
                     quanCong.clear();
 
@@ -343,6 +376,7 @@ public class GamePlay {
                 stones = (ArrayList) oDans.get(i-1).getDans().clone();
                 oDans.get(i-1).getDans().clear();
             }
+//            i++;
 
             //Vòng while để ăn liên tục
             while (stones.isEmpty()) {
@@ -393,9 +427,9 @@ public class GamePlay {
                         player2.setDans(diemCong);
                     }
 
-                    // Làm mới Stones và quanCong
                     stones.clear();
                     quanCong.clear();
+
 
                     i++;
                     if (i > 11) i = 0;
@@ -414,7 +448,19 @@ public class GamePlay {
                     break;
                 }
 
+
                 if (i > 11) i = 0;
+
+//                if (i==oQuans.get(0).getIndex() && !stones.isEmpty()) {
+//                    if (!oQuans.get(0).getQuan().isEmpty()) {
+//                        break;
+//                    }
+//                }
+//                if (i==oQuans.get(1).getIndex() && !stones.isEmpty()) {
+//                    if (!oQuans.get(1).getQuan().isEmpty() ) {
+//                        break;
+//                    }
+//                }
 
                 printBoard();
             }
@@ -507,13 +553,13 @@ public class GamePlay {
     }
 
     // Hiển thị số điểm được cộng của người chơi sau mỗi lượt rải Dân
-    private static void printScore(int luu_diemCong, int luu_quanCong) {
+    private static void printScore(int diemCong, int quanCong) {
         if (currentPlayer == 0) {
-            System.out.println("Người chơi " + player1.getName() + " nhận được: " + luu_diemCong + " Dân, " + luu_quanCong + " Quan");
+            System.out.println("Người chơi " + player1.getName() + " nhận được: " + diemCong + " Dân, " + quanCong + " Quan");
             System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
         }
         if (currentPlayer == 1) {
-            System.out.println("Người chơi " + player2.getName() + " nhận được: " +  luu_diemCong + " Dân, " + luu_quanCong + " Quan");
+            System.out.println("Người chơi " + player2.getName() + " nhận được: " +  diemCong + " Dân, " + quanCong + " Quan");
             System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
         }
     }

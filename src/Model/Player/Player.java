@@ -1,7 +1,7 @@
-package Player;
+package Model.Player;
 
-import Da.Dan;
-import Da.Quan;
+import Model.Da.Dan;
+import Model.Da.Quan;
 
 import java.util.ArrayList;
 import java.util.Random;

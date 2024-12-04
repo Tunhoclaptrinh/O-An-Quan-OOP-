@@ -1,7 +1,7 @@
 package Initialization;
 
-import Da.*;
-import OCo.*;
+import Model.Da.*;
+import Model.OCo.*;
 
 import java.util.ArrayList;
 

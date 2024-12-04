@@ -1,4 +1,4 @@
-package Da;
+package Model.Da;
 
 public class Quan extends Da {
     private static int counter = 1;

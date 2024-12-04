@@ -1,7 +1,7 @@
 package GameGUI;
 
-import OCo.OCo;
-import OCo.ODan;
+import Model.OCo.OCo;
+import Model.OCo.ODan;
 
 import java.awt.*;
 
@@ -19,6 +19,15 @@ public class Chooser {
     public static boolean Choosen = false;
 
     public Chooser() {
+    }
+
+    public static void setChoosen(boolean choosen) {
+        if (Chooser.Choosen) {
+            Chooser.chooserColor = Color.YELLOW;
+        }
+        else if (!Chooser.Choosen) {
+            Chooser.chooserColor = Color.CYAN;
+        }
     }
 }
 

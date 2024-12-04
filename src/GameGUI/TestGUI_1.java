@@ -3,8 +3,8 @@
 //import javax.swing.*;
 //import java.awt.*;
 //import java.awt.event.*;
-//import OCo.OQuan;
-//import Player.Player;
+//import Model.OCo.OQuan;
+//import Model.Player.Model.Player;
 //
 //public class main2 extends JFrame {
 //    private GamePanel gamePanel;
@@ -27,8 +27,8 @@
 //
 //class GamePanel extends JPanel implements MouseListener {
 //    private Timer gameTimer;
-//    private Player player1;
-//    private Player player2;
+//    private Model.Player player1;
+//    private Model.Player player2;
 //    private int[] board;
 //    private int currentPlayer;
 //    private int selectedHole;
@@ -43,8 +43,8 @@
 //    }
 //
 //    private void initializeGame() {
-//        player1 = new Player("Tuan");
-//        player2 = new Player("Tun");
+//        player1 = new Model.Player("Tuan");
+//        player2 = new Model.Player("Tun");
 //        board = new int[12];
 //        currentPlayer = 0;
 //        selectedHole = -1;
@@ -123,10 +123,10 @@
 //        // Draw stone counts
 //        g.setFont(gameFont);
 //        for (int i = 0; i < 5; i++) {
-//            // Bottom row (Player 1)
+//            // Bottom row (Model.Player 1)
 //            g.drawString(String.valueOf(board[i]),
 //                    Consts.x + i*100 + 40, Consts.y + 160);
-//            // Top row (Player 2)
+//            // Top row (Model.Player 2)
 //            g.drawString(String.valueOf(board[i + 6]),
 //                    Consts.x + i*100 + 40, Consts.y + 60);
 //        }
@@ -138,11 +138,11 @@
 //    private void drawInfo(Graphics2D g) {
 //        g.setColor(Color.GREEN);
 //        g.setFont(gameFont);
-//        // Player 1 info
-//        g.drawString("Player 1: " + player1.getName(), 20, 30);
+//        // Model.Player 1 info
+//        g.drawString("Model.Player 1: " + player1.getName(), 20, 30);
 //        g.drawString("Score: " + player1.getScore(), 20, 60);
-//        // Player 2 info
-//        g.drawString("Player 2: " + player2.getName(), Consts.WIDTH - 200, 30);
+//        // Model.Player 2 info
+//        g.drawString("Model.Player 2: " + player2.getName(), Consts.WIDTH - 200, 30);
 //        g.drawString("Score: " + player2.getScore(), Consts.WIDTH - 200, 60);
 //        // Current player indicator
 //        String currentPlayerName = currentPlayer == 0 ? player1.getName() : player2.getName();

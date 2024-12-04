@@ -1,12 +1,12 @@
 package GameControler;
 
 
-import Da.Dan;
-import Da.Quan;
+import Model.Da.Dan;
+import Model.Da.Quan;
 import Initialization.InitializationForThree;
-import OCo.ODan;
-import OCo.OQuan;
-import Player.Player;
+import Model.OCo.ODan;
+import Model.OCo.OQuan;
+import Model.Player.Player;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -99,11 +99,11 @@ public class TestForThree {
                 // sửa tình huống 2 người đồng điểm sau......
 
                 if (player1.sumQuanAndDans() < player2.sumQuanAndDans() && player3.sumQuanAndDans() < player2.sumQuanAndDans()) {
-                    System.out.println("Player:" + player2.getName()  + ": Win!");
+                    System.out.println("Model.Player:" + player2.getName()  + ": Win!");
                 } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans() && player3.sumQuanAndDans() < player1.sumQuanAndDans()) {
-                    System.out.println("Player:" + player1.getName()  + ": Win!");
+                    System.out.println("Model.Player:" + player1.getName()  + ": Win!");
                 } else if (player2.sumQuanAndDans() < player3.sumQuanAndDans() && player1.sumQuanAndDans() < player3.sumQuanAndDans()){
-                    System.out.println("Player:" + player3.getName()  + ": Win!");
+                    System.out.println("Model.Player:" + player3.getName()  + ": Win!");
                 } else {
                     System.out.println("Hòa");
                 }
@@ -662,11 +662,11 @@ public class TestForThree {
         System.out.println("Điểm của " + player3.getName() + ": " + player3.sumQuanAndDans());
 
         if (player1.sumQuanAndDans() < player2.sumQuanAndDans() && player3.sumQuanAndDans() < player2.sumQuanAndDans()) {
-            System.out.println("Player:" + player2.getName()  + ": Win!");
+            System.out.println("Model.Player:" + player2.getName()  + ": Win!");
         } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans() && player3.sumQuanAndDans() < player1.sumQuanAndDans()) {
-            System.out.println("Player:" + player1.getName()  + ": Win!");
+            System.out.println("Model.Player:" + player1.getName()  + ": Win!");
         } else if (player2.sumQuanAndDans() < player3.sumQuanAndDans() && player1.sumQuanAndDans() < player3.sumQuanAndDans()){
-            System.out.println("Player:" + player3.getName()  + ": Win!");
+            System.out.println("Model.Player:" + player3.getName()  + ": Win!");
         } else {
             System.out.println("Hòa");
         }

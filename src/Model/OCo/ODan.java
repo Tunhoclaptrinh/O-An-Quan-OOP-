@@ -1,6 +1,6 @@
-package OCo;
+package Model.OCo;
 
-import Da.Dan;
+import Model.Da.Dan;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ public class ODan extends OCo {
 
     public static Color oDanColor = Color.WHITE ;
     public static final int DEFAULT_STONES = 5;
-    public static final int WIDTH = 100;
-    public static final int HEIGHT = 100;
+    public static final int WIDTH = 104 /*162 - 36*/;
+    public static final int HEIGHT = 104;
     private ArrayList<Dan> dans = new ArrayList<>();
 
 

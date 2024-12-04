@@ -6,24 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
-import GameControler.GamePlay;
-import GameControler.TestForTwo;
-import Player.Player;
-import Da.*;
-import OCo.*;
+import GameControler.Test_LOGIC;
+import Model.OCo.*;
 
-import OCo.OQuan;
-import Player.Player;
-
-import java.util.Scanner;
-import java.util.Arrays;
-
-
-
+import Model.OCo.OQuan;
 
 
 public class TestGUI extends JFrame {
@@ -38,6 +25,8 @@ public class TestGUI extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        Test_LOGIC.P();
+        Test_LOGIC.playGame();
     }
 
     public static void main(String[] args) {
@@ -46,19 +35,19 @@ public class TestGUI extends JFrame {
 }
 
 class ControlWindow extends JPanel implements ActionListener, KeyListener {
-
     private Timer timer = new Timer(10, this);
-    static Test test = new Test();
-    private static Player player1 = test.player1;
-    private static Player player2 = test.player2;
 
-    private static int currentPlayer = 0;
+
+
+
+    // Ô Chọn
+    public Chooser chooser = new Chooser();
+
+    // Mũi tên chòn chiều
     public Arrow arrowR = new Arrow( "p");
     public Arrow arrowL = new Arrow("t");
 
-    public Chooser chooser = new Chooser();
-
-
+    // Set font và font-size
     private Font gameFont = new Font("Press Start 2P" , Font.PLAIN, Consts.FONT_SIZE);
 
     @Override
@@ -79,11 +68,12 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g.setFont(gameFont);
 
         // Hiển thị tên người chơi
-        g.drawString("Player1: " + player1.getName(), 5, 40);
-        g.drawString( player2.getName() + " :Player2", Consts.WIDTH - 250 - 130, 40);
-        //Hiển thị điểm người chơi
-//        g.drawString("Score: " + player1.getScore(), 5, 90);
-//        g.drawString(player2.getScore() + "  : Score" , Consts.WIDTH - 250 - 70, 90);
+        g.drawString("Player1: " + Test_LOGIC.player1.getName(), 5, 40);
+        g.drawString( Test_LOGIC.player2.getName() + " :Player2", Consts.WIDTH - 250 - 130, 40);
+
+//        Hiển thị điểm người chơi
+        g.drawString("Score: " + Test_LOGIC.player1.sumQuanAndDans(), 5, 90);
+        g.drawString(Test_LOGIC.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - 250 - 70, 90);
 
         // Vẽ Ô Quan
         g.setColor(OQuan.oQuanColor);
@@ -101,17 +91,17 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         }
 
         //Vẽ điểm của Ô Dân
-//        for (int i = 0; i < 5; i++){
-//            g.drawString(  "" + ODan.sumDans(test.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
-//
-//        }
-//        for (int i = 10; i > 5; i--){
-//            g.drawString(  "" + ODan.sumDans(test.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
-//        }
+        for (int i = 0; i < 5; i++){
+            g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
+
+        }
+        for (int i = 10; i > 5; i--){
+            g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
+        }
 
         //Vẽ điểm ô Quan
-//        g.drawString(  "" + test.board[11], OCo.x + OQuan.WIDTH/2 - ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y + OQuan.WIDTH/4 + (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan trái
-//        g.drawString(  "" + test.board[5], OCo.x + OQuan.WIDTH/2  + 5*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y +  OQuan.WIDTH/4 +  (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan phải
+        g.drawString(  "" + OQuan.sumQuanAndDans(Test_LOGIC.oQuans.get(1).getQuan(),Test_LOGIC.oQuans.get(1).getDans()), OCo.x + OQuan.WIDTH/2 - ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y + OQuan.WIDTH/4 + (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan trái
+        g.drawString(  "" + OQuan.sumQuanAndDans(Test_LOGIC.oQuans.get(0).getQuan(),Test_LOGIC.oQuans.get(0).getDans()), OCo.x + OQuan.WIDTH/2  + 5*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y +  OQuan.WIDTH/4 +  (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan phải
 
         // Set độ dày cho Chooser
         g2d.setStroke(new BasicStroke(Chooser.THICKNESS));
@@ -123,14 +113,32 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
 
 
+
+
+
+
+        //
         if (Chooser.Choosen) {
             // Thiết lập màu cho mũi tên
-            g2d.setColor(Arrow.arrowColor);
+            g2d.setColor(Arrow.Default_arrowColor);
+            g2d.setStroke(new BasicStroke(Chooser.THICKNESS) );
 
-
-            // Vẽ đầu mũi tên
+            // Vẽ đầu mũi tên bên trái
+            g2d.setColor(arrowL.arrowColor);
             g2d.fillPolygon(arrowL.xPoints, arrowL.yPoints, 3);
+
+            // Vẽ viền đen cho đầu mũi tên bên trái
+            g2d.setColor(Color.BLACK);
+            g2d.drawPolygon(arrowL.xPoints, arrowL.yPoints, 3);
+
+            // Vẽ đầu mũi tên bên phải
+            g2d.setColor(arrowR.arrowColor);
             g2d.fillPolygon(arrowR.xPoints, arrowR.yPoints, 3);
+
+            // Vẽ viền đen cho đầu mũi tên bên phải
+            g2d.setColor(Color.BLACK);
+            g2d.drawPolygon(arrowR.xPoints, arrowR.yPoints, 3);
+
         }
 
 
@@ -138,7 +146,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
 
     @Override public void actionPerformed(ActionEvent e) {
-        Scanner sc = new Scanner(System.in);
 
         OQuan quanP = new OQuan(5);
         OQuan quanT = new OQuan(11);
@@ -148,74 +155,124 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 //        sc.close();
 //        Test.nextTurn();
 
-        currentPlayer++;
+//        Testttttt.currentPlayer++;
         repaint();
     }
 
-
     @Override public void keyPressed(KeyEvent e) {
 
-        //Mũi tên LEN, XUONG
-        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-            Chooser.count_y += 1;
-            if (Chooser.count_y > 1) {
-                Chooser.count_y = 0;
+        if (!Arrow.isChoosingDirection) {
+            //Mũi tên LEN, XUONG
+            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+                Chooser.count_y += 1;
+                if (Chooser.count_y > 1) {
+                    Chooser.count_y = 0;
+                }
+                Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
+                arrowR.updateArrowPositions();
+                arrowL.updateArrowPositions();
             }
-            Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
-            arrowR.updateArrowPositions();
-            arrowL.updateArrowPositions();
-        }
 
-        if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-            Chooser.count_y -= 1;
-            if (Chooser.count_y < 0) {
-                Chooser.count_y = 1;
+            if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+                Chooser.count_y -= 1;
+                if (Chooser.count_y < 0) {
+                    Chooser.count_y = 1;
+                }
+                Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
+                arrowR.updateArrowPositions();
+                arrowL.updateArrowPositions();
             }
-            Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
-            arrowR.updateArrowPositions();
-            arrowL.updateArrowPositions();
-        }
 
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_F) {
-            Chooser.count_x += 1;
-            if (Chooser.count_x > 2) {
-                Chooser.count_x = -2;
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_F) {
+                Chooser.count_x += 1;
+                if (Chooser.count_x > 2) {
+                    Chooser.count_x = -2;
+                }
+                Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
+                arrowR.updateArrowPositions();
+                arrowL.updateArrowPositions();
             }
-            Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
-            arrowR.updateArrowPositions();
-            arrowL.updateArrowPositions();
-        }
 
-        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-            Chooser.count_x -= 1;
-            if (Chooser.count_x < -2) {
-                Chooser.count_x = 2;
+            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+                Chooser.count_x -= 1;
+                if (Chooser.count_x < -2) {
+                    Chooser.count_x = 2;
+                }
+                Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
+                arrowR.updateArrowPositions();
+                arrowL.updateArrowPositions();
             }
-            Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
-            arrowR.updateArrowPositions();
-            arrowL.updateArrowPositions();
-        }
 
-        if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
-            if (Chooser.Choosen){
+            if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (Chooser.Choosen){
+                    Chooser.Choosen = false;
+                    Arrow.isChoosingDirection = false;
+                }
+                else if (!Chooser.Choosen){
+                    Chooser.Choosen = true;
+                    Arrow.isChoosingDirection = true;
+                }
+            }
+
+
+        } else {
+            // Đang chọn chiều
+            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+                if (Arrow.selectedDirection.isEmpty() || Arrow.selectedDirection == "p") {
+                    Arrow.selectedDirection = "t";
+                    arrowL.setArrowColor(); // Đổi màu mũi tên phải để hiển thị đã chọn
+                    arrowR.arrowColor = Arrow.Default_arrowColor;
+                }
+
+                else if (!Arrow.selectedDirection.isEmpty()) {
+                    Arrow.isChoosingDirection = false;
+                    Arrow.selectedDirection = "";
+                    Chooser.Choosen = false;
+                    arrowL.setArrowColor();
+                    arrowR.setArrowColor();
+                }
+
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_F ) {
+                if (Arrow.selectedDirection.isEmpty() || Arrow.selectedDirection == "t") {
+                    Arrow.selectedDirection = "p";
+                    arrowR.setArrowColor(); // Đổi màu mũi tên phải để hiển thị đã chọn
+                    arrowL.arrowColor = Arrow.Default_arrowColor;
+                }
+
+                else if (!Arrow.selectedDirection.isEmpty()) {
+                    Arrow.isChoosingDirection = false;
+                    Arrow.selectedDirection = "";
+                    Chooser.Choosen = false;
+                    arrowL.setArrowColor();
+                    arrowR.setArrowColor();
+                }
+            }
+
+
+
+
+            if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE ) {
+                // Kết thúc chọn chiều, thực hiện hành động tiếp theo
+                Arrow.isChoosingDirection = false;
+                if (!Arrow.selectedDirection.isEmpty()) {
+                    System.out.println("Chiều đã chọn: " + Arrow.selectedDirection);
+                }
+                else {
+                    System.out.println("Ô chưa được chọn!");
+                }
+
+                // Reset trạng thái để chuẩn bị cho lượt tiếp theo
+                Arrow.selectedDirection = "";
                 Chooser.Choosen = false;
+                arrowL.setArrowColor();
+                arrowR.setArrowColor();
+
             }
-            else if (!Chooser.Choosen){
-                Chooser.Choosen = true;
-            }
-
-        }
-        else if (e.getKeyCode() != KeyEvent.VK_ENTER || e.getKeyCode() != KeyEvent.VK_SPACE) {
-            Chooser.Choosen = false;
         }
 
-
-        if (Chooser.Choosen) {
-            Chooser.chooserColor = Color.YELLOW;
-        }
-        else if (!Chooser.Choosen) {
-            Chooser.chooserColor = Color.CYAN;
-        }
+        Chooser.setChoosen(Chooser.Choosen); // reset chooserColor
 
     }
 
@@ -233,17 +290,5 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         this.addKeyListener(this);
         this.setFocusable(true);
     }
-}
-
-class Test {
-
-    public static Player player1 = TestForTwo.player1;
-    public static Player player2 = TestForTwo.player2;
-    public static ArrayList<ODan> oDans = TestForTwo.oDans;
-    public static ArrayList<Dan> dans = TestForTwo.dans;
-    public static ArrayList<OQuan> oQuans = TestForTwo.oQuans;
-    public static ArrayList<Quan> quans = TestForTwo.quans;
-
-
 }
 

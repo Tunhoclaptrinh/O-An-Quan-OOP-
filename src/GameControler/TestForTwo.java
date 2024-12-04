@@ -1,19 +1,19 @@
 package GameControler;
 
 
-import Da.Dan;
-import Da.Quan;
+import Model.Da.Dan;
+import Model.Da.Quan;
 import Initialization.InitializationForTwo;
-import OCo.ODan;
-import OCo.OQuan;
-import Player.Player;
+import Model.OCo.ODan;
+import Model.OCo.OQuan;
+import Model.Player.Player;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TestForTwo {
 
-    public static Player player1 = new Player("Tuấn");
+    public static Player player1 = new Player("Tun");
     public static Player player2 = new Player("Máy");
 
 
@@ -116,9 +116,9 @@ public class TestForTwo {
                 System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
 
                 if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
-                    System.out.println("Player:" + player2.getName()  + ": Win!");
+                    System.out.println("Model.Player:" + player2.getName()  + ": Win!");
                 } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
-                    System.out.println("Player:" + player1.getName()  + ": Win!");
+                    System.out.println("Model.Player:" + player1.getName()  + ": Win!");
                 } else {
                     System.out.println("Hòa");
                 }

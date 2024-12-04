@@ -13,7 +13,7 @@ public class Main extends JFrame {
     public Main(){
         this.add(cw);
         this.pack();
-        this.setTitle("O An Da.Quan");
+        this.setTitle("O An Model.Da.Quan");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
         this.setLocationRelativeTo(null);
         this.setResizable(false);

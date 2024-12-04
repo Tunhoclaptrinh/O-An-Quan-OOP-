@@ -1,4 +1,4 @@
-package Da;
+package Model.Da;
 
 public abstract class Da {
     protected int index;

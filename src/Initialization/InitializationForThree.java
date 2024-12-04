@@ -1,9 +1,9 @@
 package Initialization;
 
-import Da.Dan;
-import Da.Quan;
-import OCo.ODan;
-import OCo.OQuan;
+import Model.Da.Dan;
+import Model.Da.Quan;
+import Model.OCo.ODan;
+import Model.OCo.OQuan;
 
 import java.util.ArrayList;
 

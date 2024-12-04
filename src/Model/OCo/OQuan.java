@@ -1,7 +1,7 @@
-package OCo;
+package Model.OCo;
 
-import Da.Quan;
-import Da.Dan;
+import Model.Da.Quan;
+import Model.Da.Dan;
 
 import java.awt.*;
 import java.util.ArrayList;
