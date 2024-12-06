@@ -2,6 +2,7 @@ package GameControler;
 
 
 import GameGUI.Arrow;
+import GameGUI.Chooser;
 import Model.Da.Dan;
 import Model.Da.Quan;
 import Initialization.InitializationForTwo;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Test_LOGIC {
+    public static boolean isWaitingForInput = true; // Trạng thái chờ tín hiệu
 
     public static Player player1 = new Player("Tun");
     public static Player player2 = new Player("Máy");
@@ -20,7 +22,7 @@ public class Test_LOGIC {
 
     private static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
     //    private static int scored01 = player1.getScore();
-//    private static int scored02 = player2.getScore();
+    //    private static int scored02 = player2.getScore();
     private static int count = 0; //Điều kiện ăn Quan ở vòng chơi thú 3
     private static Scanner scanner = new Scanner(System.in);
 
@@ -79,7 +81,7 @@ public class Test_LOGIC {
             throw new IllegalStateException("Bàn cờ không hợp lệ. Kiểm tra lại việc khởi tạo!");
         }
 
-        playGame();
+//        playGame();
         scanner.close();
     }
 
@@ -103,50 +105,63 @@ public class Test_LOGIC {
             if (currentPlayer == 2) {
                 currentPlayer = 0;
             }
+
+
+            // Chờ tín hiệu từ GUI
+            while (isWaitingForInput) {
+                try {
+                    Thread.sleep(100); // Tạm dừng để tránh tiêu tốn tài nguyên
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+
+            }
+            // Reset trạng thái sau khi nhận tín hiệu
+            isWaitingForInput = true;
+
+
+            // Tiến hành logic game
             printBoard();
 
             if (oQuans.get(0).sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) == 0 && oQuans.get(1).sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) == 0) {
                 player1.setDans(sumRange(0, 5));
                 player2.setDans(sumRange(6, 11));
-                System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
-                System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
-
-                if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
-                    System.out.println("Model.Player:" + player2.getName()  + ": Win!");
-                } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
-                    System.out.println("Model.Player:" + player1.getName()  + ": Win!");
-                } else {
-                    System.out.println("Hòa");
-                }
+                printFinalScore();
                 break;
             }
 
             int hole;
-            if (currentPlayer == 0) {
+            if (currentPlayer == 0 && Chooser.Choosen == true) {
                 System.out.println("Player1: "+ player1.getName());
                 System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
-                hole = scanner.nextInt();
+                hole = Chooser.INDEX;
                 if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
                     continue;
+                } else {
+                    System.out.println(hole);
                 }
-            } else {
+            } else if (currentPlayer == 1 && Chooser.Choosen == true) {
                 System.out.println("Player2: " + player2.getName());
                 System.out.print("Chọn lỗ (6-10) <=> (1-5): ");
-                hole = scanner.nextInt();
+                hole = Chooser.INDEX;
                 if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
                     continue;
+                } else {
+                    System.out.println(hole);
                 }
+
             }
 
-            System.out.print("Chọn chiều Phải - Trái (p/t): ");
-            if (Arrow.selectedDirection.isEmpty()){
-                String chieu = Arrow.selectedDirection;
-            }
             else {
                 continue;
             }
+
+            System.out.print("Chọn chiều Phải - Trái (p/t): ");
+
+            String chieu = Arrow.selectedDirection;
+
 
             int i = chieu.equals("t") ? hole - 1 : hole + 1;
             phanphoi(hole, chieu, i);

@@ -16,7 +16,9 @@ import Model.OCo.OQuan;
 public class TestGUI extends JFrame {
     private ControlWindow cw = new ControlWindow();
 
+
     public TestGUI() {
+
         this.add(cw);
         this.pack();
         this.setTitle("O An Quan");
@@ -25,20 +27,20 @@ public class TestGUI extends JFrame {
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+
+        // Setup bàn cờ
         Test_LOGIC.P();
-        Test_LOGIC.playGame();
+
     }
 
     public static void main(String[] args) {
         new TestGUI();
-    }
+//        Test_LOGIC.P();        // LOGIC
+        Test_LOGIC.playGame();    }
 }
 
 class ControlWindow extends JPanel implements ActionListener, KeyListener {
     private Timer timer = new Timer(10, this);
-
-
-
 
     // Ô Chọn
     public Chooser chooser = new Chooser();
@@ -55,9 +57,30 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
+
+//        // Lấy kích thước của panel và hình ảnh
+//        int panelWidth = this.getWidth();
+//        int panelHeight = this.getHeight();
+//        int imageWidth = Consts.BACKGROUND.getWidth(this);
+//        int imageHeight = Consts.BACKGROUND.getHeight(this);
+
+        // Kích thước mới (scale theo ý muốn)
+        int newWidth = Consts.WIDTH;  // Chiều rộng mong muốn => lấy theo kích cỡ màn hình
+        int newHeight = Consts.HEIGHT; // Chiều cao mong muốn => Lấy theo kích  cỡ màn hình
+
+        // Scale hình ảnh
+        g.drawImage(Consts.BACKGROUND, 0, 0, newWidth, newHeight, this);
+
+//        // Tính toán vị trí để căn giữa
+//        int x = (panelWidth - imageWidth) / 2;
+//        int y = (panelHeight - imageHeight) / 2;
+
+
+        // Vẽ hình ảnh
+        g.drawImage(Consts.BACKGROUND, 0, 0, newWidth,newHeight,this);
+
         // Bật chế độ khử răng cưa để vẽ mượt hơn
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        //
 
         // Set the stroke (line thickness) to 5 , set độ dày cho bàn cờ
         g2d.setStroke(new BasicStroke(OCo.THICKNESS));
@@ -71,17 +94,25 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g.drawString("Player1: " + Test_LOGIC.player1.getName(), 5, 40);
         g.drawString( Test_LOGIC.player2.getName() + " :Player2", Consts.WIDTH - 250 - 130, 40);
 
-//        Hiển thị điểm người chơi
+        // Hiển thị điểm người chơi
         g.drawString("Score: " + Test_LOGIC.player1.sumQuanAndDans(), 5, 90);
         g.drawString(Test_LOGIC.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - 250 - 70, 90);
 
         // Vẽ Ô Quan
         g.setColor(OQuan.oQuanColor);
-        g.drawOval(OQuan.x /*- ODan.WITH*/ , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT);
-        g.drawOval(OQuan.x + 5*ODan.WIDTH , OQuan.y,2*ODan.WIDTH, 2*ODan.HEIGHT);
+
+        // Vẽ viền nửa đường tròn
+        g2d.setColor(Color.WHITE);
+        g2d.drawArc(OQuan.x /*- ODan.WITH*/ , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT, 90, 180);
+        g2d.drawArc(OQuan.x + 5*ODan.WIDTH  , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT, -90, 180);
+
+
+//        g.drawOval(OQuan.x /*- ODan.WITH*/ , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT);
+//        g.drawOval(OQuan.x + 5*ODan.WIDTH , OQuan.y,2*ODan.WIDTH, 2*ODan.HEIGHT);
+
         // vẽ đè lên hình tròn => tạo Ô Quan là một nửa hình tròn
-        g.setColor(Color.BLACK);
-        g.fillRect(OQuan.x + OQuan.WIDTH/2 , OQuan.y, 5*ODan.WIDTH ,2*ODan.HEIGHT);
+//        g.setColor(Color.GREEN);
+//        g.fillRect(OQuan.x + OQuan.WIDTH/2 , OQuan.y, 5*ODan.WIDTH ,2*ODan.HEIGHT);
 
         //Vẽ Ô Dân
         g.setColor(ODan.oDanColor);
@@ -90,11 +121,13 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
             g.drawRect(OCo.x + i*ODan.WIDTH,OCo.y + ODan.HEIGHT, ODan.WIDTH, ODan.HEIGHT);
         }
 
+
+        g2d.setColor(Color.GREEN);
         //Vẽ điểm của Ô Dân
         for (int i = 0; i < 5; i++){
             g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
-
         }
+
         for (int i = 10; i > 5; i--){
             g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
         }
@@ -109,13 +142,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g.setColor(Chooser.chooserColor);
         // Vẽ Chooser
         g.drawRect(Chooser.x, Chooser.y, Chooser.WIDTH, Chooser.HEIGHT);
-
-
-
-
-
-
-
 
         //
         if (Chooser.Choosen) {
@@ -140,22 +166,11 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
             g2d.drawPolygon(arrowR.xPoints, arrowR.yPoints, 3);
 
         }
-
-
     }
 
 
+    // Vẽ lại màn hình
     @Override public void actionPerformed(ActionEvent e) {
-
-        OQuan quanP = new OQuan(5);
-        OQuan quanT = new OQuan(11);
-//        test.board[quanP.getIndex()] = quanP.tinhDiem();
-//        test.board[quanT.getIndex()] = quanT.tinhDiem();
-//        test.playGame();
-//        sc.close();
-//        Test.nextTurn();
-
-//        Testttttt.currentPlayer++;
         repaint();
     }
 
@@ -165,9 +180,12 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
             //Mũi tên LEN, XUONG
             if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
                 Chooser.count_y += 1;
+
                 if (Chooser.count_y > 1) {
                     Chooser.count_y = 0;
                 }
+
+
                 Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
                 arrowR.updateArrowPositions();
                 arrowL.updateArrowPositions();
@@ -178,6 +196,8 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                 if (Chooser.count_y < 0) {
                     Chooser.count_y = 1;
                 }
+
+
                 Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
                 arrowR.updateArrowPositions();
                 arrowL.updateArrowPositions();
@@ -185,9 +205,15 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
             if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_F) {
                 Chooser.count_x += 1;
+                Chooser.INDEX +=1;
                 if (Chooser.count_x > 2) {
                     Chooser.count_x = -2;
                 }
+                if (Chooser.INDEX == 5){
+                    Chooser.INDEX = 0;
+                }
+
+
                 Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
                 arrowR.updateArrowPositions();
                 arrowL.updateArrowPositions();
@@ -195,9 +221,14 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
             if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
                 Chooser.count_x -= 1;
+                Chooser.INDEX -=1;
                 if (Chooser.count_x < -2) {
                     Chooser.count_x = 2;
                 }
+                if (Chooser.INDEX == -1){
+                    Chooser.INDEX = 4;
+                }
+
                 Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
                 arrowR.updateArrowPositions();
                 arrowL.updateArrowPositions();
@@ -211,6 +242,8 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                 else if (!Chooser.Choosen){
                     Chooser.Choosen = true;
                     Arrow.isChoosingDirection = true;
+                    Test_LOGIC.isWaitingForInput = false; // Gửi tín hiệu tới logic
+
                 }
             }
 
@@ -269,6 +302,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                 arrowL.setArrowColor();
                 arrowR.setArrowColor();
 
+
             }
         }
 
@@ -284,11 +318,14 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         //Nhấn vào thả ra mới nhận
     }
 
+
+
     public ControlWindow(){
         timer.start();
         this.setBackground(Color.BLACK);
         this.addKeyListener(this);
         this.setFocusable(true);
+
     }
 }
 

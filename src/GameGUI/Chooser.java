@@ -16,6 +16,8 @@ public class Chooser {
     public static int count_x = 0;
     public static int count_y = 0;
 
+    public static int INDEX = 2;
+
     public static boolean Choosen = false;
 
     public Chooser() {

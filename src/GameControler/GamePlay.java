@@ -79,18 +79,12 @@ public class GamePlay {
             printBoard();
 
             if (oQuans.get(0).sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) == 0 && oQuans.get(1).sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) == 0) {
+//                Cộng điểm còn lại trên bàn cờ
                 player1.setDans(sumRange(0, 5));
                 player2.setDans(sumRange(6, 11));
-                System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
-                System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
 
-                if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
-                    System.out.println("Model.Player:" + player2.getName()  + ": Win!");
-                } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
-                    System.out.println("Model.Player:" + player1.getName()  + ": Win!");
-                } else {
-                    System.out.println("Hòa");
-                }
+                printFinalScore();
+
                 break;
             }
 

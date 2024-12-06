@@ -108,6 +108,10 @@ public class Player {
 
         // Chơi hai người bình thường
         else {
+
+
+
+
             this.direction = scanner.next().charAt(0);
         }
 
