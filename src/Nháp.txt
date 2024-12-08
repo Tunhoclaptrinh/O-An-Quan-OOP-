@@ -84,5 +84,9 @@
                 Chooser.chooserColor = Color.CYAN; // Reset màu ô chọn
             }
         }
+<<<<<<< HEAD
     }
 .......
+=======
+    }
+>>>>>>> 0355d3860142b59c1090af7f64e839e6fa775430
