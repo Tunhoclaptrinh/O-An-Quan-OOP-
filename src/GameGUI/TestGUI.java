@@ -33,7 +33,7 @@ public class TestGUI extends JFrame {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         new TestGUI();
 //        Test_LOGIC.P();        // LOGIC
         Test_LOGIC.playGame();    }
@@ -41,6 +41,7 @@ public class TestGUI extends JFrame {
 
 class ControlWindow extends JPanel implements ActionListener, KeyListener {
     private Timer timer = new Timer(10, this);
+
 
     // Ô Chọn
     public Chooser chooser = new Chooser();
@@ -128,8 +129,8 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
             g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
         }
 
-        for (int i = 10; i > 5; i--){
-            g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
+        for (int i = 10; i > 5; i-- ){
+            g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(6 + 10-i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
         }
 
         //Vẽ điểm ô Quan
@@ -184,7 +185,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                 if (Chooser.count_y > 1) {
                     Chooser.count_y = 0;
                 }
-
 
                 Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
                 arrowR.updateArrowPositions();
@@ -296,8 +296,9 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                     System.out.println("Ô chưa được chọn!");
                 }
 
+                Test_LOGIC.isWaitingForInput = false; // Gửi tín hiệu tới logic
                 // Reset trạng thái để chuẩn bị cho lượt tiếp theo
-                Arrow.selectedDirection = "";
+//                Arrow.selectedDirection = "";
                 Chooser.Choosen = false;
                 arrowL.setArrowColor();
                 arrowR.setArrowColor();
