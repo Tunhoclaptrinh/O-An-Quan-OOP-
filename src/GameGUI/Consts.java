@@ -8,7 +8,7 @@ public class Consts {
     public static int FONT_SIZE = 30;
     //    / Tải hình ảnh
     public static Toolkit t = Toolkit.getDefaultToolkit();
-    public static Image BACKGROUND = t.getImage("src/Assets/1x/Asset 3.png");
+    public static String BACKGROUND_path = "src/Assets/1x/Asset 3.png";
 
 
 }

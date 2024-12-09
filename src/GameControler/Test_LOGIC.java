@@ -20,7 +20,7 @@ public class Test_LOGIC {
     public static Player player2 = new Player("Máy");
 
 
-    private static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
+    public static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
     //    private static int scored01 = player1.getScore();
     //    private static int scored02 = player2.getScore();
     private static int count = 0; //Điều kiện ăn Quan ở vòng chơi thú 3

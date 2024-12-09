@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class GamePlay {
 
+
     // Khai báo 2 người chơi
     public static Player player2 = new Player("Máy");
     public static Player player1 = new Player("Tuấn");
