@@ -20,7 +20,7 @@ public class Test_LOGIC {
     public static Player player2 = new Player("Máy");
 
 
-    private static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
+    public static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
     //    private static int scored01 = player1.getScore();
     //    private static int scored02 = player2.getScore();
     private static int count = 0; //Điều kiện ăn Quan ở vòng chơi thú 3
@@ -45,16 +45,8 @@ public class Test_LOGIC {
                 danIndex++;
             }
         }
-
         oDans.add(5,null);
 
-//        cái này là tạo 12 ô quan tránh lỗi logic khi i chạy
-//        for (int i = 0; i < 12  ; i++) {
-//            if (i != 0 && i != 11){
-//                oQuans.add(i,null);
-//            }
-//        }
-//        System.out.println(oQuans);
 
         //Thêm Quan và 0 Dân vào Ô Quan
         oQuans.get(0).setQuan(quans.get(0));
@@ -84,6 +76,19 @@ public class Test_LOGIC {
 //        playGame();
         scanner.close();
     }
+    public static void WaitingForInput (){
+        // Chờ tín hiệu từ GUI
+        while (isWaitingForInput) {
+            try {
+                Thread.sleep(100); // Tạm dừng để tránh tiêu tốn tài nguyên
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+        }
+        // Reset trạng thái sau khi nhận tín hiệu
+        isWaitingForInput = true;
+    }
 
     // Hàm in bàn cờ
     private static void printBoard() {
@@ -100,24 +105,14 @@ public class Test_LOGIC {
         System.out.println("\n");
     }
 
-    public static void playGame() {
+    public static void playGame() throws InterruptedException {
         while (true) {
             if (currentPlayer == 2) {
                 currentPlayer = 0;
             }
 
+            WaitingForInput();
 
-            // Chờ tín hiệu từ GUI
-            while (isWaitingForInput) {
-                try {
-                    Thread.sleep(100); // Tạm dừng để tránh tiêu tốn tài nguyên
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-
-            }
-            // Reset trạng thái sau khi nhận tín hiệu
-            isWaitingForInput = true;
 
 
             // Tiến hành logic game
@@ -130,7 +125,7 @@ public class Test_LOGIC {
                 break;
             }
 
-            int hole;
+            int hole = 0;
             if (currentPlayer == 0 && Chooser.Choosen == true) {
                 System.out.println("Player1: "+ player1.getName());
                 System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
@@ -154,22 +149,21 @@ public class Test_LOGIC {
 
             }
 
-            else {
-                continue;
-            }
-
             System.out.print("Chọn chiều Phải - Trái (p/t): ");
 
-            String chieu = Arrow.selectedDirection;
+            WaitingForInput();
 
+            String chieu = Arrow.selectedDirection;
+            System.out.println("Chiều đã chọn: " + Arrow.selectedDirection);
+            Arrow.selectedDirection = "";
 
             int i = chieu.equals("t") ? hole - 1 : hole + 1;
             phanphoi(hole, chieu, i);
             printBoard();
         }
     }
-    //  Kiểm tra ăn liên tục với Quan 2t 7t 1t 8t 1p 10p 2t 8t 4p 10p 4p 7t
-    private static void phanphoi(int hole, String chieu, int i) {
+
+    private static void phanphoi(int hole, String chieu, int i) throws InterruptedException {
         if (chieu.equals("t")) {
 
             // Distribute stones to the left
@@ -212,6 +206,8 @@ public class Test_LOGIC {
                 i--;
 
                 printBoard();
+                Thread.sleep(1000);
+
             }
 
             // Capture stones
@@ -316,6 +312,7 @@ public class Test_LOGIC {
                 if (i < 0) i = 11;
 
                 printBoard();
+                Thread.sleep(1000);
             }
 
             printScore(luu_diemCong, luu_quanCong );
@@ -364,7 +361,9 @@ public class Test_LOGIC {
                     if (i>11) i = 0;
                 }
                 i++;
+
                 printBoard();
+                Thread.sleep(1000);
             }
 
             // Capture stones
@@ -478,6 +477,7 @@ public class Test_LOGIC {
 //                }
 
                 printBoard();
+                Thread.sleep(1000);
             }
 
             printScore(luu_diemCong, luu_quanCong);

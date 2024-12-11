@@ -21,9 +21,6 @@ public class Arrow {
     public static String selectedDirection = "";       // Chiều đã chọn: "left" hoặc "right"
 
 
-//    public int count_x = 0;
-//    public int count_y = 0;
-
     // Tính toán điểm đầu mũi tên
     public int[] xPoints /*= {this.x, this.x  - arrowWidth, this.x - arrowWidth}*/;
     public int[] yPoints /*= {this.y, this.y - arrowHeight, this + arrowHeight}*/;
