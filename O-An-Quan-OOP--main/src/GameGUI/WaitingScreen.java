@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class MainJframe extends JFrame {
+public class WaitingScreen extends JFrame {
 
-    public MainJframe() {
+    public WaitingScreen() {
         // Thiết lập JFrame
         this.setTitle("Nhập thông tin người dùng");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
@@ -36,43 +36,30 @@ public class MainJframe extends JFrame {
         background.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
 
         // Tạo nhãn và trường nhập tên người chơi
-        JLabel nameLabel = new JLabel("Player's Name ?");
-        nameLabel.setBounds(Consts.WIDTH / 2 - 220, Consts.HEIGHT / 3 - 30, 800, 50);
+        JLabel nameLabel = new JLabel("Waiting for Player 2...");
+        nameLabel.setBounds(Consts.WIDTH / 2 - 375, Consts.HEIGHT / 3 - 40, 800, 50);
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setFont(new Font("Press Start 2P", Font.BOLD, 30));
 
-        JTextField nameField = new JTextField();
-        nameField.setBounds(Consts.WIDTH / 2 - (Consts.WIDTH * 3) / 10, Consts.HEIGHT / 2 - (Consts.HEIGHT / 10), (Consts.WIDTH * 3) / 5, (Consts.HEIGHT / 7));
-        nameField.setFont(new Font("Press Start 2P", Font.PLAIN, 30));
-
-        // Nút Submit
-        ImageIcon playIcon = new ImageIcon(getClass().getResource("/assets/Startbutton.png"));
-        Image imgButton = playIcon.getImage().getScaledInstance(100, 30, Image.SCALE_SMOOTH);
-        JButton submitButton = new JButton(new ImageIcon(imgButton));
-        submitButton.setBounds(Consts.WIDTH / 2 - 50, Consts.HEIGHT / 2 + 40, 100, 30);
-        submitButton.setContentAreaFilled(false);
-        submitButton.setBorderPainted(false);
-
-        submitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String name = nameField.getText();
-                if (!name.isEmpty()) {
-                    Test_LOGIC.player1.setName(name); // Cập nhật tên người chơi
-                    new GameModeWindow();
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên người chơi!");
-                }
-            }
-        });
+//        // Nút Submit
+//        ImageIcon playIcon = new ImageIcon(getClass().getResource("/assets/Startbutton.png"));
+//        Image imgButton = playIcon.getImage().getScaledInstance(100, 30, Image.SCALE_SMOOTH);
+//        JButton submitButton = new JButton(new ImageIcon(imgButton));
+//        submitButton.setBounds(Consts.WIDTH / 2 - 50, Consts.HEIGHT / 2 + 40, 100, 30);
+//        submitButton.setContentAreaFilled(false);
+//        submitButton.setBorderPainted(false);
+//
+//        submitButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
 
         // Thêm các thành phần vào JFrame
         add(nameLabel);
-        add(nameField);
-        add(submitButton);
+//        add(submitButton);
         add(background);
 
-        // Hiển thị JFrame
         setVisible(true);
     }
 

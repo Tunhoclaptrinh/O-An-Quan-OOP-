@@ -1,6 +1,5 @@
 package GameGUI;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,7 +10,7 @@ import java.awt.event.WindowEvent;
 public class GameModeWindow extends JFrame {
 
     public GameModeWindow() {
-        // Thiết lập
+        // Thiết lập JFrame
         this.setTitle("Chọn Chế Độ Chơi");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -22,54 +21,71 @@ public class GameModeWindow extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 // Mở lại StartMenu
-                new StartMenu();
+                SwingUtilities.invokeLater(StartMenu::new);
             }
         });
 
-        // Tạo giao diện
+        // Thêm hình nền
+        JLabel background = new JLabel();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/assets/background.png"));
+        Image img = icon.getImage().getScaledInstance(Consts.WIDTH, Consts.HEIGHT, Image.SCALE_SMOOTH);
+        background.setIcon(new ImageIcon(img));
+        background.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
+
+        // Tạo JPanel để chứa các nút
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
+        panel.setOpaque(false); // Đảm bảo nền của panel trong suốt
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 0, 10, 0); // Khoảng cách giữa các nút
+        gbc.insets = new Insets(15, 0, 15, 0); // Khoảng cách giữa các nút
 
-
-        JButton twoPlayerButton = new JButton("Chế Độ 2 Người");
-        twoPlayerButton.setFont(new Font("Arial", Font.BOLD, 30));
-        twoPlayerButton.setBackground(Color.CYAN);
-        twoPlayerButton.setForeground(Color.BLACK);
-        twoPlayerButton.setBorderPainted(false);
-        twoPlayerButton.setFocusPainted(false);
-        twoPlayerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new MainJframe();
-                dispose(); // Đóng cửa sổ chế độ chơi
-            }
-        });
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panel.add(twoPlayerButton, gbc);
-
-        // Chơi với máy test
-        JButton onePlayerButton = new JButton("Chế Độ 1 Người");
-        onePlayerButton.setFont(new Font("Arial", Font.BOLD, 30));
-        onePlayerButton.setBackground(Color.CYAN);
+        // Nút "1 Player Mode"
+        JButton onePlayerButton = new JButton("1 Player Mode");
+        onePlayerButton.setFont(new Font("Press Start 2P", Font.BOLD, 21));
+        onePlayerButton.setBackground(Color.GREEN);
         onePlayerButton.setForeground(Color.BLACK);
         onePlayerButton.setBorderPainted(false);
         onePlayerButton.setFocusPainted(false);
         onePlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(GameModeWindow.this,
-                        "Test", "1 người", JOptionPane.INFORMATION_MESSAGE);
+                new TestGUI();
+                dispose(); // Đóng cửa sổ chế độ chơi
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(onePlayerButton, gbc);
+
+        // Nút "2 Players Mode"
+        JButton twoPlayerButton = new JButton("2 Players Mode");
+        twoPlayerButton.setFont(new Font("Press Start 2P", Font.BOLD, 21));
+        twoPlayerButton.setBackground(Color.GREEN);
+        twoPlayerButton.setForeground(Color.BLACK);
+        twoPlayerButton.setBorderPainted(false);
+        twoPlayerButton.setFocusPainted(false);
+        twoPlayerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new TwoPlayersClient();
+                dispose(); // Đóng cửa sổ chế độ chơi
             }
         });
         gbc.gridx = 0;
         gbc.gridy = 1;
-        panel.add(onePlayerButton, gbc);
+        panel.add(twoPlayerButton, gbc);
 
+        // Đặt panel và background vào JFrame
+        this.setLayout(null);
+        panel.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
         this.add(panel);
-        this.setVisible(true);
+        this.add(background);
 
+        // Hiển thị JFrame
+        this.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(GameModeWindow::new);
     }
 }

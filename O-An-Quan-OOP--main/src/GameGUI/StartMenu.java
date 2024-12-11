@@ -27,14 +27,23 @@ public class StartMenu extends JFrame {
             e.printStackTrace();
         }
 
-        // Tạo giao diện nút
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
+        // Tạo panel chính với hình nền
+        BackgroundPanel mainPanel = new BackgroundPanel();
+        mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        // Khoảng cách của các nút
-        gbc.insets = new Insets(10, 0, 10, 0);
+        gbc.insets = new Insets(10, 0, 10, 0); // Khoảng cách giữa các thành phần
 
-        // Nút "CHƠI NGAY"
+        // Tiêu đề "O AN QUAN GAME"
+        JLabel titleLabel = new JLabel("O AN QUAN GAME");
+        titleLabel.setFont(new Font("Press Start 2P", Font.BOLD, 32));
+        titleLabel.setForeground(Color.YELLOW);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(15, 0, 10, 0); // Khoảng cách từ trên xuống tiêu đề
+        mainPanel.add(titleLabel, gbc);
+
+        // Nút "START"
         JButton playButton = new JButton("Start");
         playButton.setFont(new Font("Press Start 2P", Font.BOLD, 20));
         playButton.setBackground(Color.GREEN);
@@ -44,56 +53,31 @@ public class StartMenu extends JFrame {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new GameModeWindow();
-                dispose();
-            }
-        });
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panel.add(playButton, gbc);
-
-        // Nút "TEST"
-        JButton loginButton = new JButton("Login");
-        loginButton.setFont(new Font("Arial", Font.BOLD, 20));
-        loginButton.setBackground(Color.GREEN);
-        loginButton.setForeground(Color.BLACK);
-        loginButton.setBorderPainted(false);
-        loginButton.setFocusPainted(false);
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
                 new MainJframe();
                 dispose();
             }
         });
         gbc.gridx = 0;
         gbc.gridy = 1;
-        panel.add(loginButton, gbc);
+        gbc.anchor = GridBagConstraints.CENTER; // Đặt nút ở giữa
+        gbc.insets = new Insets(10, 0, 10, 0); // Khoảng cách giữa nút và các thành phần khác
+        mainPanel.add(playButton, gbc);
 
-        // Thêm panel vào
-        this.add(panel);
+        // Thêm panel chính vào JFrame
+        this.setContentPane(mainPanel);
+
+        // Hiển thị JFrame
         this.setVisible(true);
     }
 
-    // Override phương thức paintComponent để vẽ hình nền
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);  // Gọi phương thức paint của JFrame để vẽ lại các thành phần khác
-        if (backgroundImage != null) {
-            // Kích thước mới (scale theo ý muốn)
-            int newWidth = Consts.WIDTH;  // Chiều rộng mong muốn => lấy theo kích cỡ màn hình
-            int newHeight = Consts.HEIGHT; // Chiều cao mong muốn => Lấy theo kích  cỡ màn hình
-
-            // Scale hình ảnh
-            g.drawImage(backgroundImage, 0, 0, newWidth, newHeight, this);
-
-//        // Tính toán vị trí để căn giữa
-//        int x = (panelWidth - imageWidth) / 2;
-//        int y = (panelHeight - imageHeight) / 2;
-
-
-            // Vẽ hình ảnh
-            g.drawImage(backgroundImage, 0, 0, newWidth,newHeight,this);
+    // Lớp tùy chỉnh JPanel để vẽ hình nền
+    private class BackgroundPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (backgroundImage != null) {
+                g.drawImage(backgroundImage, 0, 0, Consts.WIDTH, Consts.HEIGHT, this);
+            }
         }
     }
 

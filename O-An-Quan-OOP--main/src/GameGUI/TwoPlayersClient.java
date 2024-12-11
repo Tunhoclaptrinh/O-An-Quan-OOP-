@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class MainJframe extends JFrame {
+public class TwoPlayersClient extends JFrame {
 
-    public MainJframe() {
+    public TwoPlayersClient() {
         // Thiết lập JFrame
         this.setTitle("Nhập thông tin người dùng");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
@@ -36,7 +36,7 @@ public class MainJframe extends JFrame {
         background.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
 
         // Tạo nhãn và trường nhập tên người chơi
-        JLabel nameLabel = new JLabel("Player's Name ?");
+        JLabel nameLabel = new JLabel("Enter Your Gate ?");
         nameLabel.setBounds(Consts.WIDTH / 2 - 220, Consts.HEIGHT / 3 - 30, 800, 50);
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setFont(new Font("Press Start 2P", Font.BOLD, 30));
@@ -55,14 +55,7 @@ public class MainJframe extends JFrame {
 
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String name = nameField.getText();
-                if (!name.isEmpty()) {
-                    Test_LOGIC.player1.setName(name); // Cập nhật tên người chơi
-                    new GameModeWindow();
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên người chơi!");
-                }
+                new WaitingScreen();
             }
         });
 
