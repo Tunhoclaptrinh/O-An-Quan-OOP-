@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class TwoPlayersClient extends JFrame {
+public class TwoPlayersClient2 extends JFrame {
 
-    public TwoPlayersClient() {
+    public TwoPlayersClient2() {
         // Thiết lập JFrame
         this.setTitle("Nhập thông tin người dùng");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
@@ -44,23 +44,38 @@ public class TwoPlayersClient extends JFrame {
 
         // Tạo nhãn và trường nhập mã phòng chơi
         JLabel roomLabel = new JLabel("Join Game Room:");
-        roomLabel.setBounds(Consts.WIDTH / 2 - 220, Consts.HEIGHT / 3 + 120, 800, 50);
+        roomLabel.setBounds(Consts.WIDTH / 2 - 220, Consts.HEIGHT / 3 + 200, 800, 50);
         roomLabel.setForeground(Color.WHITE);
         roomLabel.setFont(new Font("Press Start 2P", Font.BOLD, 30));
 
         JTextField roomField = new JTextField();
-        roomField.setBounds(Consts.WIDTH / 2 - (Consts.WIDTH * 3) / 10, Consts.HEIGHT / 3 + 180, (Consts.WIDTH * 3) / 5, (Consts.HEIGHT / 10));
+        roomField.setBounds(Consts.WIDTH / 2 - (Consts.WIDTH * 3) / 10, Consts.HEIGHT / 3 + 260, (Consts.WIDTH * 3) / 5, (Consts.HEIGHT / 10));
         roomField.setFont(new Font("Press Start 2P", Font.PLAIN, 30));
+
 
         // Nút Submit
         ImageIcon playIcon = new ImageIcon(getClass().getResource("/assets/Startbutton.png"));
         Image imgButton = playIcon.getImage().getScaledInstance(100, 30, Image.SCALE_SMOOTH);
         JButton submitButton = new JButton(new ImageIcon(imgButton));
-        submitButton.setBounds(Consts.WIDTH / 2 - 50, Consts.HEIGHT / 2 + 200, 100, 30);
+        submitButton.setBounds(Consts.WIDTH / 2 - 50, Consts.HEIGHT / 2 + 20, 100, 30);
         submitButton.setContentAreaFilled(false);
         submitButton.setBorderPainted(false);
 
         submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new WaitingScreen();
+            }
+        });
+
+        //Nút Join
+        ImageIcon joinIcon = new ImageIcon(getClass().getResource("/assets/Startbutton.png"));
+        Image imgJoinButton = joinIcon.getImage().getScaledInstance(100, 30, Image.SCALE_SMOOTH);
+        JButton submitJoinButton = new JButton(new ImageIcon(imgJoinButton));
+        submitJoinButton.setBounds(Consts.WIDTH / 2 - 50, Consts.HEIGHT / 2 + 250, 100, 30);
+        submitJoinButton.setContentAreaFilled(false);
+        submitJoinButton.setBorderPainted(false);
+
+        submitJoinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WaitingScreen();
             }
@@ -72,9 +87,9 @@ public class TwoPlayersClient extends JFrame {
         add(roomLabel);
         add(roomField);
         add(submitButton);
+        add(submitJoinButton);
         add(background);
 
-        // Hiển thị JFrame
         setVisible(true);
     }
 

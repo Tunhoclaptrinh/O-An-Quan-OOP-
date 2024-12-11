@@ -67,7 +67,7 @@ public class GameModeWindow extends JFrame {
         twoPlayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new TwoPlayersClient();
+                new TwoPlayersClient2();
                 dispose(); // Đóng cửa sổ chế độ chơi
             }
         });
