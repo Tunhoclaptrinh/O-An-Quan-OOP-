@@ -10,8 +10,6 @@ public class  Consts {
     public static Toolkit t = Toolkit.getDefaultToolkit();
     public static String BACKGROUND_path = "src/Assets/1x/Asset 3.png";
 
-    // Đường dẫn tới tệp nhạc
-    String musicPath = "src/Assets/pixel-song-27-72476.mp3";
 
 
 }
