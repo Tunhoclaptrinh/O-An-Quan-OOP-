@@ -1,0 +1,95 @@
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (!Arrow.isChoosingDirection) {
+            // Đang chọn ô
+            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+                Chooser.count_y += 1;
+                if (Chooser.count_y > 1) {
+                    Chooser.count_y = 0;
+                }
+                Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
+                arrowR.updateArrowPositions();
+                arrowL.updateArrowPositions();
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+                Chooser.count_y -= 1;
+                if (Chooser.count_y < 0) {
+                    Chooser.count_y = 1;
+                }
+                Chooser.y = (Consts.HEIGHT / 2 + 3 * OCo.THICKNESS / 2) - Chooser.count_y * ODan.HEIGHT;
+                arrowR.updateArrowPositions();
+                arrowL.updateArrowPositions();
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_F) {
+                Chooser.count_x += 1;
+                if (Chooser.count_x > 2) {
+                    Chooser.count_x = -2;
+                }
+                Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
+                arrowR.updateArrowPositions();
+                arrowL.updateArrowPositions();
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+                Chooser.count_x -= 1;
+                if (Chooser.count_x < -2) {
+                    Chooser.count_x = 2;
+                }
+                Chooser.x = ((Consts.WIDTH - Chooser.WIDTH) / 2) + Chooser.count_x * ODan.WIDTH;
+                arrowR.updateArrowPositions();
+                arrowL.updateArrowPositions();
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (Chooser.Choosen) {
+                    // Chuyển sang trạng thái chọn chiều
+                    Arrow.isChoosingDirection = true;
+                    Chooser.Choosen = false;
+                    Chooser.chooserColor = Color.YELLOW;
+                } else {
+                    Chooser.Choosen = true;
+                }
+
+
+            }
+            if (Chooser.Choosen) {
+                Chooser.chooserColor = Color.YELLOW;
+            }
+            else if (!Chooser.Choosen) {
+                Chooser.chooserColor = Color.CYAN;
+            }
+
+        } else {
+            // Đang chọn chiều
+            if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+                Arrow.selectedDirection = "left";
+                arrowL.arrowColor = Color.GREEN; // Đổi màu mũi tên trái để hiển thị đã chọn
+                arrowR.arrowColor = Color.ORANGE; // Mũi tên phải trở lại màu mặc định
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_F) {
+                Arrow.selectedDirection = "right";
+                arrowR.arrowColor = Color.GREEN; // Đổi màu mũi tên phải để hiển thị đã chọn
+                arrowL.arrowColor = Color.ORANGE; // Mũi tên trái trở lại màu mặc định
+            }
+
+            if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
+                // Kết thúc chọn chiều, thực hiện hành động tiếp theo
+                Arrow.isChoosingDirection = false;
+                System.out.println("Chiều đã chọn: " + Arrow.selectedDirection);
+                // Reset trạng thái để chuẩn bị cho lượt tiếp theo
+                Arrow.selectedDirection = "";
+                Chooser.chooserColor = Color.CYAN; // Reset màu ô chọn
+            }
+        }
+<<<<<<< HEAD
+    }
+.......
+=======
+    }
+>>>>>>> 0355d3860142b59c1090af7f64e839e6fa775430
+
+
+// fix git
