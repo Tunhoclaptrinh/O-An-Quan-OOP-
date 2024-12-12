@@ -52,8 +52,8 @@ public class TwoPlayersClient2 extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
                 SwingUtilities.invokeLater(() -> new GameModeWindow());
+                dispose();
             }
         });
 
@@ -88,6 +88,7 @@ public class TwoPlayersClient2 extends JFrame {
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WaitingScreen();
+                dispose();
             }
         });
 
@@ -102,6 +103,7 @@ public class TwoPlayersClient2 extends JFrame {
         submitJoinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WaitingScreen();
+                dispose();
             }
         });
 

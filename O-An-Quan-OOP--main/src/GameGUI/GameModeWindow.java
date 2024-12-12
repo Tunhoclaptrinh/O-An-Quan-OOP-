@@ -44,8 +44,8 @@ public class GameModeWindow extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
                 SwingUtilities.invokeLater(() -> new MainJframe());
+                dispose();
             }
         });
 
@@ -91,6 +91,7 @@ public class GameModeWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new TwoPlayersClient2();
+                dispose();
             }
         });
         gbc.gridx = 0;

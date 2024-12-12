@@ -23,6 +23,7 @@ public class TwoPlayersClient extends JFrame {
             public void windowClosing(WindowEvent e) {
                 // Kiểm tra nếu StartMenu tồn tại
                 SwingUtilities.invokeLater(GameModeWindow::new);
+                dispose();
             }
         });
 
@@ -63,6 +64,7 @@ public class TwoPlayersClient extends JFrame {
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new WaitingScreen();
+                dispose();
             }
         });
 

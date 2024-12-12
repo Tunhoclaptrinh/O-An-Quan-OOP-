@@ -73,8 +73,9 @@ public class TestGUI extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Đóng cửa sổ hiện tại
-                SwingUtilities.invokeLater(() -> new GameModeWindow()); // Quay về cửa sổ chính
+                // Đóng cửa sổ hiện tại
+                SwingUtilities.invokeLater(() -> new GameModeWindow()); // Quay về cửa
+                dispose();
             }
         });
 
@@ -427,4 +428,3 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
     }
 }
-
