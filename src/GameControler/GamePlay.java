@@ -13,8 +13,9 @@ public class GamePlay {
 
 
     // Khai báo 2 người chơi
-    public static Player player2 = new Player("Máy");
     public static Player player1 = new Player("Tuấn");
+    public static Player player2 = new Player("Máy");
+
 
     public static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
     private static int count = 2; //Điều kiện ăn Quan ở vòng chơi thứ 3
@@ -80,39 +81,57 @@ public class GamePlay {
             printBoard();
 
             if (oQuans.get(0).sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) == 0 && oQuans.get(1).sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) == 0) {
-//                Cộng điểm còn lại trên bàn cờ
                 player1.setDans(sumRange(0, 5));
                 player2.setDans(sumRange(6, 11));
+                System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
+                System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
 
-                printFinalScore();
-
+                if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
+                    System.out.println("Player:" + player2.getName()  + ": Win!");
+                } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
+                    System.out.println("Player:" + player1.getName()  + ": Win!");
+                } else {
+                    System.out.println("Hòa");
+                }
                 break;
             }
 
-            int hole;
+            int hole = -1;
+            String chieu = "";
             if (currentPlayer == player1.getPlayer_id()) {
                 System.out.println("Player1: "+ player1.getName());
                 System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
-                hole = scanner.nextInt();
-                if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
+                player1.setHole();
+
+                hole = player1.getHole();
+                if (player1.getHole() == oQuans.get(0).getIndex() || player1.getHole() == oQuans.get(1).getIndex() || oDans.get(player1.getHole()).sumDans(oDans.get(player1.getHole()).getDans()) == 0 || player1.getHole() < 0 || player1.getHole() > 4) {
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
                     continue;
                 }
-            } else {
+
+                System.out.print("Chọn chiều Phải - Trái (p/t): ");
+                player1.setDirection();
+                chieu = player1.getDirection();
+
+
+            } else /*if (currentPlayer == player2.getPlayer_id())*/ {
                 System.out.println("Player2: " + player2.getName());
                 System.out.print("Chọn lỗ (6-10) <=> (1-5): ");
-                hole = scanner.nextInt();
-                if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
+                player2.setHole();
+
+                hole = player2.getHole();
+                if (player2.getHole() == oQuans.get(0).getIndex() || player2.getHole() == oQuans.get(1).getIndex() || oDans.get(player2.getHole()).sumDans(oDans.get(player2.getHole()).getDans()) == 0 || player2.getHole() < 6 || player2.getHole() > 10) {
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
                     continue;
                 }
+
+                System.out.print("Chọn chiều Phải - Trái (p/t): ");
+                player2.setDirection();
+                chieu = player2.getDirection();
+
             }
-
-            System.out.print("Chọn chiều Phải - Trái (p/t): ");
-            String chieu = scanner.next();
-
-            int i = chieu.equals("t") ? hole - 1 : hole + 1;
-            phanphoi(hole, chieu, i);
+            int i = (chieu == "t") ? hole - 1 : hole + 1;
+            phanphoi(hole, String.valueOf(chieu), i);
             printBoard();
         }
     }

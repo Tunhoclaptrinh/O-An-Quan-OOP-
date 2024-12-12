@@ -111,6 +111,10 @@ public class Test_LOGIC {
                 currentPlayer = 0;
             }
 
+            if (Test_LOGIC.currentPlayer == player2.getPlayer_id() &&  player2.getName() == "Máy"){
+                Test_LOGIC.isWaitingForInput = false;
+            }
+
             WaitingForInput();
 
 
@@ -125,37 +129,78 @@ public class Test_LOGIC {
                 break;
             }
 
-            int hole = 0;
-            if (currentPlayer == 0 && Chooser.Choosen == true) {
+//            int hole = 0;
+//            if (currentPlayer == 0 && Chooser.Choosen == true) {
+//                System.out.println("Player1: "+ player1.getName());
+//                System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
+//                hole = Chooser.INDEX;
+//                if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
+//                    System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
+//                    continue;
+//                } else {
+//                    System.out.println(hole);
+//                }
+//            } else if (currentPlayer == 1 && Chooser.Choosen == true) {
+//                System.out.println("Player2: " + player2.getName());
+//                System.out.print("Chọn lỗ (6-10) <=> (1-5): ");
+//                hole = Chooser.INDEX;
+//                if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
+//                    System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
+//                    continue;
+//                } else {
+//                    System.out.println(hole);
+//                }
+//
+//            }
+//
+//            System.out.print("Chọn chiều Phải - Trái (p/t): ");
+//
+//            WaitingForInput();
+//
+//            String chieu = Arrow.selectedDirection;
+//
+////            String chieu = p;
+//
+//            System.out.println("Chiều đã chọn: " + Arrow.selectedDirection);
+//            Arrow.selectedDirection = "";
+
+
+            int hole = -1;
+            String chieu = "";
+
+
+            if (currentPlayer == player1.getPlayer_id()) {
                 System.out.println("Player1: "+ player1.getName());
                 System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
-                hole = Chooser.INDEX;
-                if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
+                player1.setHole();
+
+                hole = player1.getHole();
+                if (player1.getHole() == oQuans.get(0).getIndex() || player1.getHole() == oQuans.get(1).getIndex() || oDans.get(player1.getHole()).sumDans(oDans.get(player1.getHole()).getDans()) == 0 || player1.getHole() < 0 || player1.getHole() > 4) {
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
                     continue;
-                } else {
-                    System.out.println(hole);
                 }
-            } else if (currentPlayer == 1 && Chooser.Choosen == true) {
+
+                System.out.print("Chọn chiều Phải - Trái (p/t): ");
+                player1.setDirection();
+                chieu = player1.getDirection();
+
+
+            } else /*if (currentPlayer == player2.getPlayer_id())*/ {
                 System.out.println("Player2: " + player2.getName());
                 System.out.print("Chọn lỗ (6-10) <=> (1-5): ");
-                hole = Chooser.INDEX;
-                if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
+                player2.setHole();
+
+                hole = player2.getHole();
+                if (player2.getHole() == oQuans.get(0).getIndex() || player2.getHole() == oQuans.get(1).getIndex() || oDans.get(player2.getHole()).sumDans(oDans.get(player2.getHole()).getDans()) == 0 || player2.getHole() < 6 || player2.getHole() > 10) {
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
                     continue;
-                } else {
-                    System.out.println(hole);
                 }
 
+                System.out.print("Chọn chiều Phải - Trái (p/t): ");
+                player2.setDirection();
+                chieu = player2.getDirection();
+
             }
-
-            System.out.print("Chọn chiều Phải - Trái (p/t): ");
-
-            WaitingForInput();
-
-            String chieu = Arrow.selectedDirection;
-            System.out.println("Chiều đã chọn: " + Arrow.selectedDirection);
-            Arrow.selectedDirection = "";
 
             int i = chieu.equals("t") ? hole - 1 : hole + 1;
             phanphoi(hole, chieu, i);

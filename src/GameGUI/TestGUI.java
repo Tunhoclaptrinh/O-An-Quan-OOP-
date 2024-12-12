@@ -2,10 +2,7 @@ package GameGUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 import GameControler.Test_LOGIC;
 import Model.OCo.*;
@@ -20,20 +17,80 @@ public class TestGUI extends JFrame {
 
 
     public TestGUI() {
-
-        this.add(cw);
-        this.pack();
+        // Cấu hình JFrame
         this.setTitle("O An Quan");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setLayout(null);
+
+        // Thêm WindowListener
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showConfirmDialog(
+                        TestGUI.this,
+                        "Bạn có chắc muốn thoát không?",
+                        "Xác nhận thoát",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0); // Thoát chương trình
+                }
+
+            }
+        });
+
+        // Tạo JLayeredPane để quản lý các thành phần trên các lớp
+        JLayeredPane layeredPane = new JLayeredPane();
+        this.setContentPane(layeredPane);
+        layeredPane.setLayout(null);
+
+        // Tạo JLabel để làm hình nền
+        JLabel background = new JLabel();
+        ImageIcon bgIcon = new ImageIcon(Consts.BACKGROUND_path);
+        background.setIcon(new ImageIcon(bgIcon.getImage().getScaledInstance(Consts.WIDTH, Consts.HEIGHT, Image.SCALE_SMOOTH)));
+        background.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
+
+        // Thêm background vào JLayeredPane với layer thấp nhất
+        layeredPane.add(background, JLayeredPane.DEFAULT_LAYER);  // Dùng JLayeredPane.DEFAULT_LAYER thay vì Integer(0)
+
+        // Tạo ControlWindow (bàn cờ)
+        cw.setOpaque(false); // Đảm bảo ControlWindow không che hình nền
+        cw.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
+        layeredPane.add(cw, JLayeredPane.PALETTE_LAYER); // Dùng JLayeredPane.PALETTE_LAYER thay vì Integer(1)
+
+        // Tạo nút "Back"
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(20, Consts.HEIGHT - 80, 100, 40); // Góc dưới bên trái
+        backButton.setFont(new Font("Press Start 2P", Font.BOLD, 8));
+        backButton.setBackground(Color.GREEN);
+        backButton.setForeground(Color.BLACK);
+        backButton.setBorderPainted(false);
+        backButton.setFocusPainted(false);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                 // Đóng cửa sổ hiện tại
+                SwingUtilities.invokeLater(() -> new GameModeWindow()); // Quay về cửa
+                dispose();
+            }
+        });
+
+        // Thêm nút "Back" vào JLayeredPane với layer cao nhất
+        layeredPane.add(backButton, JLayeredPane.MODAL_LAYER); // Dùng JLayeredPane.MODAL_LAYER thay vì Integer(2)
+
+        // Hiển thị JFrame
         this.setVisible(true);
 
-        // Setup bàn cờ
+        // Khởi tạo logic bàn cờ
         Test_LOGIC.P();
-
     }
+
+
+
 
     public static void main(String[] args) throws InterruptedException {
         StartMenu.main(null);
@@ -46,7 +103,7 @@ public class TestGUI extends JFrame {
 class ControlWindow extends JPanel implements ActionListener, KeyListener {
     private Timer timer = new Timer(10, this);
 
-    public static Image BACKGROUND = t.getImage("src/Assets/1x/Asset 3.png");
+    public static Image BACKGROUND = t.getImage(Consts.BACKGROUND_path);
 
 
     // Ô Chọn
@@ -371,4 +428,3 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
     }
 }
-

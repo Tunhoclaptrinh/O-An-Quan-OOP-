@@ -1,5 +1,8 @@
 package Model.Player;
 
+import GameControler.Test_LOGIC;
+import GameGUI.Arrow;
+import GameGUI.Chooser;
 import Model.Da.Dan;
 import Model.Da.Quan;
 
@@ -7,14 +10,16 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import static GameControler.Test_LOGIC.WaitingForInput;
+
 public class Player {
     private static int counter = 0;
 
     private String name;
     private int player_id = -1;
 
-    private int hole;
-    private char direction;
+    private int hole = 2;
+    private String direction;
     private static Scanner scanner = new Scanner(System.in); // Sử dụng `scanner` dùng chung
 
 
@@ -44,7 +49,7 @@ public class Player {
         return hole;
     }
 
-    public char getDirection() {
+    public String getDirection() {
         return direction;
     }
 
@@ -85,8 +90,12 @@ public class Player {
 
         // Chơi hai người bình thường
         else {
-            this.hole = scanner.nextInt();
+//            this.hole = scanner.nextInt();
+//            WaitingForInput();
+            this.hole = Chooser.INDEX;
+
         }
+
 
     }
 
@@ -98,10 +107,10 @@ public class Player {
             boolean rd = new Random().nextBoolean();
 
             if (rd == true) {
-                this.direction = 't';
+                this.direction = "t";
             }
             else {
-                this.direction = 'p';
+                this.direction = "p";
             }
             System.out.println(this.direction);
         }
@@ -110,9 +119,10 @@ public class Player {
         else {
 
 
+            WaitingForInput();
 
-
-            this.direction = scanner.next().charAt(0);
+//            this.direction = scanner.next();
+            this.direction = Arrow.selectedDirection;
         }
 
     }
