@@ -90,8 +90,6 @@ public class TestGUI extends JFrame {
     }
 
 
-
-
     public static void main(String[] args) throws InterruptedException {
         StartMenu.main(null);
 //        new TestGUI();
@@ -189,7 +187,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
             g.drawString("Luot choi Player2: " + Test_LOGIC.player2.getName() , Consts.WIDTH/2 - textWidth2/2, Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
         }
 
-
+        g.drawString("Current Stones: " + Test_LOGIC.currentStones + "" , Consts.WIDTH/2 , Consts.HEIGHT/4 + textHeight);
 
         // Vẽ Ô Quan
         g.setColor(OQuan.oQuanColor);

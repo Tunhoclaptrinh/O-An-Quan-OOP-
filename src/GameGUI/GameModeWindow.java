@@ -1,5 +1,7 @@
 package GameGUI;
 
+import GameControler.Test_LOGIC;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,7 +46,6 @@ public class GameModeWindow extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 SwingUtilities.invokeLater(() -> new MainJframe());
                 dispose();
             }
@@ -75,8 +76,13 @@ public class GameModeWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new TestGUI();
+
+                dispose();
+
             }
+
         });
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         panel.add(onePlayerButton, gbc);
@@ -92,6 +98,8 @@ public class GameModeWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new TwoPlayersClient2();
+                dispose();
+
             }
         });
         gbc.gridx = 0;

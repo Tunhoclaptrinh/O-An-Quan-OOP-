@@ -34,6 +34,7 @@ public class Test_LOGIC {
     public static ArrayList<Dan> dans = init.InitDan();
     public static ArrayList<OQuan> oQuans = init.InitOQuan();
     public static ArrayList<Quan> quans = init.InitQuan();
+    public static int currentStones;
 
     public static void P() {
 
@@ -113,6 +114,8 @@ public class Test_LOGIC {
 
             if (Test_LOGIC.currentPlayer == player2.getPlayer_id() &&  player2.getName() == "Máy"){
                 Test_LOGIC.isWaitingForInput = false;
+                Arrow.selectedDirection = "";
+                Chooser.Choosen = false;
             }
 
             WaitingForInput();
@@ -213,6 +216,8 @@ public class Test_LOGIC {
 
             // Distribute stones to the left
             ArrayList stones = (ArrayList) (oDans.get(hole).getDans()).clone();
+            currentStones = stones.size();
+
 
             oDans.get(hole).getDans().clear();
             while (!stones.isEmpty()) {
@@ -229,6 +234,8 @@ public class Test_LOGIC {
                     oDans.get(i).setDans(dan_temp);
                 }
                 stones.remove(stones.size() - 1);
+
+                currentStones --;
 
                 if (stones.isEmpty()) {
                     if (i - 1 == -1){
@@ -247,6 +254,9 @@ public class Test_LOGIC {
                         i--;
                     }
                     if (i < 0) i = 11;
+                    currentStones = stones.size();
+                    Thread.sleep(3000);
+
                 }
                 i--;
 
@@ -365,6 +375,8 @@ public class Test_LOGIC {
         } else if (chieu.equals("p")) {
             // Distribute stones to the right
             ArrayList stones = (ArrayList) (oDans.get(hole).getDans()).clone();
+            currentStones = stones.size();
+
             oDans.get(hole).getDans().clear();
             while (!stones.isEmpty()) {
                 Dan dan_temp = (Dan) stones.get(stones.size()-1);
@@ -380,6 +392,8 @@ public class Test_LOGIC {
                     oDans.get(i).setDans(dan_temp);
                 }
                 stones.remove(stones.size() - 1);
+
+                currentStones --;
 
 
                 if (stones.isEmpty()) {
@@ -404,6 +418,8 @@ public class Test_LOGIC {
                         i++;
                     }
                     if (i>11) i = 0;
+                    currentStones = stones.size();
+                    Thread.sleep(3000);
                 }
                 i++;
 
@@ -534,7 +550,7 @@ public class Test_LOGIC {
     }
 
     //Rải thêm Dân vào ô khi rơi vào trường hợp còn game, đến lượt nhưng không có Dân trên bàn cờ phía mình để rải.
-    private static void raithhem() {
+    private static void raithhem() throws InterruptedException {
         if (currentPlayer == player1.getPlayer_id() || currentPlayer == player1.getPlayer_id() + 2) {
             if (sumRange(0, 5).isEmpty()) {
                 if (player1.getDans().size() == 0) {
@@ -564,6 +580,7 @@ public class Test_LOGIC {
                     }
                 }
             }
+            Thread.sleep(1000);
         }
 
         if (currentPlayer == player2.getPlayer_id()) {

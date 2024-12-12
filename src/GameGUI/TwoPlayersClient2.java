@@ -52,8 +52,8 @@ public class TwoPlayersClient2 extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
                 SwingUtilities.invokeLater(() -> new GameModeWindow());
+                dispose();
             }
         });
 
