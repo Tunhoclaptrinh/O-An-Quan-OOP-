@@ -13,15 +13,39 @@ public class GameModeWindow extends JFrame {
         // Thiết lập JFrame
         this.setTitle("Chọn Chế Độ Chơi");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                // Mở lại StartMenu
-                SwingUtilities.invokeLater(StartMenu::new);
+                int confirm = JOptionPane.showConfirmDialog(
+                        GameModeWindow.this,
+                        "Bạn có chắc muốn thoát không?",
+                        "Xác nhận thoát",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0); // Thoát chương trình
+                }
+
+            }
+        });
+
+        // Tạo nút "Back"
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(10, 10, 70, 35);
+        backButton.setFont(new Font("Press Start 2P", Font.BOLD, 8));
+        backButton.setBackground(Color.GREEN);
+        backButton.setForeground(Color.BLACK);
+        backButton.setBorderPainted(false);
+        backButton.setFocusPainted(false);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                SwingUtilities.invokeLater(() -> new MainJframe());
             }
         });
 
@@ -50,7 +74,6 @@ public class GameModeWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new TestGUI();
-                dispose(); // Đóng cửa sổ chế độ chơi
             }
         });
         gbc.gridx = 0;
@@ -68,7 +91,6 @@ public class GameModeWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new TwoPlayersClient2();
-                dispose(); // Đóng cửa sổ chế độ chơi
             }
         });
         gbc.gridx = 0;
@@ -79,6 +101,8 @@ public class GameModeWindow extends JFrame {
         this.setLayout(null);
         panel.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
         this.add(panel);
+        this.add(backButton);
+
         this.add(background);
 
         // Hiển thị JFrame

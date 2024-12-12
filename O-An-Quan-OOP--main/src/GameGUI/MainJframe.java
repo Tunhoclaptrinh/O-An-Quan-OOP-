@@ -15,7 +15,7 @@ public class MainJframe extends JFrame {
         // Thiết lập JFrame
         this.setTitle("Nhập thông tin người dùng");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLayout(null); // Tùy chỉnh vị trí các thành phần
         this.setLocationRelativeTo(null);
 
@@ -23,8 +23,16 @@ public class MainJframe extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                // Kiểm tra nếu StartMenu tồn tại
-                SwingUtilities.invokeLater(StartMenu::new);
+                int confirm = JOptionPane.showConfirmDialog(
+                        MainJframe.this,
+                        "Bạn có chắc muốn thoát không?",
+                        "Xác nhận thoát",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0); // Thoát chương trình
+                }
+
             }
         });
 
@@ -34,6 +42,21 @@ public class MainJframe extends JFrame {
         Image img = icon.getImage().getScaledInstance(Consts.WIDTH, Consts.HEIGHT, Image.SCALE_SMOOTH);
         background.setIcon(new ImageIcon(img));
         background.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
+
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(10, 10, 70, 35);
+        backButton.setFont(new Font("Press Start 2P", Font.BOLD, 8));
+        backButton.setBackground(Color.GREEN);
+        backButton.setForeground(Color.BLACK);
+        backButton.setBorderPainted(false);
+        backButton.setFocusPainted(false);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                SwingUtilities.invokeLater(() -> new StartMenu());
+            }
+        });
 
         // Tạo nhãn và trường nhập tên người chơi
         JLabel nameLabel = new JLabel("Player's Name ?");
@@ -70,6 +93,7 @@ public class MainJframe extends JFrame {
         add(nameLabel);
         add(nameField);
         add(submitButton);
+        add(backButton);
         add(background);
 
         // Hiển thị JFrame

@@ -9,7 +9,10 @@ import Initialization.InitializationForTwo;
 import Model.OCo.ODan;
 import Model.OCo.OQuan;
 import Model.Player.Player;
+import dao.PlayerDAO;
+import database.JDBCUtil;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,6 +21,7 @@ public class Test_LOGIC {
 
     public static Player player1 = new Player("Tun");
     public static Player player2 = new Player("Máy");
+    //private static PlayerDAO playerDAO = new PlayerDAO();
 
 
     public static int currentPlayer = player1.getPlayer_id(); //đếm người chơi => Xoay vòng chơi
@@ -36,6 +40,10 @@ public class Test_LOGIC {
     public static ArrayList<Quan> quans = init.InitQuan();
 
     public static void P() {
+
+//        System.out.println("=== Bảng điểm trước khi bắt đầu ===");
+//        playerDAO.displayAllScores();
+//        System.out.println("\n=== Bắt đầu thiết lập trò chơi ===");
 
         //Thêm Dân vào Ô Dân
         int danIndex = 0;
@@ -581,14 +589,39 @@ public class Test_LOGIC {
 
     // In ra điểm cuối cùng và tuyên bố kết quả kết thúc màn chơi.
     private static void printFinalScore() {
-        System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
-        System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
-        if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
-            System.out.println(player1.getName() +": Win!");
-        } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
-            System.out.println(player2.getName() +": Win!");
-        } else {
-            System.out.println("Hòa");
+        try {
+            int player1Score = player1.sumQuanAndDans();
+            int player2Score = player2.sumQuanAndDans();
+
+            // Kiểm tra giá trị trả về
+            System.out.println("Player 1: Name = " + player1.getName() + ", Score = " + player1Score);
+            System.out.println("Player 2: Name = " + player2.getName() + ", Score = " + player2Score);
+
+            // Kiểm tra tên người chơi
+            if (player1.getName() == null || player2.getName() == null) {
+                throw new IllegalArgumentException("Player name cannot be null!");
+            }
+
+            // Lưu điểm vào cơ sở dữ liệu
+//            System.out.println("Saving score for: " + player1.getName() + ", score: " + player1Score);
+//            playerDAO.saveScoreToDatabase(player1.getName(), player1Score);
+//
+//            System.out.println("Saving score for: " + player2.getName() + ", score: " + player2Score);
+//            playerDAO.saveScoreToDatabase(player2.getName(), player2Score);
+
+            // In kết quả cuối cùng
+            if (player1Score > player2Score) {
+                System.out.println(player1.getName() + ": Win!");
+            } else if (player2Score > player1Score) {
+                System.out.println(player2.getName() + ": Win!");
+            } else {
+                System.out.println("Hòa");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Unexpected error occurred.");
+            e.printStackTrace();
         }
     }
+
 }

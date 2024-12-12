@@ -24,7 +24,7 @@ public class WaitingScreen extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 // Kiểm tra nếu StartMenu tồn tại
-                SwingUtilities.invokeLater(StartMenu::new);
+                SwingUtilities.invokeLater(GameModeWindow::new);
             }
         });
 
@@ -35,7 +35,6 @@ public class WaitingScreen extends JFrame {
         background.setIcon(new ImageIcon(img));
         background.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
 
-        // Tạo nhãn và trường nhập tên người chơi
         JLabel nameLabel = new JLabel("Waiting for Player 2...");
         nameLabel.setBounds(Consts.WIDTH / 2 - 375, Consts.HEIGHT / 3 - 40, 800, 50);
         nameLabel.setForeground(Color.WHITE);

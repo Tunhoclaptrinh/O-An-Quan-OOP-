@@ -43,6 +43,7 @@
 //}
 package Network;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -52,6 +53,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client2 {
+
     public static int port = 0;
 
 

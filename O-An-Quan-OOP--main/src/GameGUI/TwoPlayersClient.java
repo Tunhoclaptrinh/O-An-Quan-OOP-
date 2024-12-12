@@ -22,7 +22,7 @@ public class TwoPlayersClient extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 // Kiểm tra nếu StartMenu tồn tại
-                SwingUtilities.invokeLater(StartMenu::new);
+                SwingUtilities.invokeLater(GameModeWindow::new);
             }
         });
 
