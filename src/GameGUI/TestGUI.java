@@ -152,26 +152,33 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.GREEN);
         g.setFont(gameFont);
 
+        // Lấy font hiện tại
+        Font font = g.getFont();
+        // Lấy FontMetrics từ Graphics
+        FontMetrics metrics = g.getFontMetrics(font);
+
+        String text0 = Test_LOGIC.player2.getName() + " :Player2 ";
+        String textScore2 = Test_LOGIC.player2.sumQuanAndDans() + "  : Score " ;
+        int textWidth0 = metrics.stringWidth(text0);
+        int textWidthScore = metrics.stringWidth(textScore2);
+
         // Hiển thị tên người chơi
-        g.drawString("Player1: " + Test_LOGIC.player1.getName(), 5, 40);
-        g.drawString( Test_LOGIC.player2.getName() + " :Player2", Consts.WIDTH - 250 - 130, 40);
+        g.drawString(" Player1: " + Test_LOGIC.player1.getName(), 3, 40);
+        g.drawString( Test_LOGIC.player2.getName() + " :Player2", Consts.WIDTH - textWidth0, 40);
 
         // Hiển thị điểm người chơi
-        g.drawString("Score: " + Test_LOGIC.player1.sumQuanAndDans(), 5, 90);
-        g.drawString(Test_LOGIC.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - 250 - 70, 90);
-        g.drawString(Test_LOGIC.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - 250 - 70, 90);
+        g.drawString(" Score: " + Test_LOGIC.player1.sumQuanAndDans(), 3, 90);
+//        g.drawString(Test_LOGIC.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - 250 - 70, 90);
+        g.drawString(Test_LOGIC.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - textWidthScore, 90);
 
 
 
         //Hiển thị lượt của người chơi
         g2d.setColor(Color.YELLOW);
         // Chuỗi cần đo kích thước
-        String text1 = "Luot choi Player1: " + Test_LOGIC.player1.getName();
-        String text2 = "Luot choi Player2: " + Test_LOGIC.player2.getName();
-        // Lấy font hiện tại
-        Font font = g.getFont();
-        // Lấy FontMetrics từ Graphics
-        FontMetrics metrics = g.getFontMetrics(font);
+        String text1 = "Current Turn Player: " + Test_LOGIC.player1.getName();
+        String text2 = "Current Turn Player: " + Test_LOGIC.player2.getName();
+
 
         // Đo chiều rộng và chiều cao của chuỗi
         int textWidth1 = metrics.stringWidth(text1);
@@ -181,13 +188,18 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         int textHeight = metrics.getHeight();
 
         if (Test_LOGIC.currentPlayer == Test_LOGIC.player1.getPlayer_id()) {
-            g.drawString("Luot choi Player1: " + Test_LOGIC.player1.getName() , Consts.WIDTH/2 - textWidth1/2 , Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
+            g.drawString("Current Turn Player: " + Test_LOGIC.player1.getName() , Consts.WIDTH/2 - textWidth1/2 , Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
         }
         else if (Test_LOGIC.currentPlayer == Test_LOGIC.player2.getPlayer_id()) {
-            g.drawString("Luot choi Player2: " + Test_LOGIC.player2.getName() , Consts.WIDTH/2 - textWidth2/2, Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
+            g.drawString("Current Turn Player: " + Test_LOGIC.player2.getName() , Consts.WIDTH/2 - textWidth2/2, Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
         }
 
-        g.drawString("Current Stones: " + Test_LOGIC.currentStones + "" , Consts.WIDTH/2 , Consts.HEIGHT/4 + textHeight);
+        String currentStones = "Current Stones: " + Test_LOGIC.currentStones;
+
+        int textWidth3 = metrics.stringWidth(currentStones);
+
+
+        g.drawString("Current Stones: " + Test_LOGIC.currentStones + "" , Consts.WIDTH/2 - textWidth3/2 , Consts.HEIGHT/4 + textHeight);
 
         // Vẽ Ô Quan
         g.setColor(OQuan.oQuanColor);
