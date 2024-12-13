@@ -646,9 +646,9 @@ public class Test_LOGIC {
         System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
         System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
         if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
-            System.out.println(player1.getName() +": Win!");
-        } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
             System.out.println(player2.getName() +": Win!");
+        } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
+            System.out.println(player1.getName() +": Win!");
         } else {
             System.out.println("Hòa");
         }
