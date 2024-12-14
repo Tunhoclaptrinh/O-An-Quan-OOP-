@@ -29,7 +29,7 @@ public class TestGUI extends JFrame {
         // Tạo nhạc nền
         MusicPlayer musicPlayer = new MusicPlayer();
 
-        musicPlayer.playMusic(MusicPlayer.musicPath);
+        musicPlayer.playMusic(Consts.musicPath);
 
         // Thêm WindowListener
         this.addWindowListener(new WindowAdapter() {
@@ -285,7 +285,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
     @Override public void keyPressed(KeyEvent e) {
         MusicPlayer musicPressPlayer = new MusicPlayer();
 
-        musicPressPlayer.playPressMusic(MusicPlayer.pressMusicPath);
+        musicPressPlayer.playPressMusic(Consts.pressMusicPath);
         if (!Arrow.isChoosingDirection) {
             //Mũi tên LEN, XUONG
             if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {

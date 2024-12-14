@@ -48,10 +48,6 @@ public class MusicPlayer {
         return clip != null && clip.isRunning();
     }
 
-    // Đường dẫn tới tệp nhạc
-    public static String musicPath = "D:/0. study_material/Javahoidanit_moitruong/Ptit/Test_structure_and_GUI/src/Assets/sound/pixel-song-16-31697.wav";
-    public static String pressMusicPath = "D:/0. study_material/Javahoidanit_moitruong/Ptit/Test_structure_and_GUI/src/Assets/sound/retro-coin-4-236671.wav";
-
 //    public static void playMusic() {
 //        // Tạo đối tượng phát nhạc
 //        MusicPlayer player = new MusicPlayer();
