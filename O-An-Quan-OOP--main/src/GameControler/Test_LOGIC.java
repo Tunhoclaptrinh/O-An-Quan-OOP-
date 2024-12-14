@@ -10,6 +10,7 @@ import Initialization.InitializationForTwo;
 import Model.OCo.ODan;
 import Model.OCo.OQuan;
 import Model.Player.Player;
+import dao.PlayerDAO;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -627,22 +628,37 @@ public class Test_LOGIC {
 
     // In ra điểm cuối cùng và tuyên bố kết quả kết thúc màn chơi.
     private static void printFinalScore() {
-        System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
-        System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
+        // Tạo đối tượng PlayerDAO để thao tác với cơ sở dữ liệu
+        PlayerDAO playerDAO = new PlayerDAO();
 
+        // Lấy điểm của từng người chơi
+        int player1Score = player1.sumQuanAndDans();
+        int player2Score = player2.sumQuanAndDans();
+
+        // Lưu điểm của cả hai người chơi vào cơ sở dữ liệu
+        playerDAO.saveScoreToDatabase(player1.getName(), player1Score);
+        playerDAO.saveScoreToDatabase(player2.getName(), player2Score);
+
+        // In điểm ra console
+        System.out.println("Điểm của " + player1.getName() + ": " + player1Score);
+        System.out.println("Điểm của " + player2.getName() + ": " + player2Score);
+
+        // Hiển thị cửa sổ kết thúc game
         GameOverWindow.showGameOverWindow(
                 player1.getName(),
-                player1.sumQuanAndDans(),
+                player1Score,
                 player2.getName(),
-                player2.sumQuanAndDans()
+                player2Score
         );
 
-        if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
-            System.out.println(player1.getName() +": Win!");
-        } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
-            System.out.println(player2.getName() +": Win!");
+        // Xác định người chiến thắng
+        if (player1Score > player2Score) {
+            System.out.println(player1.getName() + ": Win!");
+        } else if (player2Score > player1Score) {
+            System.out.println(player2.getName() + ": Win!");
         } else {
             System.out.println("Tie");
         }
+
     }
 }
