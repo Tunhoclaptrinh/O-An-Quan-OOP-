@@ -3,12 +3,14 @@ package GameControler;
 
 import GameGUI.Arrow;
 import GameGUI.Chooser;
+import GameGUI.MatchResultWindow;
 import Model.Da.Dan;
 import Model.Da.Quan;
 import Initialization.InitializationForTwo;
 import Model.OCo.ODan;
 import Model.OCo.OQuan;
 import Model.Player.Player;
+import dao.PlayerDAO;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -643,8 +645,20 @@ public class Test_LOGIC {
 
     // In ra điểm cuối cùng và tuyên bố kết quả kết thúc màn chơi.
     private static void printFinalScore() {
+        PlayerDAO playerDAO = new PlayerDAO();
+        playerDAO.saveScoreToDatabase(player1.getName(), player1.sumQuanAndDans());
+        playerDAO.saveScoreToDatabase(player2.getName(), player2.sumQuanAndDans());
+
         System.out.println("Điểm của " + player1.getName() + ": " + player1.sumQuanAndDans());
         System.out.println("Điểm của " + player2.getName() + ": " + player2.sumQuanAndDans());
+
+        MatchResultWindow.showGameOverWindow(
+                player1.getName(),
+                player1.sumQuanAndDans(),
+                player2.getName(),
+                player2.sumQuanAndDans()
+        );
+
         if (player1.sumQuanAndDans() < player2.sumQuanAndDans()) {
             System.out.println(player2.getName() +": Win!");
         } else if (player2.sumQuanAndDans() < player1.sumQuanAndDans()) {
@@ -653,4 +667,5 @@ public class Test_LOGIC {
             System.out.println("Hòa");
         }
     }
+
 }

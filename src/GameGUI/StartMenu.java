@@ -1,5 +1,7 @@
 package GameGUI;
 
+import dao.PlayerDAO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -62,6 +64,36 @@ public class StartMenu extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER; // Đặt nút ở giữa
         gbc.insets = new Insets(10, 0, 10, 0); // Khoảng cách giữa nút và các thành phần khác
         mainPanel.add(playButton, gbc);
+
+//        // Thêm panel chính vào JFrame
+//        this.setContentPane(mainPanel);
+//
+//        // Hiển thị JFrame
+//        this.setVisible(true);
+
+
+
+
+        // Nút "High Scores"
+        JButton scoresButton = new JButton("High Scores");
+        scoresButton.setFont(new Font("Press Start 2P", Font.BOLD, 17));
+        scoresButton.setBackground(Color.GREEN);
+        scoresButton.setForeground(Color.BLACK);
+        scoresButton.setBorderPainted(false);
+        scoresButton.setFocusPainted(false);
+        scoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlayerDAO playerDAO = new PlayerDAO();
+                playerDAO.displayAllScores();
+                dispose();
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.CENTER; // Đặt nút ở giữa
+        gbc.insets = new Insets(10, 0, 10, 0); // Khoảng cách giữa nút và các thành phần khác
+        mainPanel.add(scoresButton, gbc);
 
         // Thêm panel chính vào JFrame
         this.setContentPane(mainPanel);
