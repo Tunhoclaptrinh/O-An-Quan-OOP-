@@ -73,8 +73,6 @@ public class Test_LOGIC {
         if (oDans == null || oQuans == null || oDans.size() < 11 || oQuans.size() < 2) {
             throw new IllegalStateException("Bàn cờ không hợp lệ. Kiểm tra lại việc khởi tạo!");
         }
-
-//        playGame();
         scanner.close();
     }
     public static void WaitingForInput (){
