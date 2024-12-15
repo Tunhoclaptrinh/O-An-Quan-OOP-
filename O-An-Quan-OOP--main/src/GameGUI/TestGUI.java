@@ -201,6 +201,14 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g2d.drawArc(OQuan.x /*- ODan.WITH*/ , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT, 90, 180);
         g2d.drawArc(OQuan.x + 5*ODan.WIDTH  , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT, -90, 180);
 
+
+//        g.drawOval(OQuan.x /*- ODan.WITH*/ , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT);
+//        g.drawOval(OQuan.x + 5*ODan.WIDTH , OQuan.y,2*ODan.WIDTH, 2*ODan.HEIGHT);
+
+        // vẽ đè lên hình tròn => tạo Ô Quan là một nửa hình tròn
+//        g.setColor(Color.GREEN);
+//        g.fillRect(OQuan.x + OQuan.WIDTH/2 , OQuan.y, 5*ODan.WIDTH ,2*ODan.HEIGHT);
+
         //Vẽ Ô Dân
         g.setColor(ODan.oDanColor);
         for (int i = 1; i < 6; i++){
@@ -210,7 +218,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
 
         g2d.setColor(Color.GREEN);
-
+        //Vẽ điểm của Ô Dân
         for (int i = 0; i < 5; i++){
             g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
         }
