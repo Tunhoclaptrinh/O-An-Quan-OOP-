@@ -48,7 +48,6 @@ public class TestGUI extends JFrame {
             }
         });
 
-        // Tạo JLayeredPane để quản lý các thành phần trên các lớp
         JLayeredPane layeredPane = new JLayeredPane();
         this.setContentPane(layeredPane);
         layeredPane.setLayout(null);
@@ -85,7 +84,7 @@ public class TestGUI extends JFrame {
         });
 
         // Thêm nút "Back" vào JLayeredPane với layer cao nhất
-        layeredPane.add(backButton, JLayeredPane.MODAL_LAYER); // Dùng JLayeredPane.MODAL_LAYER thay vì Integer(2)
+        layeredPane.add(backButton, JLayeredPane.MODAL_LAYER);
 
         // Hiển thị JFrame
         this.setVisible(true);
@@ -97,9 +96,6 @@ public class TestGUI extends JFrame {
 
     public static void main(String[] args) throws InterruptedException {
         StartMenu.main(null);
-//        new TestGUI();
-
-//        Test_LOGIC.P();        // LOGIC
         Test_LOGIC.playGame();    }
 }
 
@@ -130,9 +126,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         // Scale hình ảnh
         g.drawImage(BACKGROUND, 0, 0, newWidth, newHeight, this);
 
-        // Vẽ hình ảnh
-        g.drawImage(BACKGROUND, 0, 0, newWidth,newHeight,this);
-
         // Bật chế độ khử răng cưa để vẽ mượt hơn
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -160,7 +153,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
         // Hiển thị điểm người chơi
         g.drawString(" Score: " + Test_LOGIC.player1.sumQuanAndDans(), 3, 90);
-//        g.drawString(Test_LOGIC.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - 250 - 70, 90);
         g.drawString(Test_LOGIC.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - textWidthScore, 90);
 
 
@@ -200,7 +192,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g2d.setColor(Color.WHITE);
         g2d.drawArc(OQuan.x /*- ODan.WITH*/ , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT, 90, 180);
         g2d.drawArc(OQuan.x + 5*ODan.WIDTH  , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT, -90, 180);
-
         //Vẽ Ô Dân
         g.setColor(ODan.oDanColor);
         for (int i = 1; i < 6; i++){
@@ -210,7 +201,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
 
         g2d.setColor(Color.GREEN);
-
+        //Vẽ điểm của Ô Dân
         for (int i = 0; i < 5; i++){
             g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
         }
@@ -393,7 +384,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
                 Test_LOGIC.isWaitingForInput = false; // Gửi tín hiệu tới logic
                 // Reset trạng thái để chuẩn bị cho lượt tiếp theo
-//                Arrow.selectedDirection = "";
                 Chooser.Choosen = false;
                 arrowL.setArrowColor();
                 arrowR.setArrowColor();

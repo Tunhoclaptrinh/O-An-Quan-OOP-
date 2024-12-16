@@ -73,8 +73,6 @@ public class Test_LOGIC {
         if (oDans == null || oQuans == null || oDans.size() < 11 || oQuans.size() < 2) {
             throw new IllegalStateException("Bàn cờ không hợp lệ. Kiểm tra lại việc khởi tạo!");
         }
-
-//        playGame();
         scanner.close();
     }
     public static void WaitingForInput (){
@@ -131,41 +129,6 @@ public class Test_LOGIC {
                 printFinalScore();
                 break;
             }
-
-//            int hole = 0;
-//            if (currentPlayer == 0 && Chooser.Choosen == true) {
-//                System.out.println("Player1: "+ player1.getName());
-//                System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
-//                hole = Chooser.INDEX;
-//                if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
-//                    System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
-//                    continue;
-//                } else {
-//                    System.out.println(hole);
-//                }
-//            } else if (currentPlayer == 1 && Chooser.Choosen == true) {
-//                System.out.println("Player2: " + player2.getName());
-//                System.out.print("Chọn lỗ (6-10) <=> (1-5): ");
-//                hole = Chooser.INDEX;
-//                if (hole == 5 || hole == 11 || oDans.get(hole).sumDans(oDans.get(hole).getDans()) == 0) {
-//                    System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
-//                    continue;
-//                } else {
-//                    System.out.println(hole);
-//                }
-//
-//            }
-//
-//            System.out.print("Chọn chiều Phải - Trái (p/t): ");
-//
-//            WaitingForInput();
-//
-//            String chieu = Arrow.selectedDirection;
-//
-////            String chieu = p;
-//
-//            System.out.println("Chiều đã chọn: " + Arrow.selectedDirection);
-//            Arrow.selectedDirection = "";
 
 
             int hole = -1;

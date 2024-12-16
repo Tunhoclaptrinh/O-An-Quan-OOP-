@@ -63,6 +63,9 @@ public class Server {
             writer1 = new BufferedWriter(new OutputStreamWriter(player1Socket.getOutputStream()));
             String player1Name = reader1.readLine();  // Đọc tên người chơi từ client
             player1 = new Player(player1Name);
+            writer1.write("Player1: " + player1.getName());
+            writer1.newLine();
+            writer1.flush();
 
             new Thread(() -> {
                 try {
@@ -73,8 +76,10 @@ public class Server {
                     String player2Name = reader2.readLine();
                     player2 = new Player(player2Name);  // Khởi tạo player2 khi kết nối
                     isPlayer2Connected = true;
+                    writer2.write("Player2: " + player2.getName());
+                    writer2.newLine();
+                    writer2.flush();
 
-                    // Gửi thông báo "Game start" tới cả 2 người chơi
                     try {
                         writer1.write("Game start");
                         writer1.newLine();
@@ -128,6 +133,26 @@ public class Server {
         }
 
     }
+    public static void sendScoresToClients() {
+        try {
+            if (player1 != null && player2 != null) {
+                int player1Score = player1.sumQuanAndDans();
+                int player2Score = player2.sumQuanAndDans();
+
+                // Gửi điểm đến Player 1
+                writer1.write("Player1Score: " + player1Score);
+                writer1.newLine();
+                writer1.flush();
+
+                // Gửi điểm đến Player 2
+                writer2.write("Player2Score: " + player2Score);
+                writer2.newLine();
+                writer2.flush();
+            }
+        } catch (IOException e) {
+            System.err.println("Lỗi" + e.getMessage());
+        }
+    }
 
     private static void SearchFailed() {
         try {
@@ -160,7 +185,6 @@ public class Server {
             e.printStackTrace();
         }
     }
-
     private static void printBoard() {
         StringBuilder board = new StringBuilder();
         board.append("     | ");
@@ -169,29 +193,22 @@ public class Server {
             board.append(ODan.sumDans(oDans.get(k).getDans())).append(" | ");
         }
         board.append("\n");
-        board.append("[")
-                .append(OQuan.sumQuanAndDans(((OQuan) oQuans.get(1)).getQuan(), ((OQuan) oQuans.get(1)).getDans()))
-                .append(",").append(((OQuan) oQuans.get(1)).getDans().size()).append("]                   [")
-                .append(((OQuan) oQuans.get(0)).getDans().size()).append(",")
-                .append(OQuan.sumQuanAndDans(((OQuan) oQuans.get(0)).getQuan(), ((OQuan) oQuans.get(0)).getDans()))
-                .append("]\n");
+        board.append("[").append(OQuan.sumQuanAndDans(oQuans.get(1).getQuan(), oQuans.get(1).getDans())).append(",").append(oQuans.get(1).getDans().size()).append("]                   [").append(oQuans.get(0).getDans().size()).append(",").append(OQuan.sumQuanAndDans(oQuans.get(0).getQuan(), oQuans.get(0).getDans())).append("]")
+                .append("\n");
         board.append("     | ");
 
         for (int k = 0; k < 5; k++) {
             board.append(ODan.sumDans(oDans.get(k).getDans())).append(" | ");
         }
+        board.append("\n");
 
         try {
-            if (writer1 != null) {
-                writer1.write(board.toString());
-                writer1.newLine();
-                writer1.flush();
-            }
-            if (writer2 != null) {
-                writer2.write(board.toString());
-                writer2.newLine();
-                writer2.flush();
-            }
+            writer1.write(board.toString());
+            writer1.newLine();
+            writer1.flush();
+            writer2.write(board.toString());
+            writer2.newLine();
+            writer2.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -199,7 +216,7 @@ public class Server {
         System.out.println(board);
     }
 
-    public static void playGame() {
+    static void playGame() {
         try {
             while (true) {
                 if (currentPlayer == 2) {
@@ -331,7 +348,7 @@ public class Server {
                 stones = (ArrayList) oDans.get(i+1).getDans().clone();
                 oDans.get(i+1).getDans().clear();
             }
-
+//            i--;
 
 
             //Vòng while để ăn liên tục
@@ -491,7 +508,7 @@ public class Server {
                 stones = (ArrayList) oDans.get(i-1).getDans().clone();
                 oDans.get(i-1).getDans().clear();
             }
-//            i++;
+
 
             //Vòng while để ăn liên tục
             while (stones.isEmpty()) {
@@ -565,6 +582,7 @@ public class Server {
 
 
                 if (i > 11) i = 0;
+
                 printBoard();
                 Thread.sleep(1000);
             }

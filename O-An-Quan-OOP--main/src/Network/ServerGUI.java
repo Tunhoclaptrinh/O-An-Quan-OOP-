@@ -2,51 +2,97 @@ package Network;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
-
-
-import GameGUI.Arrow;
-import GameGUI.Chooser;
-import GameGUI.Consts;
-import GameGUI.StartMenu;
+import GameControler.Test_LOGIC;
+import GameGUI.*;
 import Model.OCo.*;
-import javax.swing.*;
-import Model.OCo.OQuan;
-import Model.Player.Player;
 
-import static GameControler.Test_LOGIC.isWaitingForInput;
+import Model.OCo.OQuan;
+
 import static GameGUI.Consts.t;
 
 
 public class ServerGUI extends JFrame {
     private ControlWindow cw = new ControlWindow();
+
+
     public ServerGUI() {
-        this.pack();
+        // Cấu hình JFrame
         this.setTitle("O An Quan");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setLayout(null);
+
+        // Tạo nhạc nền
+        MusicPlayer musicPlayer = new MusicPlayer();
+
+        musicPlayer.playMusic(Consts.musicPath);
+
+        // Thêm WindowListener
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showConfirmDialog(
+                        ServerGUI.this,
+                        "Bạn có chắc muốn thoát không?",
+                        "Xác nhận thoát",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0); // Thoát chương trình
+                }
+
+            }
+        });
+
+        // Tạo JLayeredPane để quản lý các thành phần trên các lớp
+        JLayeredPane layeredPane = new JLayeredPane();
+        this.setContentPane(layeredPane);
+        layeredPane.setLayout(null);
+
+        // Tạo JLabel để làm hình nền
+        JLabel background = new JLabel();
+        ImageIcon bgIcon = new ImageIcon(Consts.BACKGROUND_path);
+        background.setIcon(new ImageIcon(bgIcon.getImage().getScaledInstance(Consts.WIDTH, Consts.HEIGHT, Image.SCALE_SMOOTH)));
+        background.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
+
+        // Thêm background vào JLayeredPane với layer thấp nhất
+        layeredPane.add(background, JLayeredPane.DEFAULT_LAYER);  // Dùng JLayeredPane.DEFAULT_LAYER thay vì Integer(0)
+
+        // Tạo ControlWindow (bàn cờ)
+        cw.setOpaque(false); // Đảm bảo ControlWindow không che hình nền
+        cw.setBounds(0, 0, Consts.WIDTH, Consts.HEIGHT);
+        layeredPane.add(cw, JLayeredPane.PALETTE_LAYER); // Dùng JLayeredPane.PALETTE_LAYER thay vì Integer(1)
+
+        // Tạo nút "Back"
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(20, Consts.HEIGHT - 80, 100, 40); // Góc dưới bên trái
+        backButton.setFont(new Font("Press Start 2P", Font.BOLD, 8));
+        backButton.setBackground(Color.GREEN);
+        backButton.setForeground(Color.BLACK);
+        backButton.setBorderPainted(false);
+        backButton.setFocusPainted(false);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Đóng cửa sổ hiện tại
+                SwingUtilities.invokeLater(() -> new GameModeWindow()); // Quay về cửa
+                dispose();
+            }
+        });
+
+        // Thêm nút "Back" vào JLayeredPane với layer cao nhất
+        layeredPane.add(backButton, JLayeredPane.MODAL_LAYER); // Dùng JLayeredPane.MODAL_LAYER thay vì Integer(2)
+
+        // Hiển thị JFrame
         this.setVisible(true);
 
-    }
-
-
-    public static void WaitingForInput (){
-        while (isWaitingForInput) {
-            try {
-                Thread.sleep(100); // Tạm dừng để tránh tiêu tốn tài nguyên
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-
-        }
-        // Reset trạng thái sau khi nhận tín hiệu
-        isWaitingForInput = true;
+        // Khởi tạo logic bàn cờ
+        Test_LOGIC.P();
     }
 
 
@@ -65,7 +111,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
     // Ô Chọn
     public Chooser chooser = new Chooser();
 
-    // Mũi tên chọn chiều
+    // Mũi tên chòn chiều
     public Arrow arrowR = new Arrow( "p");
     public Arrow arrowL = new Arrow("t");
 
@@ -83,9 +129,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         // Scale hình ảnh
         g.drawImage(BACKGROUND, 0, 0, newWidth, newHeight, this);
 
-        // Vẽ hình ảnh
-        g.drawImage(BACKGROUND, 0, 0, newWidth,newHeight,this);
-
         // Bật chế độ khử răng cưa để vẽ mượt hơn
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -97,23 +140,32 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.GREEN);
         g.setFont(gameFont);
 
-        // Hiển thị tên người chơi
-        g.drawString("Player1: " + Server.player1, 5, 40);
-        g.drawString( Server.player2 + " :Player2", Consts.WIDTH - 250 - 130, 40);
-//
-//        // Hiển thị điểm người chơi
-        g.drawString("Score: " + Server.player1.sumQuanAndDans(), 5, 90);
-        g.drawString(Server.player2.sumQuanAndDans() + "  : Score" , Consts.WIDTH - 250 - 70, 90);
-
-        //Hiển thị lượt của người chơi
-        g2d.setColor(Color.YELLOW);
-        // Chuỗi cần đo kích thước
-        String text1 = "Luot choi Player1: " + Server.player1;
-        String text2 = "Luot choi Player2: " + Server.player2;
         // Lấy font hiện tại
         Font font = g.getFont();
         // Lấy FontMetrics từ Graphics
         FontMetrics metrics = g.getFontMetrics(font);
+
+        String text0 = Client2.getPlayer1Name() + " :Player2 ";
+        String textScore2 = Client2.score2() + "  : Score " ;
+        int textWidth0 = metrics.stringWidth(text0);
+        int textWidthScore = metrics.stringWidth(textScore2);
+
+        // Hiển thị tên người chơi
+        g.drawString(" Player1: " + Client2.getPlayer1Name(), 3, 40);
+        g.drawString( Client2.getPlayer2Name() + " :Player2", Consts.WIDTH - textWidth0, 40);
+
+        // Hiển thị điểm người chơi
+        g.drawString(" Score: " + Client2.score1(), 3, 90);
+        g.drawString(Client2.score2() + "  : Score" , Consts.WIDTH - textWidthScore, 90);
+
+
+
+        //Hiển thị lượt của người chơi
+        g2d.setColor(Color.YELLOW);
+        // Chuỗi cần đo kích thước
+        String text1 = "Current Turn Player: " + Client2.getPlayer1Name();
+        String text2 = "Current Turn Player: " + Client2.getPlayer2Name();
+
 
         // Đo chiều rộng và chiều cao của chuỗi
         int textWidth1 = metrics.stringWidth(text1);
@@ -122,12 +174,19 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
         int textHeight = metrics.getHeight();
 
-        if (Server.currentPlayer == Server.player1.getPlayer_id()) {
-            g.drawString("Luot choi Player1: " + Server.player1 , Consts.WIDTH/2 - textWidth1/2 , Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
+        if (Server.currentPlayer == 0) {
+            g.drawString("Current Turn Player: " + Client2.getPlayer1Name() , Consts.WIDTH/2 - textWidth1/2 , Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
         }
-        else if (Server.currentPlayer == Server.player2.getPlayer_id()) {
-            g.drawString("Luot choi Player2: " + Server.player2, Consts.WIDTH/2 - textWidth2/2, Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
+        else if (Server.currentPlayer == 1) {
+            g.drawString("Current Turn Player: " + Client2.getPlayer2Name() , Consts.WIDTH/2 - textWidth2/2, Consts.HEIGHT/4 - textHeight /*- ODan.HEIGHT*/);
         }
+
+        String currentStones = "Current Stones: " + Test_LOGIC.currentStones;
+
+        int textWidth3 = metrics.stringWidth(currentStones);
+
+
+        g.drawString("Current Stones: " + Test_LOGIC.currentStones + "" , Consts.WIDTH/2 - textWidth3/2 , Consts.HEIGHT/4 + textHeight);
 
         // Vẽ Ô Quan
         g.setColor(OQuan.oQuanColor);
@@ -136,6 +195,10 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g2d.setColor(Color.WHITE);
         g2d.drawArc(OQuan.x /*- ODan.WITH*/ , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT, 90, 180);
         g2d.drawArc(OQuan.x + 5*ODan.WIDTH  , OQuan.y, 2*ODan.WIDTH, 2*ODan.HEIGHT, -90, 180);
+
+
+
+
         //Vẽ Ô Dân
         g.setColor(ODan.oDanColor);
         for (int i = 1; i < 6; i++){
@@ -147,16 +210,16 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         g2d.setColor(Color.GREEN);
         //Vẽ điểm của Ô Dân
         for (int i = 0; i < 5; i++){
-            g.drawString(  "" + ODan.sumDans(Server.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
+            g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(i).getDans()), OCo.x + OQuan.WIDTH/2 + i*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2 , OCo.y + 2*ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
         }
 
         for (int i = 10; i > 5; i-- ){
-            g.drawString(  "" + ODan.sumDans(Server.oDans.get(5 + 10-i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-5)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
+            g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(6 + 10-i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
         }
 
         //Vẽ điểm ô Quan
-        g.drawString(  "" + OQuan.sumQuanAndDans(Server.oQuans.get(1).getQuan(),Server.oQuans.get(1).getDans()), OCo.x + OQuan.WIDTH/2 - ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y + OQuan.WIDTH/4 + (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan trái
-        g.drawString(  "" + OQuan.sumQuanAndDans(Server.oQuans.get(0).getQuan(),Server.oQuans.get(0).getDans()), OCo.x + OQuan.WIDTH/2  + 5*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y +  OQuan.WIDTH/4 +  (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan phải
+        g.drawString(  "" + OQuan.sumQuanAndDans(Test_LOGIC.oQuans.get(1).getQuan(),Test_LOGIC.oQuans.get(1).getDans()), OCo.x + OQuan.WIDTH/2 - ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y + OQuan.WIDTH/4 + (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan trái
+        g.drawString(  "" + OQuan.sumQuanAndDans(Test_LOGIC.oQuans.get(0).getQuan(),Test_LOGIC.oQuans.get(0).getDans()), OCo.x + OQuan.WIDTH/2  + 5*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/4 , OCo.y +  OQuan.WIDTH/4 +  (ODan.HEIGHT - Consts.FONT_SIZE)); // Quan phải
 
         // Set độ dày cho Chooser
         g2d.setStroke(new BasicStroke(Chooser.THICKNESS));
@@ -197,7 +260,9 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override public void keyPressed(KeyEvent e) {
+        MusicPlayer musicPressPlayer = new MusicPlayer();
 
+        musicPressPlayer.playPressMusic(Consts.pressMusicPath);
         if (!Arrow.isChoosingDirection) {
             //Mũi tên LEN, XUONG
             if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
@@ -267,7 +332,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                 else if (!Chooser.Choosen){
                     Chooser.Choosen = true;
                     Arrow.isChoosingDirection = true;
-                    isWaitingForInput = false; // Gửi tín hiệu tới logic
+//                    Test_LOGIC.isWaitingForInput = false; // Gửi tín hiệu tới logic
 
                 }
             }
@@ -324,9 +389,8 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                     Server.currentPlayer ++;
                 }
 
-                isWaitingForInput = false; // Gửi tín hiệu tới logic
+//                Test_LOGIC.isWaitingForInput = false; // Gửi tín hiệu tới logic
                 // Reset trạng thái để chuẩn bị cho lượt tiếp theo
-//                Arrow.selectedDirection = "";
                 Chooser.Choosen = false;
                 arrowL.setArrowColor();
                 arrowR.setArrowColor();
