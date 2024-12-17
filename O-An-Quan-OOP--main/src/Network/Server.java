@@ -67,6 +67,7 @@ public class Server {
             writer1.newLine();
             writer1.flush();
 
+
             new Thread(() -> {
                 try {
                     player2Socket = serverSocket.accept();  // Người chơi 2 kết nối
@@ -79,8 +80,13 @@ public class Server {
                     writer2.write("Player2: " + player2.getName());
                     writer2.newLine();
                     writer2.flush();
-
+                    writer2.write("Player1: " + player1.getName());
+                    writer2.newLine();
+                    writer2.flush();
                     try {
+                        writer1.write("Player2: " + player2.getName());
+                        writer1.newLine();
+                        writer1.flush();
                         writer1.write("Game start");
                         writer1.newLine();
                         writer1.flush();
@@ -90,7 +96,7 @@ public class Server {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // Thông báo cả 2 client bắt đầu game
+
                     notifyPlayersGameStart();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -139,12 +145,10 @@ public class Server {
                 int player1Score = player1.sumQuanAndDans();
                 int player2Score = player2.sumQuanAndDans();
 
-                // Gửi điểm đến Player 1
                 writer1.write("Player1Score: " + player1Score);
                 writer1.newLine();
                 writer1.flush();
 
-                // Gửi điểm đến Player 2
                 writer2.write("Player2Score: " + player2Score);
                 writer2.newLine();
                 writer2.flush();

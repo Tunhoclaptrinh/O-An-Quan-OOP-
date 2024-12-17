@@ -64,7 +64,9 @@ public class TwoPlayersClient2 extends JFrame {
         joinRoomButton.setBackground(Color.GREEN); // Màu xanh lá
         joinRoomButton.setOpaque(true);            // Bắt buộc để hiện màu nền
         joinRoomButton.setContentAreaFilled(true); // Hiển thị vùng nền
-        joinRoomButton.setBorderPainted(true);    // Ẩn viền nút nếu muốn
+        joinRoomButton.setBorderPainted(false);    // Ẩn viền nút nếu muốn
+
+        joinRoomButton.setFocusPainted(false);
 
         joinRoomButton.addActionListener(e -> new Thread(() -> {
             Client2 n = new Client2();
@@ -78,7 +80,8 @@ public class TwoPlayersClient2 extends JFrame {
         createRoomButton.setBackground(Color.GREEN); // Màu xanh lá
         createRoomButton.setOpaque(true);            // Bắt buộc để hiện màu nền
         createRoomButton.setContentAreaFilled(true); // Hiển thị vùng nền
-        createRoomButton.setBorderPainted(true);    // Ẩn viền nút nếu muốn
+        createRoomButton.setBorderPainted(false);
+        createRoomButton.setFocusPainted(false);
         createRoomButton.addActionListener(e -> new Thread(() -> {
             JOptionPane.showMessageDialog(null,"Server is running in port 12370");
             Server s =new Server();

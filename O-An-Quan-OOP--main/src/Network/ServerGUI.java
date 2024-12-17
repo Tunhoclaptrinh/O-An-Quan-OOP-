@@ -18,7 +18,6 @@ public class ServerGUI extends JFrame {
 
 
     public ServerGUI() {
-        // Cấu hình JFrame
         this.setTitle("O An Quan");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
         this.setLocationRelativeTo(null);
@@ -98,8 +97,8 @@ public class ServerGUI extends JFrame {
 
     public static void main(String[] args) throws InterruptedException {
         StartMenu.main(null);
-
-        Server.playGame();    }
+        Server p =new Server();
+        p.playGame();    }
 }
 
 class ControlWindow extends JPanel implements ActionListener, KeyListener {
@@ -294,7 +293,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
 
             if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_F) {
                 Chooser.count_x += 1;
-//                if (Cho)
                 Chooser.INDEX +=1;
                 if (Chooser.count_x > 2) {
                     Chooser.count_x = -2;
