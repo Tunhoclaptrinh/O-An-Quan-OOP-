@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -19,6 +21,7 @@ public class StartMenu extends JFrame {
         this.setTitle("O An Quan Menu");
         this.setSize(Consts.WIDTH, Consts.HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
@@ -28,6 +31,22 @@ public class StartMenu extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showConfirmDialog(
+                        StartMenu.this,
+                        "Bạn có chắc muốn thoát không?",
+                        "Xác nhận thoát",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    System.exit(0); // Thoát chương trình
+                }
+
+            }
+        });
 
         // Tạo panel chính với hình nền
         BackgroundPanel mainPanel = new BackgroundPanel();
@@ -85,6 +104,26 @@ public class StartMenu extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER; // Đặt nút ở giữa
         gbc.insets = new Insets(10, 0, 10, 0); // Khoảng cách giữa nút và các thành phần khác
         mainPanel.add(scoresButton, gbc);
+
+        //Nút "Game Rule"
+        JButton ruleButton = new JButton("Game Rule");
+        ruleButton.setFont(new Font("Press Start 2P", Font.BOLD, 17));
+        ruleButton.setBackground(Color.GREEN);
+        ruleButton.setForeground(Color.BLACK);
+        ruleButton.setBorderPainted(false);
+        ruleButton.setFocusPainted(false);
+        ruleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GameRule();
+                dispose();
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.CENTER; // Đặt nút ở giữa
+        gbc.insets = new Insets(10, 0, 10, 0); // Khoảng cách giữa nút và các thành phần khác
+        mainPanel.add(ruleButton, gbc);
 
         // Thêm panel chính vào JFrame
         this.setContentPane(mainPanel);
