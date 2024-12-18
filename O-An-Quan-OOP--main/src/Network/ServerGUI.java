@@ -213,7 +213,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
         }
 
         for (int i = 10; i > 5; i-- ){
-            g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(6 + 10-i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
+            g.drawString(  "" + ODan.sumDans(Test_LOGIC.oDans.get(16-i).getDans()), OCo.x + OQuan.WIDTH/2 + (i-6)*ODan.WIDTH + (ODan.WIDTH - Consts.FONT_SIZE)/2, OCo.y + ODan.HEIGHT - (ODan.HEIGHT - Consts.FONT_SIZE + OCo.THICKNESS)/2);
         }
 
         //Vẽ điểm ô Quan
@@ -248,7 +248,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
             // Vẽ viền đen cho đầu mũi tên bên phải
             g2d.setColor(Color.BLACK);
             g2d.drawPolygon(arrowR.xPoints, arrowR.yPoints, 3);
-
         }
     }
 

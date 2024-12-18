@@ -33,7 +33,7 @@ public class Player {
     public Player(String name) {
         this.name = name;
         this.player_id = counter;
-        counter++ ;
+        counter++ ; //id người chơi tăng tự đông => xoay vòng người chơi
     }
 
     //Getter
@@ -71,8 +71,8 @@ public class Player {
     }
 
     public void setDans(ArrayList<Dan> dans) {
-         this.dans.addAll(dans);
-         System.out.println(dans);
+        this.dans.addAll(dans);
+        System.out.println(dans);
     }
 
     public void setQuans(ArrayList<Quan> quans){
@@ -90,8 +90,8 @@ public class Player {
 
         // Chơi hai người bình thường
         else {
-            this.hole = scanner.nextInt();
-            WaitingForInput();
+//            this.hole = scanner.nextInt();
+//            WaitingForInput();
             this.hole = Chooser.INDEX;
 
         }
@@ -144,5 +144,6 @@ public class Player {
             return this.quans.size()*Quan.getScore() + this.dans.size()*Dan.getScore();
         }
     }
+
 
 }

@@ -83,7 +83,7 @@ public class TwoPlayersClient2 extends JFrame {
         createRoomButton.setBorderPainted(false);
         createRoomButton.setFocusPainted(false);
         createRoomButton.addActionListener(e -> new Thread(() -> {
-            JOptionPane.showMessageDialog(null,"Server is running in port 12370");
+            JOptionPane.showMessageDialog(null,"Server is running in port: 12370");
             Server s =new Server();
             Server.Z();
         }).start());

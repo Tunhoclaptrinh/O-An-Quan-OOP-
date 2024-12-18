@@ -77,7 +77,6 @@ public class TestGUI extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                 // Đóng cửa sổ hiện tại
                 SwingUtilities.invokeLater(() -> new GameModeWindow()); // Quay về cửa
                 dispose();
             }
@@ -362,7 +361,6 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                     Arrow.selectedDirection = "";
                     Chooser.Choosen = false;
                     System.out.println("Chiều chưa được chọn");
-
                     arrowL.setArrowColor();
                     arrowR.setArrowColor();
                 }
@@ -382,8 +380,7 @@ class ControlWindow extends JPanel implements ActionListener, KeyListener {
                     Test_LOGIC.currentPlayer ++;
                 }
 
-                Test_LOGIC.isWaitingForInput = false; // Gửi tín hiệu tới logic
-                // Reset trạng thái để chuẩn bị cho lượt tiếp theo
+                Test_LOGIC.isWaitingForInput = false;
                 Chooser.Choosen = false;
                 arrowL.setArrowColor();
                 arrowR.setArrowColor();

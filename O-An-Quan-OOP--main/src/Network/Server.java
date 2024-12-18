@@ -177,14 +177,8 @@ public class Server {
             writer2.write("Game start");
             writer2.newLine();
             writer2.flush();
-            System.out.println("Game start");
-
             playGame();
             scanner.close();
-
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -220,7 +214,7 @@ public class Server {
         System.out.println(board);
     }
 
-    static void playGame() {
+    public static void playGame() {
         try {
             while (true) {
                 if (currentPlayer == 2) {

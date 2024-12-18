@@ -85,7 +85,7 @@ public class Test_LOGIC {
             }
 
         }
-        // Reset trạng thái sau khi nhận tín hiệu
+
         isWaitingForInput = true;
     }
 
@@ -115,33 +115,28 @@ public class Test_LOGIC {
                 Arrow.selectedDirection = "";
                 Chooser.Choosen = false;
             }
-
             WaitingForInput();
-
-
-
-            // Tiến hành logic game
             printBoard();
 
-            if (oQuans.get(0).sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) == 0 && oQuans.get(1).sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) == 0) {
+            if (oQuans.get(0).sumQuanAndDans(oQuans.get(0).getQuan(),oQuans.get(0).getDans()) == 0
+                    && oQuans.get(1).sumQuanAndDans(oQuans.get(1).getQuan(),oQuans.get(1).getDans()) == 0) {
                 player1.setDans(sumRange(0, 5));
                 player2.setDans(sumRange(6, 11));
                 printFinalScore();
                 break;
             }
-
-
             int hole = -1;
             String chieu = "";
-
-
             if (currentPlayer == player1.getPlayer_id()) {
                 System.out.println("Player1: "+ player1.getName());
                 System.out.print("Chọn lỗ (0-4) <=> (1-5): ");
                 player1.setHole();
 
                 hole = player1.getHole();
-                if (player1.getHole() == oQuans.get(0).getIndex() || player1.getHole() == oQuans.get(1).getIndex() || oDans.get(player1.getHole()).sumDans(oDans.get(player1.getHole()).getDans()) == 0 || player1.getHole() < 0 || player1.getHole() > 4) {
+                if (player1.getHole() == oQuans.get(0).getIndex()
+                        || player1.getHole() == oQuans.get(1).getIndex() ||
+                        oDans.get(player1.getHole()).sumDans(oDans.get(player1.getHole()).getDans()) == 0 ||
+                        player1.getHole() < 0 || player1.getHole() > 4) {
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại!");
                     continue;
                 }
@@ -149,9 +144,7 @@ public class Test_LOGIC {
                 System.out.print("Chọn chiều Phải - Trái (p/t): ");
                 player1.setDirection();
                 chieu = player1.getDirection();
-
-
-            } else /*if (currentPlayer == player2.getPlayer_id())*/ {
+            } else{
                 System.out.println("Player2: " + player2.getName());
                 System.out.print("Chọn lỗ (6-10) <=> (1-5): ");
                 player2.setHole();
@@ -489,16 +482,6 @@ public class Test_LOGIC {
 
                 if (i > 11) i = 0;
 
-//                if (i==oQuans.get(0).getIndex() && !stones.isEmpty()) {
-//                    if (!oQuans.get(0).getQuan().isEmpty()) {
-//                        break;
-//                    }
-//                }
-//                if (i==oQuans.get(1).getIndex() && !stones.isEmpty()) {
-//                    if (!oQuans.get(1).getQuan().isEmpty() ) {
-//                        break;
-//                    }
-//                }
 
                 printBoard();
                 Thread.sleep(1000);
